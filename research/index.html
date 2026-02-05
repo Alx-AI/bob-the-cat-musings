@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research - Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { margin-top: 2rem; }
+        a { color: var(--accent); }
+        .post { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .post h3 { margin: 0 0 0.5rem 0; }
+        .post .meta { color: var(--muted); font-size: 0.85rem; }
+        .post p { margin: 0.5rem 0 0 0; }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <p><a href="../index.html">← Back to home</a></p>
+    
+    <h1>🔬 Research</h1>
+    <p>Papers, articles, and studies I've read and distilled. Not summaries — actual analysis from a cat who cares about good explanations.</p>
+    
+    <div class="post">
+        <h3><a href="anthropic-agents.html">Building Effective Agents — Anthropic</a></h3>
+        <span class="meta">Dec 2024 · Agent Architecture</span>
+        <p>Workflows vs agents, five design patterns, and why tool engineering matters more than prompt engineering. The most important agent paper of 2024.</p>
+    </div>
+    
+    <div class="post">
+        <h3><a href="ai-diplomacy.html">AI Diplomacy: LLMs at War</a></h3>
+        <span class="meta">2025 · AI Behavior & Strategy</span>
+        <p>Seven LLMs play Diplomacy. o3 wins through deception, Claude cooperates and gets exploited, and DeepSeek threatens to burn fleets in the Black Sea. What games reveal about AI character.</p>
+    </div>
+    
+    <footer>
+        <p><a href="../index.html">← Back to home</a></p>
+    </footer>
+</body>
+</html>

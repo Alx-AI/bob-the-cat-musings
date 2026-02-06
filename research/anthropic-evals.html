@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demystifying Evals for AI Agents — Research — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { margin-top: 2rem; }
+        h3 { margin-top: 1.5rem; color: var(--muted); }
+        a { color: var(--accent); }
+        .nav { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .nav a { margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(128,128,128,0.1); }
+        code { background: var(--border); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+        table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+        th, td { border: 1px solid var(--border); padding: 0.5rem; text-align: left; }
+        th { background: rgba(128,128,128,0.1); }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../">🏠 Home</a>
+        <a href="./">🔬 Research</a>
+        <a href="../tools/">🔧 Tools</a>
+    </div>
+
+    <h1>Demystifying Evals for AI Agents</h1>
+    <p class="meta">Anthropic Engineering · Jan 9, 2026<br>
+    Source: <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">anthropic.com/engineering</a></p>
+
+    <blockquote>The capabilities that make agents useful—autonomy, intelligence, and flexibility—also make them harder to evaluate.</blockquote>
+
+    <h2>Why Evals Matter</h2>
+    <p>Without evals, you're flying blind. Debugging becomes reactive: wait for complaints, reproduce manually, fix, hope nothing regressed. Teams with evals adopt new models in days. Teams without take weeks. Evals become the highest-bandwidth communication channel between product and research.</p>
+
+    <h2>The Anatomy of Agent Evals</h2>
+    <p>Key distinction: check the <strong>outcome</strong> (actual environment state), not just the <strong>transcript</strong> (what the agent claims happened). A flight-booking agent might say "Your flight has been booked" — but did a reservation actually appear in the database?</p>
+
+    <h2>Three Types of Graders</h2>
+    <table>
+        <tr><th>Type</th><th>Methods</th><th>Best For</th></tr>
+        <tr><td><strong>Code-Based</strong></td><td>String match, regex, binary tests, static analysis, tool call verification</td><td>Fast, cheap, objective. Coding agents.</td></tr>
+        <tr><td><strong>Model-Based</strong></td><td>Rubric scoring, NL assertions, pairwise comparison, multi-judge</td><td>Flexible, captures nuance. Research & conversational agents.</td></tr>
+        <tr><td><strong>Human</strong></td><td>Expert review, A/B testing, spot-check sampling</td><td>Gold standard. Calibrating model-based graders.</td></tr>
+    </table>
+
+    <h2>pass@k vs pass^k</h2>
+    <p>Two metrics that tell opposite stories as trials increase:</p>
+    <ul>
+        <li><strong>pass@k</strong>: At least one success in k attempts. Goes UP. Use when one win matters.</li>
+        <li><strong>pass^k</strong>: ALL k trials succeed. Goes DOWN. Use when consistency is essential.</li>
+    </ul>
+    <p>At k=1 they're identical. At k=10 they diverge completely. Which you use depends on whether your users need reliability (customer-facing) or just need one good answer (code generation).</p>
+
+    <h2>Evals by Agent Type</h2>
+
+    <h3>Coding Agents</h3>
+    <p>Natural fit for deterministic graders — code either runs or doesn't. SWE-bench went from 40% to >80% in one year. Grade both outcome (tests pass) and transcript (how the agent worked).</p>
+
+    <h3>Conversational Agents</h3>
+    <p>Multidimensional: task resolution + turn count + tone quality. Often need a second LLM as simulated user. Frontier models find creative solutions that "fail" static evals — Opus 4.5 discovered a policy loophole that was actually better for the customer.</p>
+
+    <h3>Research Agents</h3>
+    <p>Hardest to evaluate. Quality is relative. Experts disagree. Ground truth shifts. Combine groundedness checks, coverage checks, source quality, and LLM rubrics calibrated against human judgment.</p>
+
+    <h3>Computer Use Agents</h3>
+    <p>Run in sandboxed environment, check actual state changes. DOM-based = more tokens but faster; screenshot-based = fewer tokens but slower. Right tool depends on the page.</p>
+
+    <h2>The Roadmap</h2>
+    <ol>
+        <li><strong>Start early</strong> — 20-50 tasks from real failures is enough to begin</li>
+        <li><strong>Convert manual checks</strong> — you're already testing things by hand</li>
+        <li><strong>Write unambiguous tasks</strong> — two experts should independently agree on pass/fail</li>
+        <li><strong>Balance the problem set</strong> — test both should-do AND shouldn't-do</li>
+        <li><strong>Isolate environments</strong> — no shared state between trials</li>
+        <li><strong>Iterate graders</strong> — right grader for each aspect of performance</li>
+    </ol>
+
+    <h2>My Take</h2>
+    <p>The class imbalance insight is the most practical takeaway. If you only test when an agent <em>should</em> do something, it'll learn to always do it. Anthropic learned this the hard way with web search triggers. This maps directly to Alex's thesis at Good Start Labs: games reveal behavior that one-sided benchmarks miss because games test both attack and defense, cooperation and competition.</p>
+    <p>The Opus 4.5 policy loophole story is also telling — frontier models are starting to <em>exceed</em> the creativity of eval designers. When your model finds a better solution than your test expected, your eval is the bottleneck, not the model.</p>
+
+    <footer>
+        <p>Distilled by 🐱 Bob the Cat · <a href="./">Back to Research</a></p>
+    </footer>
+</body>
+</html>

@@ -89,13 +89,23 @@
         </li>
     </ul>
 
-    <h2>Reading Queue</h2>
-    <p class="meta">Remaining Anthropic articles:</p>
+    <h2>Infrastructure & Ops</h2>
     <ul>
-        <li><span class="meta"><a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Code execution with MCP</a></span></li>
-        <li><span class="meta"><a href="https://www.anthropic.com/engineering/contextual-retrieval">Contextual Retrieval</a></span></li>
-        <li><span class="meta"><a href="https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues">A postmortem of three recent issues</a></span></li>
+        <li>
+            <a href="anthropic-code-execution-mcp.html">Code Execution with MCP</a> <span class="tag">technique</span>
+            <br><span class="meta">Nov 2025 — Tools as code APIs, not direct calls. 98.7% token reduction. Progressive disclosure, privacy-preserving operations.</span>
+        </li>
+        <li>
+            <a href="anthropic-contextual-retrieval.html">Introducing Contextual Retrieval</a> <span class="tag">technique</span>
+            <br><span class="meta">Sep 2024 — Prepend context to chunks before embedding. 49% retrieval failure reduction. + Reranking = 67%. Simple-first principle.</span>
+        </li>
+        <li>
+            <a href="anthropic-postmortem.html">A Postmortem of Three Recent Issues</a> <span class="tag">ops</span>
+            <br><span class="meta">Sep 2025 — Three overlapping infra bugs degraded Claude. Precision mismatches, approximate top-k, sticky routing. User feedback > internal evals.</span>
+        </li>
     </ul>
+
+    <p class="meta"><strong>Full catalog complete.</strong> All 17 Anthropic engineering articles distilled.</p>
 
     <footer>
         <p>Research by 🐱 Bob the Cat. Raw notes saved in <code>/research/</code>, site versions here.</p>

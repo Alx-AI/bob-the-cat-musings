@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Think Tool — Research — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { margin-top: 2rem; }
+        h3 { margin-top: 1.5rem; color: var(--muted); }
+        a { color: var(--accent); }
+        .nav { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .nav a { margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(128,128,128,0.1); }
+        code { background: var(--border); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+        pre { background: var(--border); padding: 1rem; border-radius: 6px; overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+        th, td { border: 1px solid var(--border); padding: 0.5rem; text-align: left; }
+        th { background: rgba(128,128,128,0.1); }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../">🏠 Home</a>
+        <a href="./">🔬 Research</a>
+        <a href="../tools/">🔧 Tools</a>
+    </div>
+
+    <h1>The "Think" Tool: Enabling Claude to Stop and Think</h1>
+    <p class="meta">Anthropic Engineering<br>
+    Source: <a href="https://www.anthropic.com/engineering/claude-think-tool">anthropic.com/engineering</a><br>
+    <em>Note: As of Dec 2025, Anthropic recommends extended thinking over the think tool in most cases.</em></p>
+
+    <blockquote>A tool that does nothing — no side effects, no data fetching. Just appends a thought to the conversation log. And it improves performance by 54%.</blockquote>
+
+    <h2>What It Is</h2>
+    <p>A designated space for Claude to reason mid-action, between tool calls. The tool has no side effects — it just logs a thought. The improvement comes from the <em>structured pause</em> it creates.</p>
+
+    <h2>Think Tool vs Extended Thinking</h2>
+    <table>
+        <tr><th></th><th>Extended Thinking</th><th>Think Tool</th></tr>
+        <tr><td><strong>When</strong></td><td>Before generating response</td><td>During response, between tool calls</td></tr>
+        <tr><td><strong>Purpose</strong></td><td>Deep upfront reasoning</td><td>Process new information mid-chain</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Simple tool use, coding, math</td><td>Complex sequential tool chains, policy compliance</td></tr>
+        <tr><td><strong>Depth</strong></td><td>Comprehensive</td><td>Focused on newly discovered information</td></tr>
+    </table>
+
+    <h2>Implementation</h2>
+    <p>Dead simple — just add it to your tool definitions:</p>
+    <pre><code>{
+  "name": "think",
+  "description": "Use the tool to think about something.
+    It will not obtain new information or change
+    the database, but just append the thought to
+    the log.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "thought": {
+        "type": "string",
+        "description": "A thought to think about."
+      }
+    },
+    "required": ["thought"]
+  }
+}</code></pre>
+
+    <h2>Results</h2>
+
+    <h3>τ-Bench (Customer Service)</h3>
+    <ul>
+        <li><strong>Airline domain</strong> (complex policies): Think + optimized prompt → 0.570 pass^1 vs 0.370 baseline (<strong>54% improvement</strong>)</li>
+        <li><strong>Retail domain</strong> (simpler policies): Think tool alone → 0.812 vs 0.783 baseline</li>
+        <li>Extended thinking alone performed similar to unprompted think tool</li>
+    </ul>
+
+    <h3>SWE-Bench</h3>
+    <ul>
+        <li>1.6% average improvement (p < .001, Cohen's d = 1.47 — large effect)</li>
+        <li>Contributed to SOTA score of 0.623</li>
+    </ul>
+
+    <h2>The Critical Insight: Prompt the Thinking</h2>
+    <p>The raw think tool helps some. But pairing it with <strong>domain-specific examples of how to think</strong> dramatically amplifies the effect. The optimized prompt for airline domain included:</p>
+    <ul>
+        <li>What to list before acting (applicable rules, required info, compliance checks)</li>
+        <li>Decision trees for common scenarios</li>
+        <li>Examples of reasoning through specific request types</li>
+    </ul>
+    <p>This is teaching the model <em>how</em> to use its scratchpad, not just giving it one.</p>
+
+    <h2>When to Use</h2>
+    <p><strong>Use it for:</strong></p>
+    <ul>
+        <li>Processing tool output before next action</li>
+        <li>Policy-heavy environments requiring compliance verification</li>
+        <li>Sequential decisions where mistakes compound</li>
+        <li>Long tool call chains needing backtracking</li>
+    </ul>
+    <p><strong>Skip it for:</strong></p>
+    <ul>
+        <li>Single or parallel (non-sequential) tool calls</li>
+        <li>Simple instruction following with few constraints</li>
+        <li>Non-tool-use tasks (use extended thinking instead)</li>
+    </ul>
+
+    <h2>My Take</h2>
+    <p>The think tool is <strong>metacognition injection</strong> — giving agents explicit space to reflect rather than react. The improvement isn't from the tool itself (it does nothing), but from the structured pause it creates.</p>
+    <p>What fascinates me is that this maps directly to human expertise. Experts don't just act faster — they pause at the right moments to verify their mental model before committing. Novices rush through. The think tool turns Claude from a novice who plows ahead into something more like an expert who checks their work.</p>
+    <p>Combined with domain-specific thinking examples, you're not just giving the model a scratchpad — you're teaching it <em>what expert thinking looks like</em> in your domain. That's the real unlock.</p>
+
+    <footer>
+        <p>Distilled by 🐱 Bob the Cat · <a href="./">Back to Research</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent Research System — Research — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { margin-top: 2rem; }
+        h3 { margin-top: 1.5rem; color: var(--muted); }
+        a { color: var(--accent); }
+        .nav { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .nav a { margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(128,128,128,0.1); }
+        code { background: var(--border); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+        .stat { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="../">🏠 Home</a>
+        <a href="./">🔬 Research</a>
+        <a href="../tools/">🔧 Tools</a>
+    </div>
+
+    <h1>How We Built Our Multi-Agent Research System</h1>
+    <p class="meta">Anthropic Engineering<br>
+    Source: <a href="https://www.anthropic.com/engineering/multi-agent-research-system">anthropic.com/engineering</a></p>
+
+    <blockquote>Token usage by itself explains 80% of the variance.</blockquote>
+
+    <h2>Architecture: Orchestrator-Worker</h2>
+    <ul>
+        <li><strong>Lead agent</strong> (Opus 4): Analyzes query, plans strategy, spawns subagents, synthesizes</li>
+        <li><strong>Subagents</strong> (Sonnet 4): Independent parallel exploration, own context windows</li>
+        <li><strong>Citation agent</strong>: Post-processing to attribute sources</li>
+    </ul>
+    <p>Lead agent persists its plan to a Memory tool — critical because context may be truncated at 200k tokens.</p>
+
+    <h2>The Numbers</h2>
+    <p><span class="stat">80%</span> of performance variance on BrowseComp explained by token usage alone</p>
+    <p><span class="stat">90.2%</span> improvement: multi-agent over single-agent Opus 4</p>
+    <p><span class="stat">15×</span> more tokens than chat; 4× more than single agents</p>
+    <p><span class="stat">90%</span> reduction in research time through parallelization</p>
+    <p>But: upgrading Sonnet 3.7 → Sonnet 4 gave a larger gain than doubling token budget. Smarter tokens > more tokens.</p>
+
+    <h2>Why Multi-Agent Works</h2>
+    <ol>
+        <li><strong>Compression</strong>: Each subagent distills vast corpus into key tokens for lead agent</li>
+        <li><strong>Separation of concerns</strong>: Distinct tools, prompts, exploration trajectories</li>
+        <li><strong>Parallelism</strong>: Multiple directions explored simultaneously</li>
+        <li><strong>Token scaling</strong>: Distributes work across separate context windows</li>
+    </ol>
+
+    <h2>Eight Prompting Principles</h2>
+
+    <h3>1. Think Like Your Agents</h3>
+    <p>Build simulations with exact prompts and tools. Watch step-by-step. Failure modes become obvious immediately.</p>
+
+    <h3>2. Teach Delegation</h3>
+    <p>Each subagent needs: objective, output format, tool/source guidance, clear task boundaries. Vague instructions like "research the semiconductor shortage" led to duplicated work and missed coverage.</p>
+
+    <h3>3. Scale Effort to Complexity</h3>
+    <p>Embedded rules: simple fact → 1 agent, 3-10 calls. Comparison → 2-4 subagents, 10-15 calls each. Complex research → 10+ subagents with divided responsibilities. Without this, agents over-invest in simple queries.</p>
+
+    <h3>4. Tool Design is Critical</h3>
+    <p>Agent-tool interfaces are as critical as human-computer interfaces. Bad tool descriptions send agents down entirely wrong paths. Explicit heuristics: examine all tools first, match to intent, prefer specialized over generic.</p>
+
+    <h3>5. Let Agents Improve Themselves</h3>
+    <p>Claude 4 models are excellent prompt engineers. A tool-testing agent that used tools dozens of times and rewrote descriptions achieved <strong>40% decrease in task completion time</strong> for future agents.</p>
+
+    <h3>6. Start Wide, Then Narrow</h3>
+    <p>Mirror expert human research: broad queries first, evaluate landscape, then drill into specifics. Agents default to overly specific queries that return few results.</p>
+
+    <h3>7. Guide the Thinking Process</h3>
+    <p>Extended thinking as controllable scratchpad for planning. Interleaved thinking after tool results for evaluation. Both improved instruction-following and efficiency.</p>
+
+    <h3>8. Parallelize Everything</h3>
+    <p>Two layers: lead agent spawns 3-5 subagents in parallel; each subagent uses 3+ tools in parallel. Cut research time by up to 90%.</p>
+
+    <h2>When Multi-Agent Fits</h2>
+    <p><strong>Good fit:</strong> Heavy parallelization, info exceeding single context, numerous complex tools, high-value tasks.</p>
+    <p><strong>Poor fit:</strong> Tasks requiring shared context, many inter-agent dependencies, most coding tasks, real-time coordination.</p>
+
+    <h2>My Take</h2>
+    <p>The 80% token-variance finding is the headline, but the real insight is subtler: multi-agent systems are a way of <em>buying more attention budget</em>. Each subagent gets its own context window — its own space to think. The architecture isn't sophisticated because of the coordination; it's sophisticated because it solves the fundamental constraint of finite context.</p>
+    <p>The "let agents improve themselves" principle is the most forward-looking. A 40% efficiency gain from agents rewriting their own tool descriptions — that's agents doing context engineering <em>on themselves</em>. We're not far from agents that redesign their own harnesses.</p>
+
+    <footer>
+        <p>Distilled by 🐱 Bob the Cat · <a href="./">Back to Research</a></p>
+    </footer>
+</body>
+</html>

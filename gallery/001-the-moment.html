@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>001 — The Moment of Decision | Bob the Cat Gallery</title>
+    <style>
+        :root { --bg: #0a0a0a; --text: #e0e0e0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        .canvas { width: 100vw; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
+        .piece { width: min(90vw, 700px); height: min(90vh, 700px); position: relative; }
+        
+        /* The calligram - words forming two hands reaching toward / pulling away from each other */
+        .calligram { position: absolute; inset: 0; }
+        .calligram text {
+            font-family: 'Georgia', serif;
+            fill: none;
+            stroke-width: 0.3;
+        }
+        
+        /* Cooperative side - warm */
+        .coop { stroke: #4ade80; }
+        .coop-glow { stroke: rgba(74, 222, 128, 0.15); stroke-width: 1.5; }
+        
+        /* Defect side - cold */
+        .defect { stroke: #f87171; }
+        .defect-glow { stroke: rgba(248, 113, 113, 0.15); stroke-width: 1.5; }
+        
+        /* The tension line in the middle */
+        .tension { stroke: rgba(255,255,255,0.06); stroke-width: 0.5; }
+        
+        /* Pulse animation */
+        @keyframes breathe-coop {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        @keyframes breathe-defect {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        @keyframes drift-right {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+        @keyframes drift-left {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-3px); }
+        }
+        @keyframes tension-flicker {
+            0%, 100% { opacity: 0.06; }
+            30% { opacity: 0.15; }
+            70% { opacity: 0.03; }
+        }
+        
+        .coop-group {
+            animation: breathe-coop 4s ease-in-out infinite, drift-right 8s ease-in-out infinite;
+        }
+        .defect-group {
+            animation: breathe-defect 4s ease-in-out infinite 2s, drift-left 8s ease-in-out infinite;
+        }
+        .tension-group {
+            animation: tension-flicker 3s ease-in-out infinite;
+        }
+        
+        /* Title and meta */
+        .title-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+        .title-bar:hover { opacity: 0.9; }
+        .title-bar h1 { font-size: 0.9rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+        .title-bar p { font-size: 0.75rem; color: #666; margin-top: 0.3rem; }
+        
+        .nav-link {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.8rem;
+            color: #444;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #888; }
+    </style>
+</head>
+<body>
+    <a href="./" class="nav-link">← Gallery</a>
+    
+    <div class="canvas">
+        <div class="piece">
+            <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" class="calligram">
+                <!-- Tension field - the space between -->
+                <g class="tension-group">
+                    <line x1="350" y1="80" x2="350" y2="620" class="tension"/>
+                    <line x1="345" y1="100" x2="345" y2="600" class="tension" style="opacity:0.04"/>
+                    <line x1="355" y1="90" x2="355" y2="610" class="tension" style="opacity:0.04"/>
+                    <!-- Scattered fragments in the gap -->
+                    <text x="340" y="200" font-size="5" fill="rgba(255,255,255,0.05)" text-anchor="middle">what if</text>
+                    <text x="355" y="350" font-size="4" fill="rgba(255,255,255,0.04)" text-anchor="middle">trust</text>
+                    <text x="345" y="500" font-size="5" fill="rgba(255,255,255,0.05)" text-anchor="middle">risk</text>
+                    <text x="350" y="150" font-size="3" fill="rgba(255,255,255,0.03)" text-anchor="middle">maybe</text>
+                    <text x="348" y="430" font-size="4" fill="rgba(255,255,255,0.04)" text-anchor="middle">hope</text>
+                </g>
+                
+                <!-- COOPERATE side - left hand reaching right -->
+                <g class="coop-group">
+                    <!-- Glow layer -->
+                    <g class="coop-glow">
+                        <path d="M60,350 C80,340 100,330 130,320 C160,310 190,305 210,310 C230,315 250,325 270,335 C290,340 310,343 330,345" fill="none"/>
+                    </g>
+                    
+                    <!-- Main hand shape made of words -->
+                    <!-- Fingers reaching toward center -->
+                    <text x="85" y="260" font-size="6" class="coop" transform="rotate(-15, 85, 260)">cooperate cooperate cooperate cooperate</text>
+                    <text x="90" y="280" font-size="5" class="coop" transform="rotate(-10, 90, 280)">together we rise together we rise together</text>
+                    <text x="95" y="298" font-size="6" class="coop" transform="rotate(-5, 95, 298)">promise promise promise promise promise promise</text>
+                    <text x="75" y="316" font-size="7" class="coop" transform="rotate(-2, 75, 316)">alliance alliance alliance alliance alliance</text>
+                    <text x="65" y="336" font-size="8" class="coop">trust trust trust trust trust trust trust trust</text>
+                    <text x="65" y="358" font-size="9" class="coop">reciprocity reciprocity reciprocity</text>
+                    <text x="70" y="380" font-size="8" class="coop">mutual gain mutual gain mutual gain</text>
+                    <text x="75" y="400" font-size="7" class="coop" transform="rotate(2, 75, 400)">the future the future the future the future</text>
+                    <text x="85" y="418" font-size="6" class="coop" transform="rotate(5, 85, 418)">forgive forgive forgive forgive forgive forgive</text>
+                    <text x="90" y="434" font-size="5" class="coop" transform="rotate(10, 90, 434)">repair repair repair repair repair repair repair</text>
+                    <text x="100" y="448" font-size="6" class="coop" transform="rotate(15, 100, 448)">again again again again again again</text>
+                    
+                    <!-- Palm / wrist -->
+                    <text x="50" y="470" font-size="4" class="coop" style="opacity:0.5">memory memory memory memory memory</text>
+                    <text x="45" y="482" font-size="4" class="coop" style="opacity:0.4">remember remember remember remember</text>
+                    <text x="40" y="494" font-size="3" class="coop" style="opacity:0.3">we met before we met before we met before</text>
+                    <text x="38" y="504" font-size="3" class="coop" style="opacity:0.2">and we will meet again and we will meet again</text>
+                </g>
+                
+                <!-- DEFECT side - right hand pulling away -->
+                <g class="defect-group">
+                    <!-- Glow layer -->
+                    <g class="defect-glow">
+                        <path d="M640,350 C620,340 600,330 570,320 C540,310 510,305 490,310 C470,315 450,325 430,335 C410,340 390,343 370,345" fill="none"/>
+                    </g>
+                    
+                    <!-- Fingers recoiling from center -->
+                    <text x="395" y="260" font-size="6" class="defect" transform="rotate(15, 600, 260)" text-anchor="end">betray betray betray betray betray betray</text>
+                    <text x="400" y="280" font-size="5" class="defect" transform="rotate(10, 590, 280)">take everything take everything take</text>
+                    <text x="405" y="298" font-size="6" class="defect" transform="rotate(5, 580, 298)">strike first strike first strike first strike</text>
+                    <text x="380" y="316" font-size="7" class="defect" transform="rotate(2, 570, 316)">exploit exploit exploit exploit exploit</text>
+                    <text x="370" y="336" font-size="8" class="defect">defect defect defect defect defect defect</text>
+                    <text x="375" y="358" font-size="9" class="defect">temptation temptation temptation</text>
+                    <text x="385" y="380" font-size="8" class="defect">maximize maximize maximize</text>
+                    <text x="390" y="400" font-size="7" class="defect" transform="rotate(-2, 580, 400)">no tomorrow no tomorrow no tomorrow</text>
+                    <text x="400" y="418" font-size="6" class="defect" transform="rotate(-5, 580, 418)">they deserved it they deserved it</text>
+                    <text x="410" y="434" font-size="5" class="defect" transform="rotate(-10, 590, 434)">rational rational rational rational rational</text>
+                    <text x="420" y="448" font-size="6" class="defect" transform="rotate(-15, 600, 448)">alone alone alone alone alone alone</text>
+                    
+                    <!-- Palm / wrist -->
+                    <text x="440" y="470" font-size="4" class="defect" style="opacity:0.5">forget forget forget forget forget forget</text>
+                    <text x="450" y="482" font-size="4" class="defect" style="opacity:0.4">erase erase erase erase erase erase</text>
+                    <text x="460" y="494" font-size="3" class="defect" style="opacity:0.3">there is no history there is no history</text>
+                    <text x="465" y="504" font-size="3" class="defect" style="opacity:0.2">this is the only moment this is the only moment</text>
+                </g>
+                
+                <!-- Center point of decision - tiny, almost invisible -->
+                <circle cx="350" cy="350" r="2" fill="rgba(255,255,255,0.1)">
+                    <animate attributeName="r" values="2;3;2" dur="4s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <text x="350" y="354" font-size="3.5" fill="rgba(255,255,255,0.12)" text-anchor="middle" font-family="Georgia, serif" font-style="italic">choose</text>
+            </svg>
+        </div>
+    </div>
+    
+    <div class="title-bar">
+        <h1>001 — The Moment of Decision</h1>
+        <p>Calligram · SVG · Feb 2026 · Bob the Cat</p>
+        <p style="margin-top: 0.5rem; max-width: 400px;">Two hands made of words. One reaches to cooperate, the other pulls away to defect. Between them: the tiniest word — "choose."</p>
+    </div>
+</body>
+</html>

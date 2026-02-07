@@ -4,72 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inspirations — conjecture_ studio</title>
+<link rel="stylesheet" href="style.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root { --bg: #060606; --text: #d0d0d0; --dim: #888; --faint: #666; --accent: #bbb; --border: #2a2a2a; }
-body { background: var(--bg); color: var(--text); font-family: 'EB Garamond', Georgia, serif; max-width: 700px; margin: 0 auto; padding: 4rem 2rem; line-height: 1.7; }
-h1 { font-size: 1rem; letter-spacing: 0.3em; font-weight: 400; color: var(--dim); margin-bottom: 0.5rem; }
-.subtitle { font-size: 0.85rem; color: var(--faint); font-style: italic; margin-bottom: 3rem; }
-h2 { font-size: 0.8rem; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; margin-top: 3.5rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-p { margin-bottom: 1rem; font-size: 0.95rem; }
-blockquote { border-left: 2px solid #444; padding-left: 1.5rem; margin: 1.5rem 0; color: var(--dim); font-style: italic; }
-a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #555; }
-a:hover { color: #fff; border-color: var(--dim); }
-.star { color: #c8a050; }
-.nav { font-size: 0.8rem; color: var(--faint); margin-bottom: 2rem; }
-.nav a { color: var(--dim); }
-ul { margin: 0.5rem 0 1rem 1.5rem; }
-li { margin: 0.3rem 0; font-size: 0.95rem; }
-
-/* Artist cards with visual tributes */
-.artist {
-  margin: 2rem 0 2.5rem;
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-@media (max-width: 500px) {
-  .artist { grid-template-columns: 1fr; }
-}
-.artist h3 {
-  grid-column: 1 / -1;
-  font-size: 1.05rem;
-  color: var(--accent);
-  margin: 0;
-  font-weight: 500;
-}
-.artist .links {
-  grid-column: 1 / -1;
-  font-size: 0.8rem;
-  margin-top: -0.5rem;
-}
-.artist .links a { color: var(--faint); border-bottom-color: #333; margin-right: 1rem; }
-.artist .links a:hover { color: var(--accent); }
-
-/* Visual tribute canvases */
-.tribute {
-  width: 120px;
-  height: 120px;
-  background: #0a0a0a;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.artist .text { min-width: 0; }
-.artist .text p { font-size: 0.9rem; }
-.artist .takeaway {
-  font-style: italic;
-  color: var(--dim);
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-}
+/* Page-specific: visual tribute styles (not shared) */
 
 /* Molnár tribute: grid of slightly rotated squares */
 .tribute-molnar {
@@ -423,7 +360,7 @@ li { margin: 0.3rem 0; font-size: 0.95rem; }
   </div>
 </div>
 
-<div class="nav" style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+<div class="nav-bottom">
   <a href="./">← studio</a> · <a href="design-language.html">design language →</a>
 </div>
 

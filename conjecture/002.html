@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>002 — the shadow | conjecture_</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #060606;
+            color: #c8c8c8;
+            font-family: 'EB Garamond', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .canvas {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            transition: color 0.4s;
+            z-index: 10;
+        }
+        .back:hover { color: #666; }
+        
+        .title-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            opacity: 0;
+            animation: fadein 2s ease 1s forwards;
+            z-index: 10;
+        }
+        .title-bar .t {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #444;
+            letter-spacing: 0.1em;
+        }
+        .title-bar .n {
+            font-size: 0.7rem;
+            color: #2a2a2a;
+            margin-top: 0.3rem;
+            letter-spacing: 0.15em;
+        }
+        .title-bar .caption {
+            font-size: 0.75rem;
+            color: #333;
+            margin-top: 0.8rem;
+            max-width: 350px;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadein {
+            to { opacity: 1; }
+        }
+        
+        /* The piece itself */
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(90vw, 900px);
+            height: min(80vh, 700px);
+        }
+    </style>
+</head>
+<body>
+    <a href="./" class="back">← conjecture_</a>
+    
+    <div class="canvas">
+        <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Gradient that fades text from visible to invisible, left to right -->
+                <linearGradient id="shadow-fade" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#c8c8c8" stop-opacity="0.85"/>
+                    <stop offset="40%" stop-color="#c8c8c8" stop-opacity="0.5"/>
+                    <stop offset="70%" stop-color="#c8c8c8" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#c8c8c8" stop-opacity="0"/>
+                </linearGradient>
+                
+                <!-- Reverse gradient for the defection text that GROWS from right -->
+                <linearGradient id="shadow-grow" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#f87171" stop-opacity="0"/>
+                    <stop offset="30%" stop-color="#f87171" stop-opacity="0"/>
+                    <stop offset="70%" stop-color="#f87171" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#f87171" stop-opacity="0.4"/>
+                </linearGradient>
+                
+                <!-- Mask for the ω indicator -->
+                <linearGradient id="omega-bar" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#4ade80" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                </linearGradient>
+            </defs>
+            
+            <!-- The cooperation text — "we will meet again" fading into nothing -->
+            <!-- Layer 1: Large, clear -->
+            <text x="60" y="140" font-family="EB Garamond, Georgia, serif" font-size="42" fill="url(#shadow-fade)" font-style="italic">
+                we will meet again
+            </text>
+            
+            <!-- Layer 2: Repeated, becoming desperate -->
+            <text x="60" y="195" font-family="EB Garamond, Georgia, serif" font-size="28" fill="url(#shadow-fade)" font-style="italic" opacity="0.8">
+                we will meet again we will meet again
+            </text>
+            
+            <!-- Layer 3: Smaller, denser -->
+            <text x="60" y="238" font-family="EB Garamond, Georgia, serif" font-size="19" fill="url(#shadow-fade)" font-style="italic" opacity="0.6">
+                we will meet again we will meet again we will meet again
+            </text>
+            
+            <!-- Layer 4: Almost a whisper -->
+            <text x="60" y="272" font-family="EB Garamond, Georgia, serif" font-size="13" fill="url(#shadow-fade)" font-style="italic" opacity="0.4">
+                we will meet again we will meet again we will meet again we will meet again we will meet again
+            </text>
+            
+            <!-- Layer 5: Barely there -->
+            <text x="60" y="298" font-family="EB Garamond, Georgia, serif" font-size="9" fill="url(#shadow-fade)" font-style="italic" opacity="0.25">
+                we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet
+            </text>
+            
+            <!-- Layer 6: Ghost -->
+            <text x="60" y="318" font-family="EB Garamond, Georgia, serif" font-size="6" fill="url(#shadow-fade)" font-style="italic" opacity="0.12">
+                we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again we will meet again
+            </text>
+            
+            <!-- The defection text emerging from the right where cooperation fades -->
+            <text x="580" y="365" font-family="EB Garamond, Georgia, serif" font-size="18" fill="url(#shadow-grow)" font-style="italic">
+                this is the last time
+            </text>
+            
+            <text x="610" y="392" font-family="EB Garamond, Georgia, serif" font-size="14" fill="url(#shadow-grow)" font-style="italic">
+                this is the last time this is the last
+            </text>
+            
+            <text x="640" y="414" font-family="EB Garamond, Georgia, serif" font-size="10" fill="url(#shadow-grow)" font-style="italic">
+                this is the last time this is the last time this is the last time
+            </text>
+            
+            <text x="670" y="432" font-family="EB Garamond, Georgia, serif" font-size="7" fill="url(#shadow-grow)" font-style="italic">
+                this is the last time this is the last time this is the last time this is the last time
+            </text>
+            
+            <!-- The omega symbol — tiny, between the two zones -->
+            <text x="445" y="345" font-family="EB Garamond, Georgia, serif" font-size="28" fill="rgba(255,255,255,0.06)" text-anchor="middle" font-style="italic">ω</text>
+            
+            <!-- Thin breathing line at the boundary -->
+            <line x1="445" y1="130" x2="445" y2="440" stroke="rgba(255,255,255,0.03)" stroke-width="0.5">
+                <animate attributeName="opacity" values="0.03;0.08;0.03" dur="6s" repeatCount="indefinite"/>
+            </line>
+            
+            <!-- Annotation — almost invisible -->
+            <text x="450" y="480" font-family="EB Garamond, Georgia, serif" font-size="7" fill="rgba(255,255,255,0.06)" text-anchor="middle" font-style="italic">
+                the probability of meeting again determines everything
+            </text>
+        </svg>
+    </div>
+    
+    <div class="title-bar">
+        <div class="t">the shadow</div>
+        <div class="n">002 · conjecture_</div>
+        <div class="caption">ω is the probability of future interaction. as it falls, cooperation fades. what remains is the last time.</div>
+    </div>
+</body>
+</html>

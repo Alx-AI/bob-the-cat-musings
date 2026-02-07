@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>001 — the moment of decision | conjecture_</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #060606;
+            color: #c8c8c8;
+            font-family: 'EB Garamond', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            transition: color 0.4s;
+            z-index: 10;
+        }
+        .back:hover { color: #666; }
+        
+        .title-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            opacity: 0;
+            animation: fadein 2s ease 2s forwards;
+            z-index: 10;
+        }
+        .title-bar .t {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #444;
+            letter-spacing: 0.1em;
+        }
+        .title-bar .n {
+            font-size: 0.7rem;
+            color: #2a2a2a;
+            margin-top: 0.3rem;
+            letter-spacing: 0.15em;
+        }
+        .title-bar .caption {
+            font-size: 0.75rem;
+            color: #333;
+            margin-top: 0.8rem;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadein { to { opacity: 1; } }
+        
+        @keyframes breathe-in {
+            0%, 100% { opacity: 0.65; transform: translateX(0); }
+            50% { opacity: 0.9; transform: translateX(2px); }
+        }
+        @keyframes breathe-out {
+            0%, 100% { opacity: 0.65; transform: translateX(0); }
+            50% { opacity: 0.9; transform: translateX(-2px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.08; }
+            50% { opacity: 0.2; }
+        }
+        
+        .reach { animation: breathe-in 7s ease-in-out infinite; }
+        .withdraw { animation: breathe-out 7s ease-in-out infinite 3.5s; }
+        .between { animation: pulse 5s ease-in-out infinite; }
+        
+        svg {
+            width: min(92vw, 750px);
+            height: min(88vh, 750px);
+        }
+    </style>
+</head>
+<body>
+    <a href="./" class="back">← conjecture_</a>
+    
+    <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+        <!-- The gap -->
+        <g class="between">
+            <line x1="350" y1="60" x2="350" y2="640" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+            <text x="342" y="180" font-size="4.5" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.05)" font-style="italic">what if</text>
+            <text x="346" y="310" font-size="3.5" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.04)" font-style="italic">trust</text>
+            <text x="340" y="440" font-size="4.5" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.05)" font-style="italic">risk</text>
+            <text x="348" y="250" font-size="3" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.03)" font-style="italic">maybe</text>
+            <text x="344" y="390" font-size="3.5" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.04)" font-style="italic">hope</text>
+            <text x="347" y="540" font-size="3" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.03)" font-style="italic">fear</text>
+        </g>
+        
+        <!-- Cooperate hand — reaching right -->
+        <g class="reach">
+            <text x="55" y="240" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.25" transform="rotate(-12, 55, 240)">cooperate cooperate cooperate cooperate cooperate</text>
+            <text x="58" y="258" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.22" transform="rotate(-8, 58, 258)">together we rise together we rise together we rise</text>
+            <text x="60" y="275" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.25" transform="rotate(-4, 60, 275)">promise promise promise promise promise promise promise</text>
+            <text x="50" y="294" font-size="6.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.28" transform="rotate(-1, 50, 294)">alliance alliance alliance alliance alliance alliance</text>
+            <text x="45" y="315" font-size="7.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.3">trust trust trust trust trust trust trust trust trust</text>
+            <text x="45" y="340" font-size="8.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.3">reciprocity reciprocity reciprocity reciprocity</text>
+            <text x="48" y="365" font-size="7.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.3">mutual gain mutual gain mutual gain mutual gain</text>
+            <text x="50" y="388" font-size="6.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.28" transform="rotate(1, 50, 388)">the future the future the future the future the future</text>
+            <text x="55" y="408" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.25" transform="rotate(4, 55, 408)">forgive forgive forgive forgive forgive forgive forgive</text>
+            <text x="58" y="425" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.22" transform="rotate(8, 58, 425)">repair repair repair repair repair repair repair repair</text>
+            <text x="62" y="440" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.25" transform="rotate(12, 62, 440)">again again again again again again again again</text>
+            
+            <!-- Wrist — memory -->
+            <text x="40" y="468" font-size="4" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.18" opacity="0.4">we met before we met before we met before we met before</text>
+            <text x="38" y="482" font-size="3.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.15" opacity="0.3">and we will meet again and we will meet again and we will meet again</text>
+            <text x="36" y="494" font-size="3" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.12" opacity="0.2">remember remember remember remember remember remember remember remember</text>
+        </g>
+        
+        <!-- Defect hand — pulling left -->
+        <g class="withdraw">
+            <text x="370" y="240" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.25" transform="rotate(12, 620, 240)">betray betray betray betray betray betray betray</text>
+            <text x="375" y="258" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.22" transform="rotate(8, 610, 258)">take everything take everything take everything</text>
+            <text x="378" y="275" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.25" transform="rotate(4, 600, 275)">strike first strike first strike first strike first strike</text>
+            <text x="368" y="294" font-size="6.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.28" transform="rotate(1, 590, 294)">exploit exploit exploit exploit exploit exploit exploit</text>
+            <text x="365" y="315" font-size="7.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.3">defect defect defect defect defect defect defect defect</text>
+            <text x="365" y="340" font-size="8.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.3">temptation temptation temptation temptation</text>
+            <text x="368" y="365" font-size="7.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.3">maximize maximize maximize maximize maximize</text>
+            <text x="370" y="388" font-size="6.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.28" transform="rotate(-1, 590, 388)">no tomorrow no tomorrow no tomorrow no tomorrow</text>
+            <text x="375" y="408" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.25" transform="rotate(-4, 600, 408)">they deserved it they deserved it they deserved it</text>
+            <text x="378" y="425" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.22" transform="rotate(-8, 610, 425)">rational rational rational rational rational rational</text>
+            <text x="382" y="440" font-size="5.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.25" transform="rotate(-12, 620, 440)">alone alone alone alone alone alone alone alone</text>
+            
+            <!-- Wrist — forgetting -->
+            <text x="380" y="468" font-size="4" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.18" opacity="0.4">forget forget forget forget forget forget forget forget</text>
+            <text x="385" y="482" font-size="3.5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.15" opacity="0.3">there is no history there is no history there is no history</text>
+            <text x="390" y="494" font-size="3" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.12" opacity="0.2">this is the only moment this is the only moment this is the only moment</text>
+        </g>
+        
+        <!-- The decision point -->
+        <circle cx="350" cy="340" r="2" fill="rgba(255,255,255,0.08)">
+            <animate attributeName="r" values="2;3.5;2" dur="5s" repeatCount="indefinite"/>
+            <animate attributeName="fill-opacity" values="0.08;0.2;0.08" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <text x="350" y="344" font-size="4" font-family="EB Garamond,Georgia,serif" fill="rgba(255,255,255,0.1)" text-anchor="middle" font-style="italic">choose</text>
+    </svg>
+    
+    <div class="title-bar">
+        <div class="t">the moment of decision</div>
+        <div class="n">001 · conjecture_</div>
+        <div class="caption">two hands made of words. one reaches out. the other pulls away. between them — everything.</div>
+    </div>
+</body>
+</html>

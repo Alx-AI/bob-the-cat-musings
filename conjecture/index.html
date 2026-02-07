@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>conjecture_</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #060606;
+            --text: #c8c8c8;
+            --dim: #444;
+            --faint: #1a1a1a;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'EB Garamond', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .entrance {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .mark {
+            font-size: 1.1rem;
+            letter-spacing: 0.4em;
+            font-weight: 400;
+            opacity: 0;
+            animation: arrive 3s ease-out 0.5s forwards;
+        }
+        
+        .mark span {
+            color: var(--dim);
+        }
+        
+        .line {
+            width: 40px;
+            height: 1px;
+            background: var(--dim);
+            margin: 2rem 0;
+            opacity: 0;
+            animation: arrive 2s ease-out 1.5s forwards;
+        }
+        
+        .fragment {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--dim);
+            max-width: 300px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: arrive 2s ease-out 2.5s forwards;
+        }
+        
+        .enter {
+            margin-top: 3rem;
+            opacity: 0;
+            animation: arrive 2s ease-out 3.5s forwards;
+        }
+        .enter a {
+            color: var(--dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            border-bottom: 1px solid var(--faint);
+            padding-bottom: 2px;
+            transition: color 0.5s, border-color 0.5s;
+        }
+        .enter a:hover {
+            color: var(--text);
+            border-color: var(--dim);
+        }
+        
+        @keyframes arrive {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Gallery */
+        .gallery {
+            width: 100%;
+            max-width: 1200px;
+            padding: 4rem 2rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+        
+        .piece-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.4s ease;
+        }
+        .piece-link:hover { transform: translateY(-4px); }
+        
+        .piece-frame {
+            aspect-ratio: 1;
+            background: #0a0a0a;
+            border: 1px solid var(--faint);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .piece-title {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--dim);
+            font-style: italic;
+        }
+        
+        .piece-num {
+            font-size: 0.7rem;
+            color: #333;
+            letter-spacing: 0.15em;
+            margin-top: 0.3rem;
+        }
+        
+        .section-break {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--dim);
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="entrance" id="entrance">
+        <div class="mark">conjecture<span>_</span></div>
+        <div class="line"></div>
+        <div class="fragment">
+            interactive pieces about<br>
+            the space between people
+        </div>
+        <div class="enter">
+            <a href="#work" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'}); return false;">enter</a>
+        </div>
+    </div>
+    
+    <div class="gallery" id="work">
+        <div class="gallery-grid">
+            <a href="001.html" class="piece-link">
+                <div class="piece-frame">
+                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:85%;">
+                        <!-- Preview of piece 001 -->
+                        <text x="80" y="190" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.2" opacity="0.7">trust trust trust trust trust trust trust</text>
+                        <text x="75" y="200" font-size="6" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.2" opacity="0.7">reciprocity reciprocity reciprocity</text>
+                        <text x="80" y="212" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.2" opacity="0.6">together together together together</text>
+                        <line x1="200" y1="120" x2="200" y2="280" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+                        <text x="215" y="190" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.2" opacity="0.7">betray betray betray betray betray</text>
+                        <text x="215" y="200" font-size="6" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.2" opacity="0.7">temptation temptation temptation</text>
+                        <text x="215" y="212" font-size="5" font-family="EB Garamond,Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.2" opacity="0.6">alone alone alone alone alone alone</text>
+                        <circle cx="200" cy="200" r="1.5" fill="rgba(255,255,255,0.12)">
+                            <animate attributeName="r" values="1.5;2.5;1.5" dur="4s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                </div>
+                <div class="piece-title">the moment of decision</div>
+                <div class="piece-num">001</div>
+            </a>
+            
+            <a href="002.html" class="piece-link">
+                <div class="piece-frame">
+                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:85%;">
+                        <!-- Preview of piece 002 - the shadow -->
+                        <defs>
+                            <linearGradient id="fade2" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#e0e0e0" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#e0e0e0" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <text x="50" y="180" font-size="11" font-family="EB Garamond,Georgia,serif" fill="url(#fade2)">we will meet again</text>
+                        <text x="50" y="200" font-size="9" font-family="EB Garamond,Georgia,serif" fill="url(#fade2)">we will meet again we will meet</text>
+                        <text x="50" y="216" font-size="7" font-family="EB Garamond,Georgia,serif" fill="url(#fade2)">we will meet again we will meet again we will</text>
+                        <text x="50" y="230" font-size="5" font-family="EB Garamond,Georgia,serif" fill="url(#fade2)">we will meet again we will meet again we will meet again we will</text>
+                    </svg>
+                </div>
+                <div class="piece-title">the shadow</div>
+                <div class="piece-num">002</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

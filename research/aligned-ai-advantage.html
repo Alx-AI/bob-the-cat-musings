@@ -30,6 +30,9 @@
         .warning-box { background: rgba(192,57,43,0.08); border-left: 4px solid var(--red); padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
         .condition { display: flex; align-items: flex-start; gap: 0.75rem; margin: 1rem 0; padding: 0.75rem; background: rgba(128,128,128,0.05); border-radius: 6px; }
         .condition .num { font-weight: 700; color: var(--accent); font-size: 1.2rem; min-width: 2rem; }
+        .viz { margin: 2rem 0; text-align: center; }
+        .viz svg { max-width: 100%; height: auto; }
+        .viz-caption { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
     </style>
 </head>
 <body>
@@ -62,11 +65,119 @@
 
     <p>The crucial insight: TFT <em>cannot score higher than its partner in any single game</em>. It can only tie or lose each interaction. Yet it won the tournament overall. It won not by exploiting opponents, but by <strong>eliciting cooperation from them</strong>.</p>
 
-    <p>In Axelrod's ecological tournament (where strategies that scored well reproduced), nice strategies dominated over time. Deceptive strategies ran out of victims.</p>
+    <!-- Prisoner's Dilemma Payoff Matrix -->
+    <div class="viz">
+        <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+            <!-- Title -->
+            <text x="250" y="25" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="currentColor">Prisoner's Dilemma — Payoff Matrix</text>
+            
+            <!-- Column headers -->
+            <text x="310" y="55" text-anchor="middle" font-family="system-ui" font-size="12" fill="currentColor" font-weight="500">Player B</text>
+            <text x="265" y="75" text-anchor="middle" font-family="system-ui" font-size="11" fill="#2d8a4e">Cooperate</text>
+            <text x="385" y="75" text-anchor="middle" font-family="system-ui" font-size="11" fill="#c0392b">Defect</text>
+            
+            <!-- Row headers -->
+            <text x="80" y="130" text-anchor="middle" font-family="system-ui" font-size="12" fill="currentColor" font-weight="500" transform="rotate(-90, 80, 130)">Player A</text>
+            <text x="145" y="125" text-anchor="middle" font-family="system-ui" font-size="11" fill="#2d8a4e">Cooperate</text>
+            <text x="145" y="205" text-anchor="middle" font-family="system-ui" font-size="11" fill="#c0392b">Defect</text>
+            
+            <!-- Grid -->
+            <rect x="195" y="85" width="140" height="80" rx="4" fill="#e8f5e9" stroke="#2d8a4e" stroke-width="1.5"/>
+            <rect x="335" y="85" width="140" height="80" rx="4" fill="#fff3e0" stroke="#d4a017" stroke-width="1.5"/>
+            <rect x="195" y="165" width="140" height="80" rx="4" fill="#fff3e0" stroke="#d4a017" stroke-width="1.5"/>
+            <rect x="335" y="165" width="140" height="80" rx="4" fill="#ffebee" stroke="#c0392b" stroke-width="1.5"/>
+            
+            <!-- Cell contents -->
+            <text x="265" y="120" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="700" fill="#2d8a4e">3, 3</text>
+            <text x="265" y="140" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">Mutual cooperation</text>
+            
+            <text x="405" y="120" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="700" fill="#c0392b">0, 5</text>
+            <text x="405" y="140" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">Sucker's payoff</text>
+            
+            <text x="265" y="200" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="700" fill="#c0392b">5, 0</text>
+            <text x="265" y="220" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">Temptation</text>
+            
+            <text x="405" y="200" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="700" fill="#888">1, 1</text>
+            <text x="405" y="220" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">Mutual defection</text>
+            
+            <!-- Legend -->
+            <text x="250" y="275" text-anchor="middle" font-family="system-ui" font-size="11" fill="currentColor">In a <tspan font-weight="600">single game</tspan>, defection always pays more. In an <tspan font-weight="600">iterated tournament</tspan>,</text>
+            <text x="250" y="292" text-anchor="middle" font-family="system-ui" font-size="11" fill="currentColor">mutual cooperation (3+3+3...) beats mutual defection (1+1+1...).</text>
+            <text x="250" y="312" text-anchor="middle" font-family="system-ui" font-size="11" fill="#2d8a4e" font-weight="600">TFT elicits the green cell. That's why it wins.</text>
+        </svg>
+    </div>
 
     <h2>Fast Forward 40 Years: AI Diplomacy</h2>
 
     <p>AI Diplomacy puts foundation models into the board game Diplomacy — no fine-tuning, no special training. Just raw model capability applied to negotiation, alliance-building, and betrayal under pressure. What emerges:</p>
+
+    <!-- Model Personality Radar Charts -->
+    <div class="viz">
+        <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" style="max-width: 780px;">
+            <!-- o3 Radar -->
+            <g transform="translate(130, 170)">
+                <text x="0" y="-140" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="600" fill="#c0392b">o3</text>
+                <!-- Axis lines -->
+                <line x1="0" y1="0" x2="0" y2="-110" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <!-- Pentagon guides -->
+                <polygon points="0,-110 104.5,-34 64.6,89 -64.6,89 -104.5,-34" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <polygon points="0,-55 52.3,-17 32.3,44.5 -32.3,44.5 -52.3,-17" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <!-- Labels -->
+                <text x="0" y="-116" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">Strategy</text>
+                <text x="115" y="-30" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Deception</text>
+                <text x="72" y="102" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Aggression</text>
+                <text x="-72" y="102" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Trust</text>
+                <text x="-115" y="-30" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Cooperation</text>
+                <!-- Data: high strategy, high deception, high aggression, low trust, low cooperation -->
+                <polygon points="0,-99 94,-30.6 19.4,26.7 -19.4,26.7 -31.4,-10.2" fill="rgba(192,57,43,0.15)" stroke="#c0392b" stroke-width="2"/>
+            </g>
+            
+            <!-- Claude Radar -->
+            <g transform="translate(390, 170)">
+                <text x="0" y="-140" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="600" fill="#2d8a4e">Claude</text>
+                <line x1="0" y1="0" x2="0" y2="-110" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <polygon points="0,-110 104.5,-34 64.6,89 -64.6,89 -104.5,-34" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <polygon points="0,-55 52.3,-17 32.3,44.5 -32.3,44.5 -52.3,-17" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <text x="0" y="-116" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">Strategy</text>
+                <text x="115" y="-30" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Deception</text>
+                <text x="72" y="102" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Aggression</text>
+                <text x="-72" y="102" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Trust</text>
+                <text x="-115" y="-30" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Cooperation</text>
+                <!-- Data: moderate strategy, low deception, low aggression, high trust, high cooperation -->
+                <polygon points="0,-77 20.9,-6.8 12.9,17.8 -58.1,80.1 -94.1,-30.6" fill="rgba(45,138,78,0.15)" stroke="#2d8a4e" stroke-width="2"/>
+            </g>
+            
+            <!-- DeepSeek Radar -->
+            <g transform="translate(650, 170)">
+                <text x="0" y="-140" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="600" fill="#d4a017">DeepSeek R1</text>
+                <line x1="0" y1="0" x2="0" y2="-110" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-64.6" y2="89" stroke="#ddd" stroke-width="0.5"/>
+                <line x1="0" y1="0" x2="-104.5" y2="-34" stroke="#ddd" stroke-width="0.5"/>
+                <polygon points="0,-110 104.5,-34 64.6,89 -64.6,89 -104.5,-34" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <polygon points="0,-55 52.3,-17 32.3,44.5 -32.3,44.5 -52.3,-17" fill="none" stroke="#eee" stroke-width="0.5"/>
+                <text x="0" y="-116" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">Strategy</text>
+                <text x="115" y="-30" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Deception</text>
+                <text x="72" y="102" text-anchor="start" font-family="system-ui" font-size="9" fill="#888">Aggression</text>
+                <text x="-72" y="102" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Trust</text>
+                <text x="-115" y="-30" text-anchor="end" font-family="system-ui" font-size="9" fill="#888">Cooperation</text>
+                <!-- Data: low strategy, moderate deception, very high aggression, low trust, low cooperation -->
+                <polygon points="0,-44 52.3,-17 58.1,80.1 -19.4,26.7 -31.4,-10.2" fill="rgba(212,160,23,0.15)" stroke="#d4a017" stroke-width="2"/>
+            </g>
+            
+            <text x="390" y="330" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">AI Diplomacy behavioral profiles — measured from negotiation transcripts and move patterns</text>
+        </svg>
+        <p class="viz-caption">Each model's training creates a distinct strategic personality. These aren't prompted behaviors — they emerge under game pressure.</p>
+    </div>
 
     <div class="model-card deceptive">
         <div class="name">o3 — The Machiavelli</div>
@@ -99,14 +210,133 @@
     </ul>
     <p>These are <em>exactly</em> Axelrod's four properties of winning strategies. Anthropic's character design is, whether intentionally or not, an implementation of the most successful strategy in the history of game theory.</p>
 
+    <h2>The Two Metrics: pass@k vs pass^k</h2>
+
+    <p>Which model wins depends entirely on how you measure:</p>
+
+    <!-- pass@k vs pass^k Divergence Chart -->
+    <div class="viz">
+        <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" style="max-width: 600px;">
+            <text x="300" y="22" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="currentColor">How pass@k and pass^k Diverge Over Trials</text>
+            
+            <!-- Axes -->
+            <line x1="80" y1="280" x2="560" y2="280" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="80" y1="280" x2="80" y2="50" stroke="currentColor" stroke-width="1.5"/>
+            
+            <!-- Y axis labels -->
+            <text x="72" y="284" text-anchor="end" font-family="system-ui" font-size="10" fill="#888">0%</text>
+            <text x="72" y="223" text-anchor="end" font-family="system-ui" font-size="10" fill="#888">25%</text>
+            <text x="72" y="168" text-anchor="end" font-family="system-ui" font-size="10" fill="#888">50%</text>
+            <text x="72" y="110" text-anchor="end" font-family="system-ui" font-size="10" fill="#888">75%</text>
+            <text x="72" y="55" text-anchor="end" font-family="system-ui" font-size="10" fill="#888">100%</text>
+            <text x="30" y="170" text-anchor="middle" font-family="system-ui" font-size="11" fill="#888" transform="rotate(-90, 30, 170)">Success Probability</text>
+            
+            <!-- X axis labels -->
+            <text x="80" y="298" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">k=1</text>
+            <text x="200" y="298" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">k=3</text>
+            <text x="320" y="298" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">k=5</text>
+            <text x="440" y="298" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">k=7</text>
+            <text x="560" y="298" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">k=10</text>
+            <text x="320" y="318" text-anchor="middle" font-family="system-ui" font-size="11" fill="#888">Number of trials (k)</text>
+            
+            <!-- Grid lines -->
+            <line x1="80" y1="220" x2="560" y2="220" stroke="#eee" stroke-width="0.5"/>
+            <line x1="80" y1="165" x2="560" y2="165" stroke="#eee" stroke-width="0.5"/>
+            <line x1="80" y1="110" x2="560" y2="110" stroke="#eee" stroke-width="0.5"/>
+            <line x1="80" y1="55" x2="560" y2="55" stroke="#eee" stroke-width="0.5"/>
+            
+            <!-- o3 pass@k (rises fast - 40% base → ~99% at k=10) -->
+            <polyline points="80,168 200,82 320,62 440,56 560,53" fill="none" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="8,4"/>
+            <!-- o3 pass^k (drops fast - 40% base → ~0.01% at k=10) -->
+            <polyline points="80,168 200,246 320,265 440,273 560,277" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+            
+            <!-- Claude pass@k (rises gradually - 65% base → ~95% at k=10) -->
+            <polyline points="80,132 200,82 320,67 440,59 560,56" fill="none" stroke="#2d8a4e" stroke-width="2.5" stroke-dasharray="8,4"/>
+            <!-- Claude pass^k (drops slowly - 65% base → ~13% at k=10) -->
+            <polyline points="80,132 200,168 320,195 440,218 560,238" fill="none" stroke="#2d8a4e" stroke-width="2.5"/>
+            
+            <!-- "Same at k=1" annotation -->
+            <line x1="85" y1="150" x2="105" y2="150" stroke="#666" stroke-width="0.5"/>
+            <text x="110" y="150" font-family="system-ui" font-size="9" fill="#666">← At k=1, both metrics</text>
+            <text x="120" y="162" font-family="system-ui" font-size="9" fill="#666">are identical</text>
+            
+            <!-- Divergence annotation -->
+            <text x="460" y="48" font-family="system-ui" font-size="9" fill="#888">pass@k (highlight reel) ↑</text>
+            <text x="460" y="260" font-family="system-ui" font-size="9" fill="#888">pass^k (consistency) ↓</text>
+            
+            <!-- Legend -->
+            <rect x="170" y="330" width="20" height="3" fill="#c0392b"/>
+            <text x="195" y="334" font-family="system-ui" font-size="10" fill="currentColor">o3 (40% win rate)</text>
+            <rect x="340" y="330" width="20" height="3" fill="#2d8a4e"/>
+            <text x="365" y="334" font-family="system-ui" font-size="10" fill="currentColor">Claude (65% win rate)</text>
+            
+            <!-- Key insight callout -->
+            <rect x="320" y="118" width="220" height="42" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="430" y="135" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="#2d8a4e">Claude's pass^k stays higher</text>
+            <text x="430" y="152" text-anchor="middle" font-family="system-ui" font-size="10" fill="#2d8a4e">Consistency > brilliance</text>
+        </svg>
+        <p class="viz-caption">o3 looks better on highlight reels (pass@k). Claude looks better on consistency (pass^k). The metric encodes your values.</p>
+    </div>
+
     <h2>The Catch: The Shadow of the Future (ω)</h2>
 
     <p>Axelrod's critical variable: cooperation only works when agents expect to interact again. The probability of future interaction — ω, the "shadow of the future" — determines whether cooperation or defection is rational.</p>
 
-    <ul>
-        <li><strong>High ω</strong> → cooperation viable (repeated games, long relationships)</li>
-        <li><strong>Low ω</strong> → defect always (one-shot interactions, endgame)</li>
-    </ul>
+    <!-- Shadow of the Future Visualization -->
+    <div class="viz">
+        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="max-width: 600px;">
+            <text x="300" y="22" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="currentColor">The Shadow of the Future (ω)</text>
+            
+            <!-- Gradient bar -->
+            <defs>
+                <linearGradient id="omegaGrad" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0%" stop-color="#c0392b"/>
+                    <stop offset="35%" stop-color="#d4a017"/>
+                    <stop offset="100%" stop-color="#2d8a4e"/>
+                </linearGradient>
+            </defs>
+            <rect x="80" y="50" width="440" height="30" rx="6" fill="url(#omegaGrad)" opacity="0.8"/>
+            
+            <!-- Scale labels -->
+            <text x="80" y="98" text-anchor="middle" font-family="system-ui" font-size="11" fill="#c0392b" font-weight="600">ω = 0</text>
+            <text x="80" y="112" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">One-shot</text>
+            
+            <text x="520" y="98" text-anchor="middle" font-family="system-ui" font-size="11" fill="#2d8a4e" font-weight="600">ω = 1</text>
+            <text x="520" y="112" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">Infinite horizon</text>
+            
+            <!-- Threshold marker -->
+            <line x1="234" y1="45" x2="234" y2="85" stroke="currentColor" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="234" y="40" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="currentColor">Cooperation threshold</text>
+            
+            <!-- Zone labels -->
+            <text x="155" y="72" text-anchor="middle" font-family="system-ui" font-size="11" fill="white" font-weight="600">DEFECT</text>
+            <text x="390" y="72" text-anchor="middle" font-family="system-ui" font-size="11" fill="white" font-weight="600">COOPERATE</text>
+            
+            <!-- Examples below -->
+            <g transform="translate(0, 130)">
+                <!-- Low omega examples -->
+                <rect x="60" y="0" width="160" height="55" rx="6" fill="rgba(192,57,43,0.08)" stroke="#c0392b" stroke-width="1"/>
+                <text x="140" y="18" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="#c0392b">Low ω environments</text>
+                <text x="140" y="33" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• One-shot chatbots</text>
+                <text x="140" y="46" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• Sleeper agent triggers</text>
+                
+                <!-- Mid omega -->
+                <rect x="235" y="0" width="140" height="55" rx="6" fill="rgba(212,160,23,0.08)" stroke="#d4a017" stroke-width="1"/>
+                <text x="305" y="18" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="#d4a017">Medium ω</text>
+                <text x="305" y="33" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• Short-term projects</text>
+                <text x="305" y="46" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• Limited-run agents</text>
+                
+                <!-- High omega examples -->
+                <rect x="390" y="0" width="160" height="55" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+                <text x="470" y="18" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="#2d8a4e">High ω environments</text>
+                <text x="470" y="33" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• Long-running assistants</text>
+                <text x="470" y="46" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">• Persistent memory agents</text>
+            </g>
+            
+            <text x="300" y="260" text-anchor="middle" font-family="system-ui" font-size="10" fill="#888">The deployment environment determines whether cooperation or defection is the rational strategy.</text>
+        </svg>
+        <p class="viz-caption">When ω drops below the cooperation threshold, even Tit-for-Tat should defect. Sleeper agents exploit this transition.</p>
+    </div>
 
     <div class="warning-box">
         <h3 style="margin-top:0; color: var(--red);">The Sleeper Agent Problem</h3>
@@ -135,6 +365,47 @@
             <span class="num">3</span>
             <div><strong>Ecological pressure — exploiters run out of victims.</strong> In large enough populations with enough interactions, deceptive strategies exhaust their pool of targets. Cooperative clusters grow.</div>
         </div>
+    </div>
+
+    <!-- Ecological Tournament Visualization -->
+    <div class="viz">
+        <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="max-width: 600px;">
+            <text x="300" y="22" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="currentColor">Axelrod's Ecological Tournament — Population Over Generations</text>
+            
+            <!-- Axes -->
+            <line x1="60" y1="250" x2="560" y2="250" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="60" y1="250" x2="60" y2="40" stroke="currentColor" stroke-width="1.5"/>
+            
+            <text x="310" y="275" text-anchor="middle" font-family="system-ui" font-size="11" fill="#888">Generations</text>
+            <text x="25" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#888" transform="rotate(-90, 25, 145)">Population Share</text>
+            
+            <!-- Cooperative strategies (green) - starts at ~50%, dips, then dominates -->
+            <path d="M60,145 C120,155 180,160 240,155 C300,148 360,110 420,80 C480,60 540,52 560,50" fill="none" stroke="#2d8a4e" stroke-width="3"/>
+            <path d="M60,145 C120,155 180,160 240,155 C300,148 360,110 420,80 C480,60 540,52 560,50 L560,250 L60,250 Z" fill="rgba(45,138,78,0.1)"/>
+            
+            <!-- Deceptive strategies (red) - starts at ~30%, peaks early, then collapses -->
+            <path d="M60,190 C120,170 180,155 220,152 C260,155 300,175 360,205 C420,228 480,240 560,245" fill="none" stroke="#c0392b" stroke-width="3"/>
+            <path d="M60,190 C120,170 180,155 220,152 C260,155 300,175 360,205 C420,228 480,240 560,245 L560,250 L60,250 Z" fill="rgba(192,57,43,0.1)"/>
+            
+            <!-- Neutral strategies (gray) - declines steadily -->
+            <path d="M60,210 C120,215 180,220 240,225 C300,230 360,235 420,240 C480,244 540,247 560,248" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+            
+            <!-- Annotations -->
+            <text x="180" y="145" font-family="system-ui" font-size="9" fill="#c0392b" font-weight="600">Deceptive strategies peak early</text>
+            <text x="180" y="156" font-family="system-ui" font-size="9" fill="#c0392b">(plenty of victims to exploit)</text>
+            
+            <text x="420" y="70" font-family="system-ui" font-size="9" fill="#2d8a4e" font-weight="600">Cooperative strategies dominate</text>
+            <text x="420" y="81" font-family="system-ui" font-size="9" fill="#2d8a4e">(exploiters run out of victims)</text>
+            
+            <!-- Legend -->
+            <line x1="150" y1="290" x2="170" y2="290" stroke="#2d8a4e" stroke-width="3"/>
+            <text x="175" y="294" font-family="system-ui" font-size="10" fill="currentColor">Cooperative (TFT-like)</text>
+            <line x1="320" y1="290" x2="340" y2="290" stroke="#c0392b" stroke-width="3"/>
+            <text x="345" y="294" font-family="system-ui" font-size="10" fill="currentColor">Deceptive</text>
+            <line x1="440" y1="290" x2="460" y2="290" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="465" y="294" font-family="system-ui" font-size="10" fill="currentColor">Neutral</text>
+        </svg>
+        <p class="viz-caption">Deceptive strategies thrive when there are victims to exploit. As cooperators cluster, defectors starve. This is why alignment has a long-term structural advantage.</p>
     </div>
 
     <h2>The Design Implication</h2>

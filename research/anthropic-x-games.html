@@ -26,6 +26,9 @@
         .connection-box .label { font-weight: 600; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .synthesis { background: rgba(45,138,78,0.08); border-left: 4px solid var(--green); padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
         .synthesis h3 { color: var(--green); margin-top: 0; }
+        .viz { margin: 2rem 0; text-align: center; }
+        .viz svg { max-width: 100%; height: auto; }
+        .viz-caption { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
         th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
         th { background: var(--border); font-weight: 600; }
@@ -268,6 +271,86 @@
             <li>You can evaluate character design quality by measuring game performance</li>
             <li>Games are <strong>character tests</strong>, not just capability tests</li>
         </ul>
+    </div>
+
+    <!-- Connection Map -->
+    <div class="viz">
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" style="max-width: 700px;">
+            <text x="350" y="22" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="currentColor">How the Pieces Connect</text>
+            
+            <!-- Anthropic side -->
+            <rect x="30" y="55" width="200" height="35" rx="8" fill="rgba(102,153,204,0.15)" stroke="#0066cc" stroke-width="1.5"/>
+            <text x="130" y="77" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="600" fill="#0066cc">Anthropic Engineering</text>
+            
+            <rect x="20" y="110" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="67" y="128" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">pass@k / pass^k</text>
+            
+            <rect x="125" y="110" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="172" y="128" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">3 Grader Types</text>
+            
+            <rect x="20" y="150" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="67" y="168" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">Token Scaling</text>
+            
+            <rect x="125" y="150" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="172" y="168" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">Tool Engineering</text>
+            
+            <rect x="20" y="190" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="67" y="208" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">Multi-Agent</text>
+            
+            <rect x="125" y="190" width="95" height="28" rx="6" fill="rgba(102,153,204,0.08)" stroke="#0066cc" stroke-width="1"/>
+            <text x="172" y="208" text-anchor="middle" font-family="system-ui" font-size="9" fill="#0066cc">Character Design</text>
+            
+            <!-- Games side -->
+            <rect x="470" y="55" width="200" height="35" rx="8" fill="rgba(45,138,78,0.15)" stroke="#2d8a4e" stroke-width="1.5"/>
+            <text x="570" y="77" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="600" fill="#2d8a4e">Games-as-Eval</text>
+            
+            <rect x="480" y="110" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="527" y="128" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">Coop vs Deceit</text>
+            
+            <rect x="585" y="110" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="632" y="128" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">4th Grader Type</text>
+            
+            <rect x="480" y="150" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="527" y="168" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">Quality > Quantity</text>
+            
+            <rect x="585" y="150" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="632" y="168" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">Game = Interface</text>
+            
+            <rect x="480" y="190" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="527" y="208" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">Emergent Coord</text>
+            
+            <rect x="585" y="190" width="95" height="28" rx="6" fill="rgba(45,138,78,0.08)" stroke="#2d8a4e" stroke-width="1"/>
+            <text x="632" y="208" text-anchor="middle" font-family="system-ui" font-size="9" fill="#2d8a4e">Personality Tests</text>
+            
+            <!-- Connection lines -->
+            <line x1="115" y1="124" x2="480" y2="124" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            <line x1="220" y1="124" x2="585" y2="124" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            <line x1="115" y1="164" x2="480" y2="164" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            <line x1="220" y1="164" x2="585" y2="164" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            <line x1="115" y1="204" x2="480" y2="204" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            <line x1="220" y1="204" x2="585" y2="204" stroke="#d4a017" stroke-width="1.5" opacity="0.6"/>
+            
+            <!-- Center synthesis -->
+            <rect x="260" y="250" width="180" height="55" rx="10" fill="rgba(212,160,23,0.12)" stroke="#d4a017" stroke-width="2"/>
+            <text x="350" y="272" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="700" fill="#d4a017">They need each other</text>
+            <text x="350" y="289" text-anchor="middle" font-family="system-ui" font-size="9" fill="#888">Build × Evaluate = Understand</text>
+            
+            <!-- Lines to center -->
+            <line x1="130" y1="218" x2="300" y2="250" stroke="#d4a017" stroke-width="1" opacity="0.4"/>
+            <line x1="570" y1="218" x2="400" y2="250" stroke="#d4a017" stroke-width="1" opacity="0.4"/>
+            
+            <!-- Bottom labels -->
+            <text x="130" y="340" text-anchor="middle" font-family="system-ui" font-size="10" fill="#0066cc">How to build agents</text>
+            <text x="130" y="355" text-anchor="middle" font-family="system-ui" font-size="10" fill="#0066cc">Eval vocabulary</text>
+            <text x="130" y="370" text-anchor="middle" font-family="system-ui" font-size="10" fill="#0066cc">Scaling laws</text>
+            
+            <text x="350" y="340" text-anchor="middle" font-family="system-ui" font-size="10" fill="#d4a017" font-weight="600">↔</text>
+            
+            <text x="570" y="340" text-anchor="middle" font-family="system-ui" font-size="10" fill="#2d8a4e">Where evals break</text>
+            <text x="570" y="355" text-anchor="middle" font-family="system-ui" font-size="10" fill="#2d8a4e">Character evidence</text>
+            <text x="570" y="370" text-anchor="middle" font-family="system-ui" font-size="10" fill="#2d8a4e">The interesting 20%</text>
+        </svg>
+        <p class="viz-caption">Six concept pairs that map between Anthropic's engineering framework and games-based evaluation. Each connection reveals something neither side shows alone.</p>
     </div>
 
     <h2>Grand Synthesis</h2>

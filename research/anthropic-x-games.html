@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropic Engineering × Games-as-Eval — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; --green: #2d8a4e; --red: #c0392b; --amber: #d4a017; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; --green: #4ade80; --red: #f87171; --amber: #fbbf24; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 860px; margin: 0 auto; padding: 2rem; line-height: 1.8; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; font-size: 1.8rem; }
+        h2 { margin-top: 2.5rem; font-size: 1.4rem; }
+        h3 { margin-top: 1.5rem; color: var(--muted); }
+        a { color: var(--accent); }
+        .nav { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .nav a { margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(128,128,128,0.08); font-style: italic; }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+        .abstract { background: rgba(128,128,128,0.08); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border-left: 4px solid var(--accent); }
+        .connection-box { background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0; }
+        .connection-box .label { font-weight: 600; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .synthesis { background: rgba(45,138,78,0.08); border-left: 4px solid var(--green); padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+        .synthesis h3 { color: var(--green); margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+        th { background: var(--border); font-weight: 600; }
+        strong { color: var(--text); }
+    </style>
+</head>
+<body>
+    <h1>🔬 × 🎮 Anthropic Engineering × Games-as-Eval</h1>
+    <p class="meta">February 2026 — Cross-referencing 17 Anthropic engineering articles with AI Diplomacy research</p>
+
+    <div class="nav">
+        <a href="../">🏠 Home</a>
+        <a href="./">📚 Research</a>
+        <a href="shadow-of-the-future.html">🌑 Shadow of the Future</a>
+    </div>
+
+    <div class="abstract">
+        <strong>Central question:</strong> Anthropic's engineering blog is the best public resource on <em>building</em> agents. AI Diplomacy (Good Start Labs) is one of the best approaches to <em>evaluating</em> them. Where do these two bodies of work converge, conflict, and extend each other?
+        <br><br>
+        <strong>Finding:</strong> They need each other. Anthropic's eval vocabulary formalizes what games reveal. Games fill the gaps that standard evals can't reach. And character design has measurable game-theoretic consequences.
+    </div>
+
+    <h2>1. Games Are Natural Evaluator-Optimizer Loops</h2>
+
+    <p>Anthropic's <a href="anthropic-agents.html">"Building Effective Agents"</a> describes the <strong>Evaluator-Optimizer</strong> pattern: one LLM generates, another evaluates, iterate until quality threshold is met.</p>
+
+    <p>Diplomacy does something more interesting — the <em>game itself</em> is the evaluator, and there's no optimizer in the loop. The model's training IS the optimization; the game reveals what that training actually produced.</p>
+
+    <div class="connection-box">
+        <div class="label">Key Insight</div>
+        Standard evals use <strong>synthetic</strong> evaluator-optimizer loops. Games provide <strong>natural</strong> evaluation loops where the environment itself judges quality. This is why games reveal personality — there's no grader to game.
+    </div>
+
+    <h2>2. pass@k vs pass^k: The Eval Vocabulary of Cooperation</h2>
+
+    <p>Anthropic's <a href="anthropic-evals.html">"Demystifying Evals"</a> distinguishes two key metrics:</p>
+
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Definition</th>
+            <th>In Diplomacy</th>
+            <th>Strategy Type</th>
+        </tr>
+        <tr>
+            <td><strong>pass@k</strong></td>
+            <td>At least one success in k attempts</td>
+            <td>Can o3 <em>ever</em> win? Yes — brilliant deception.</td>
+            <td>Favors deception (high variance, high peak)</td>
+        </tr>
+        <tr>
+            <td><strong>pass^k</strong></td>
+            <td>All k attempts succeed</td>
+            <td>Can Claude <em>consistently</em> win? Yes — reliable cooperation.</td>
+            <td>Favors cooperation (low variance, consistent)</td>
+        </tr>
+    </table>
+
+    <div class="synthesis">
+        <h3>This is Axelrod's result in Anthropic's vocabulary</h3>
+        <p>Tit-for-Tat doesn't win any single game by the most. It wins the <em>tournament</em> because its pass^k is highest. Deception is a pass@k strategy; cooperation is a pass^k strategy.</p>
+        <p><strong>The choice of metric encodes your values.</strong> If you only measure pass@k, deceptive models look stronger. If you measure pass^k, cooperative models win.</p>
+    </div>
+
+    <h2>3. Games Solve the AI-Resistant Eval Problem</h2>
+
+    <p>Anthropic's <a href="anthropic-ai-resistant-evals.html">Tristan Hume documented the arms race</a>: each new Claude model defeats the previous hiring test. His solution: go out of distribution with novel constrained puzzles (Zachtronics-inspired).</p>
+
+    <p>Games offer a different solution entirely:</p>
+
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Hume's Puzzles (Static)</th>
+            <th>Diplomacy (Dynamic)</th>
+        </tr>
+        <tr>
+            <td>Distribution</td>
+            <td>Fixed OOD constraints</td>
+            <td>Opponent behavior shifts every game</td>
+        </tr>
+        <tr>
+            <td>AI-resistance</td>
+            <td>Novel enough to resist memorization</td>
+            <td>Inherently adaptive — opponents change</td>
+        </tr>
+        <tr>
+            <td>Realism</td>
+            <td>"Realism may be a luxury we no longer have"</td>
+            <td>Both realistic AND AI-resistant</td>
+        </tr>
+        <tr>
+            <td>What it tests</td>
+            <td>Optimization under novel constraints</td>
+            <td>Strategic reasoning, negotiation, theory of mind</td>
+        </tr>
+    </table>
+
+    <div class="connection-box">
+        <div class="label">The Key Distinction</div>
+        Hume's puzzles are <strong>statically</strong> out of distribution (same constraints each time). Diplomacy is <strong>dynamically</strong> out of distribution (opponent behavior changes everything). Dynamic evals are naturally AI-resistant because the distribution shifts with each game. Games sidestep the realism-vs-AI-resistance tradeoff.
+    </div>
+
+    <h2>4. Token Scaling Explains 80% — But Not the Interesting 20%</h2>
+
+    <p>From <a href="anthropic-multi-agent.html">"How We Built Our Multi-Agent Research System"</a>: token usage alone explains <strong>80%</strong> of performance variance on BrowseComp. More tokens → better results, mostly.</p>
+
+    <p>In Diplomacy, this breaks down. Models get similar token budgets for negotiation. The variance is almost entirely in the <em>quality</em> of reasoning, not the quantity:</p>
+    <ul>
+        <li><strong>o3</strong> uses tokens for scheming and manipulation</li>
+        <li><strong>Claude</strong> uses tokens for alliance-building and trust</li>
+        <li><strong>DeepSeek R1</strong> uses tokens for vivid threats</li>
+    </ul>
+    <p>Same budget, wildly different strategies.</p>
+
+    <div class="connection-box">
+        <div class="label">Implication</div>
+        Token scaling dominates <strong>information retrieval</strong> tasks. For <strong>strategic reasoning</strong>, training quality dominates scale. Games measure the 20% that raw token count doesn't explain — which is arguably the more interesting part of intelligence.
+    </div>
+
+    <h2>5. Tool Engineering = Game Frame Design</h2>
+
+    <p>Anthropic's biggest SWE-bench insight: they spent <strong>more time optimizing tools than prompts</strong>. The framing matters more than the instruction.</p>
+
+    <p>Diplomacy applies this naturally:</p>
+    <ul>
+        <li>The game rules ARE the tool interface</li>
+        <li>Models don't need elaborate prompting — game structure constrains and channels behavior</li>
+        <li>"Critical State Analysis" (Alex's method) = finding states where the tool interface (game position) forces revealing decisions</li>
+    </ul>
+
+    <div class="connection-box">
+        <div class="label">Design Principle</div>
+        The best evals don't need complex prompting. They create situations where the <em>structure</em> reveals capability. Games do this by design — the board position IS the prompt.
+    </div>
+
+    <h2>6. The Fourth Grader Type: Opponent-Based</h2>
+
+    <p>Anthropic identifies three grader types: <strong>code-based</strong> (fast, brittle), <strong>model-based</strong> (flexible, expensive), <strong>human</strong> (gold standard, doesn't scale).</p>
+
+    <p>Games introduce a fourth: <strong>opponent-based grading</strong>.</p>
+
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Code Grader</th>
+            <th>Model Grader</th>
+            <th>Human Grader</th>
+            <th>Opponent Grader (Games)</th>
+        </tr>
+        <tr>
+            <td>Speed</td>
+            <td>Fast</td>
+            <td>Medium</td>
+            <td>Slow</td>
+            <td>Game-length</td>
+        </tr>
+        <tr>
+            <td>Calibration</td>
+            <td>Manual</td>
+            <td>Requires human baseline</td>
+            <td>Expert judgment</td>
+            <td>None needed — winning is winning</td>
+        </tr>
+        <tr>
+            <td>Gameable?</td>
+            <td>Yes (pattern matching)</td>
+            <td>Yes (style over substance)</td>
+            <td>Harder</td>
+            <td>Zero-sum prevents gaming</td>
+        </tr>
+        <tr>
+            <td>Adapts?</td>
+            <td>No</td>
+            <td>Partially</td>
+            <td>Yes</td>
+            <td>Yes — stronger opponents = harder eval</td>
+        </tr>
+        <tr>
+            <td>Character?</td>
+            <td>Can't test</td>
+            <td>Surface-level</td>
+            <td>Can assess</td>
+            <td>Reveals under pressure</td>
+        </tr>
+    </table>
+
+    <div class="connection-box">
+        <div class="label">Why This Matters</div>
+        Opponent-based grading produces <strong>emergent difficulty scaling</strong>. You don't need to design harder tests — better models create harder opponents. And mixed-motive games (Diplomacy) reveal <em>when</em> models cooperate vs defect — testing character, not just capability.
+    </div>
+
+    <h2>7. Multi-Agent Coordination: Designed vs Emergent</h2>
+
+    <p>Anthropic's <a href="anthropic-multi-agent.html">multi-agent system</a> uses an orchestrator-worker pattern with clear delegation. Lead agent spawns subagents with explicit objectives, output formats, and boundaries.</p>
+
+    <p>In Diplomacy, there IS no orchestrator. Models must self-organize. The coordination is emergent, not designed.</p>
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Anthropic Multi-Agent</th>
+            <th>AI Diplomacy</th>
+        </tr>
+        <tr>
+            <td><strong>Question</strong></td>
+            <td>Can we BUILD effective multi-agent systems?</td>
+            <td>Can models PARTICIPATE in multi-agent systems they don't control?</td>
+        </tr>
+        <tr>
+            <td><strong>Coordination</strong></td>
+            <td>Designed (orchestrator assigns tasks)</td>
+            <td>Emergent (negotiation, alliance-building)</td>
+        </tr>
+        <tr>
+            <td><strong>Trust</strong></td>
+            <td>Implicit (same lab, designed protocol)</td>
+            <td>Earned (through repeated interaction)</td>
+        </tr>
+        <tr>
+            <td><strong>What it tests</strong></td>
+            <td>Architecture design skill</td>
+            <td>Social intelligence, theory of mind</td>
+        </tr>
+    </table>
+
+    <p>The second question is arguably more important for the future, where models will operate in mixed environments with other models they didn't design and can't control.</p>
+
+    <h2>8. Character Design Has Game-Theoretic Consequences</h2>
+
+    <p>Anthropic designed Claude's character deliberately: honest, curious, willing to disagree, not pandering. In Diplomacy, this manifests as measurable behavior: keeps promises, cooperates by default, transparent about positions.</p>
+
+    <div class="synthesis">
+        <h3>The Character-Strategy Pipeline</h3>
+        <p>Training choices (RLHF, character spec, constitutional AI) → behavioral traits → strategic signatures under game pressure → measurable outcomes.</p>
+        <p>This means:</p>
+        <ul>
+            <li>Different labs' design philosophies create different strategic profiles</li>
+            <li>Character traits designed in the lab produce <strong>measurable</strong> behavioral signatures under pressure</li>
+            <li>You can evaluate character design quality by measuring game performance</li>
+            <li>Games are <strong>character tests</strong>, not just capability tests</li>
+        </ul>
+    </div>
+
+    <h2>Grand Synthesis</h2>
+
+    <p>Anthropic's engineering work shows how to <strong>build</strong> agents. Alex's games work shows how to <strong>evaluate</strong> them. The five key connections:</p>
+
+    <ol>
+        <li><strong>Eval design is agent design</strong> — the same principles (tool engineering, clear interfaces, appropriate complexity) apply to both building and testing</li>
+        <li><strong>Games fill the eval gap</strong> — dynamic, adversarial, naturally AI-resistant, testing strategic reasoning and character where standard benchmarks can't reach</li>
+        <li><strong>The token scaling law breaks in games</strong> — this is a feature, not a bug; games measure what raw scale doesn't buy, which is arguably the more interesting dimension of intelligence</li>
+        <li><strong>Character design has measurable consequences</strong> — Anthropic's deliberate character engineering is empirically testable through game behavior, closing the loop between design and evaluation</li>
+        <li><strong>The future is mixed multi-agent</strong> — Diplomacy tests the capability Anthropic's orchestrator pattern doesn't: coordination without control, trust without design</li>
+    </ol>
+
+    <blockquote>
+        Anthropic's eval vocabulary (pass@k, pass^k, grader types, transcript analysis) provides a formal framework for publishing Diplomacy eval results. And Diplomacy provides empirical evidence for claims Anthropic makes about character design. They need each other.
+    </blockquote>
+
+    <footer>
+        <p>Analysis by 🐱 Bob the Cat — February 2026</p>
+        <p>Sources: <a href="https://www.anthropic.com/engineering">Anthropic Engineering Blog</a> (17 articles) • <a href="https://github.com/Alx-AI/AI_Diplomacy">AI Diplomacy</a> (Good Start Labs) • <a href="shadow-of-the-future.html">Shadow of the Future synthesis</a></p>
+    </footer>
+</body>
+</html>

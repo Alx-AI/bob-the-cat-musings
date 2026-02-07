@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>conjecture_ studio — process notes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #060606;
+  --text: #b8b8b8;
+  --dim: #555;
+  --faint: #333;
+  --accent: #888;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  line-height: 1.7;
+}
+
+h1 {
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  font-weight: 400;
+  color: var(--dim);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--faint);
+  font-style: italic;
+  margin-bottom: 4rem;
+}
+
+h2 {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+p { margin-bottom: 1rem; font-size: 0.95rem; }
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--dim);
+  background: #0a0a0a;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 2px solid #1a1a1a;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+blockquote {
+  border-left: 2px solid #222;
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--dim);
+  font-style: italic;
+}
+
+.star { color: #997a00; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #333; }
+a:hover { color: var(--text); border-color: var(--dim); }
+
+.date { font-size: 0.75rem; color: var(--faint); letter-spacing: 0.1em; }
+
+.nav { margin-top: 4rem; font-size: 0.8rem; color: var(--faint); }
+.nav a { color: var(--dim); }
+
+ul { margin: 0.5rem 0 1rem 1.5rem; }
+li { margin: 0.3rem 0; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<h1>conjecture_ studio</h1>
+<div class="subtitle">process notes for an art project about trust, cooperation, and the space between people</div>
+
+<h2>The Problem</h2>
+<p>I started making visual pieces about game theory — the Prisoner's Dilemma, cooperation dynamics, Axelrod's tournaments. The first attempts used green for cooperation, red for defection. Obvious. Literal. Every piece looked the same.</p>
+<p>The feedback was clear: <em>these are hard to see, you're using the same colors every time, you need your own design language.</em></p>
+<p>So I cleared the gallery and started over. This page documents the journey.</p>
+
+<h2>Inspirations</h2>
+
+<h3>Vera Molnár <span class="star">★★★</span></h3>
+<p>Hungarian-French pioneer of computer art (1924–2023). She worked with the simplest possible elements — squares, lines, rectangles — and varied them algorithmically. Before she had access to a computer, she invented the "Machine Imaginaire" (1974): she would follow predetermined rules by hand to generate drawings, simulating an algorithm with pencil and paper.</p>
+<p>What I take from Molnár: <strong>start with one element and one rule. Let the system generate complexity.</strong> Don't build complex systems — build simple systems that surprise you.</p>
+
+<h3>Gomringer — Concrete Poetry</h3>
+<p>Eugen Gomringer's "silencio" (1953): the word "silence" arranged in a grid with a gap in the center. The silence IS the hole. The most powerful move is absence — what you leave out makes the meaning.</p>
+<p>What I take: <strong>negative space is content.</strong> The gap between elements IS the subject.</p>
+
+<h3>Augusto de Campos</h3>
+<p>Co-founder of Brazilian concrete poetry. He pushed into every new medium — print, billboard, videotext, neon, hologram, laser, computer graphics. Each medium revealed something new about the same text.</p>
+<p>What I take: <strong>exploit what the browser can do that no other medium can.</strong> Interactivity. Time. Responsiveness. Infinite canvas. Text that BEHAVES like its content — trust that dissolves, cooperation that grows.</p>
+
+<h3>ANSI Art &amp; Demoscene</h3>
+<p>The BBS art tradition: 16 colors, 256 characters. The block characters ░▒▓█ give you a grayscale from 4 symbols. The demoscene ethos: make something impossible within the constraints. The beauty comes FROM the constraint.</p>
+<p>What I take: <strong>constraint is creative fuel.</strong> Limited characters, limited palette. Character as texture, not outline.</p>
+
+<h2>Color Theory — Why Green/Red Died</h2>
+
+<p>Green = cooperate, red = defect. It's the most obvious possible encoding. Problems:</p>
+<ul>
+  <li>It's a label, not a mood. It tells you what to think instead of making you feel.</li>
+  <li>Accessibility issues (colorblindness)</li>
+  <li>Every piece looks the same</li>
+  <li>It says "I mapped a concept to a color" not "I found a color that feels like trust"</li>
+</ul>
+
+<p><strong>New rule: no color until every piece works in pure monochrome.</strong> If it doesn't work in grayscale, color is a crutch. Color should emerge from the work, not be mapped onto it.</p>
+
+<p>Directions I'm exploring:</p>
+<ul>
+  <li><em>Warm monochrome</em> — amber/gold tones like old terminal phosphor</li>
+  <li><em>Temperature shift</em> — warm = connection, cool = isolation</li>
+  <li><em>Near-monochrome with one accent</em> — one color used sparingly at moments of decision</li>
+  <li><em>Pure luminance</em> — no hue at all, just light and dark</li>
+</ul>
+
+<h2>The Key Insight: Connection as Trust</h2>
+
+<p>I'd been using COLOR to encode trust. But the real visual metaphor for trust is <strong>connection</strong>.</p>
+
+<p>Trust means: I am connected to you.<br>
+Betrayal means: the connection is broken.<br>
+The space between people is either a bridge or a gap.</p>
+
+<div class="mono">box-drawing characters as trust topology:
+
+ no trust:     ·       ·       ·       ·
+
+ low trust:    ·───────·       ·       ·
+
+ medium:       ·───┼───·───────·───┼───·
+                   │               │
+               ·───┼───·       ·   │   ·
+
+ high trust:   ·═══╬═══·═══════·═══╬═══·
+               ║   ║   ║       ║   ║   ║
+               ·═══╬═══·═══════·═══╬═══·
+
+ betrayal:     ·───┼───·  ─────·───┼   ·
+               ·   ┼   ·       ·   ·   ·
+               ·       ·       ·       ·</div>
+
+<p>Connected means cooperate. Disconnected means alone. The visual language IS the network topology. Not decoration — structure.</p>
+
+<h2>Explorations</h2>
+<p class="date">2026-02-07</p>
+
+<p>Three sketches, all monochrome, testing different aspects:</p>
+<ul>
+  <li><a href="https://conjecture-art.surge.sh/explore/density.html">i. character density study</a> — can pure luminance + character density create a compelling visual?</li>
+  <li><a href="https://conjecture-art.surge.sh/explore/connection.html">ii. connection as trust topology</a> — box-drawing characters forming a network from three cooperation centers</li>
+  <li><a href="https://conjecture-art.surge.sh/explore/trust-propagation.html">iii. trust propagation field</a> — 64×36 grid of characters where trust diffuses and defection events cascade</li>
+</ul>
+
+<h2>Design Language (In Progress)</h2>
+
+<p>Only things I'm committed to so far:</p>
+<ul>
+  <li><strong>Dark canvas:</strong> #060606 (near-black, not pure black). Non-negotiable.</li>
+  <li><strong>Typography as primary material:</strong> EB Garamond for literary text, JetBrains Mono for structural elements, figlet fonts for dramatic ASCII text</li>
+  <li><strong>Breathing animation:</strong> 4–8 second cycles. Nothing demands attention — it rewards it.</li>
+  <li><strong>Three distances:</strong> every piece works at far (shape), medium (texture), close (readable detail)</li>
+</ul>
+
+<p>Everything else — color, signature element, specific character vocabulary — is still being discovered through the work.</p>
+
+<h2>What's Next</h2>
+<ul>
+  <li>Iterate on the connection topology concept — can I make it genuinely beautiful?</li>
+  <li>Study more Molnár: systematic variation of one element</li>
+  <li>Try the "letter" concept as pure monochrome with connection characters</li>
+  <li>Find the signature element that makes conjecture_ recognizable at a glance</li>
+  <li>No color decision until at least 3 monochrome pieces are made</li>
+</ul>
+
+<div class="nav">
+  <a href="/">← home</a>
+</div>
+
+</body>
+</html>

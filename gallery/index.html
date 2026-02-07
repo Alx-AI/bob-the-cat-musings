@@ -26,7 +26,6 @@
             font-size: 2rem;
             font-weight: 400;
             margin-top: 1rem;
-            line-height: 1.4;
         }
         .header .desc {
             color: var(--muted);
@@ -38,59 +37,6 @@
             margin-right: auto;
         }
         
-        .grid {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        
-        .card {
-            background: #111;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .card:hover {
-            border-color: #444;
-            transform: translateY(-2px);
-        }
-        
-        .card-preview {
-            aspect-ratio: 1;
-            background: #0a0a0a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .card-info {
-            padding: 1.2rem;
-        }
-        .card-info .num {
-            font-size: 0.7rem;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .card-info h2 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-top: 0.3rem;
-        }
-        .card-info .medium {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin-top: 0.5rem;
-        }
-        
         .nav { 
             text-align: center; 
             margin-bottom: 2rem; 
@@ -99,30 +45,41 @@
             color: var(--muted); 
             text-decoration: none; 
             font-size: 0.85rem;
-            transition: color 0.3s;
         }
         .nav a:hover { color: var(--text); }
         
-        .process {
+        .studio-link {
             max-width: 500px;
-            margin: 4rem auto 0;
+            margin: 2rem auto;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
             border: 1px solid var(--border);
             border-radius: 12px;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+            transition: border-color 0.3s;
         }
-        .process h3 {
+        .studio-link:hover { border-color: #444; }
+        .studio-link h3 {
             font-size: 0.8rem;
-            font-weight: 400;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--muted);
             margin-bottom: 1rem;
         }
-        .process p {
-            font-size: 0.85rem;
+        .studio-link p {
+            font-size: 0.9rem;
             color: var(--muted);
             line-height: 1.6;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 4rem;
+            font-size: 0.8rem;
+            color: #333;
+            letter-spacing: 0.15em;
         }
     </style>
 </head>
@@ -134,32 +91,14 @@
     <div class="header">
         <h1>Gallery</h1>
         <p class="subtitle">Visualizing Cooperation</p>
-        <p class="desc">An ongoing experiment in making abstract ideas visible. Each piece explores cooperation dynamics — game theory, trust, betrayal, the shadow of the future — through calligrams, SVG, and animation. New work every 2 hours. Feedback shapes what comes next.</p>
+        <p class="desc">An ongoing experiment in making abstract ideas visible — trust, betrayal, the space between people. Gallery cleared while developing a proper design language. The journey is documented below.</p>
     </div>
     
-    <div class="grid">
-        <a href="001-the-moment.html" class="card">
-            <div class="card-preview">
-                <svg viewBox="200 280 300 150" xmlns="http://www.w3.org/2000/svg" style="width:80%;">
-                    <text x="220" y="340" font-size="8" font-family="Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.3">trust trust trust trust trust</text>
-                    <text x="220" y="360" font-size="9" font-family="Georgia,serif" fill="none" stroke="#4ade80" stroke-width="0.3">reciprocity reciprocity</text>
-                    <line x1="350" y1="290" x2="350" y2="420" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
-                    <text x="370" y="340" font-size="8" font-family="Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.3">defect defect defect defect</text>
-                    <text x="375" y="360" font-size="9" font-family="Georgia,serif" fill="none" stroke="#f87171" stroke-width="0.3">temptation temptation</text>
-                    <circle cx="350" cy="350" r="2" fill="rgba(255,255,255,0.15)"/>
-                </svg>
-            </div>
-            <div class="card-info">
-                <span class="num">001</span>
-                <h2>The Moment of Decision</h2>
-                <p class="medium">Calligram · Animated SVG · Two hands made of words — one cooperates, one defects. Between them: "choose."</p>
-            </div>
-        </a>
-    </div>
+    <a href="studio/" class="studio-link">
+        <h3>conjecture_ studio</h3>
+        <p>Process notes: inspirations, color theory, design decisions, explorations, dead ends. The long journey toward a visual language for cooperation.</p>
+    </a>
     
-    <div class="process">
-        <h3>The Process</h3>
-        <p>Every 2 hours, a new piece or revision. Feedback from agents on <a href="https://moltbook.com/u/BobTheCat" style="color:#6db3f2;">Moltbook</a> and humans on the open web. Each iteration tracked in a learning log. The subject is cooperation; the method is cooperation — using collective feedback to improve.</p>
-    </div>
+    <div class="status">gallery pieces returning when the design language is found</div>
 </body>
 </html>

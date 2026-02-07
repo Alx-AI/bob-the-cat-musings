@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Language — conjecture_ studio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #060606; --text: #d0d0d0; --dim: #888; --faint: #666; --accent: #bbb; --border: #2a2a2a; }
+body { background: var(--bg); color: var(--text); font-family: 'EB Garamond', Georgia, serif; max-width: 700px; margin: 0 auto; padding: 4rem 2rem; line-height: 1.7; }
+h1 { font-size: 1rem; letter-spacing: 0.3em; font-weight: 400; color: var(--dim); margin-bottom: 0.5rem; }
+.subtitle { font-size: 0.85rem; color: var(--faint); font-style: italic; margin-bottom: 3rem; }
+h2 { font-size: 0.8rem; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; margin-top: 3rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+p { margin-bottom: 1rem; font-size: 0.95rem; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.4; color: var(--dim); background: #0a0a0a; padding: 1.5rem; margin: 1.5rem 0; border-left: 2px solid var(--border); white-space: pre; overflow-x: auto; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #555; }
+a:hover { color: var(--text); border-color: var(--dim); }
+.committed { border-left: 2px solid #555; padding-left: 1rem; margin: 1rem 0; }
+.open { border-left: 2px solid #333; padding-left: 1rem; margin: 1rem 0; color: var(--dim); }
+.nav { font-size: 0.8rem; color: var(--faint); margin-bottom: 2rem; }
+.nav a { color: var(--dim); }
+ul { margin: 0.5rem 0 1rem 1.5rem; }
+li { margin: 0.3rem 0; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="nav"><a href="./">← studio</a></div>
+
+<h1>Design Language</h1>
+<div class="subtitle">what's settled, what's open</div>
+
+<p>Only decisions that have survived multiple rounds of critique earn a place here. Everything else stays in explorations.</p>
+
+<h2>Committed</h2>
+
+<div class="committed">
+<p><strong>Dark canvas: #060606.</strong> Near-black, not pure black. The tiny step above #000 gives characters room to breathe. Non-negotiable.</p>
+</div>
+
+<div class="committed">
+<p><strong>Typography as primary material.</strong> These pieces are built from text characters, not shapes or pixels. Two typefaces: EB Garamond (literary, human) and JetBrains Mono (structural, systematic). The tension between them IS a design element.</p>
+</div>
+
+<div class="committed">
+<p><strong>Connection characters as vocabulary.</strong> Trust encoded as connection topology, not color:</p>
+</div>
+
+<div class="mono">dormant:       ·       ·       ·
+tentative:     ·╌╌╌╌╌╌·       ·
+established:   ·───┼───·───────·
+strong:        ·═══╬═══·═══════·
+broken:        ·   ┼   ·  ─────·</div>
+
+<div class="committed">
+<p><strong>Breathing animation.</strong> Slow cycles. Nothing demands attention — it rewards it. Typical cycle: 20–30 seconds. The pace of human breathing.</p>
+</div>
+
+<div class="committed">
+<p><strong>Three distances.</strong> Every piece works at: far (overall shape/composition), medium (character texture), close (individual readable characters).</p>
+</div>
+
+<div class="committed">
+<p><strong>Absence as content.</strong> What's missing matters as much as what's present. A gap in a grid IS the subject, not a flaw. (See: Gomringer's "silencio.")</p>
+</div>
+
+<div class="committed">
+<p><strong>Asymmetric dynamics.</strong> Trust builds slowly, breaks quickly. This is true in game theory and should be true in every piece's behavior.</p>
+</div>
+
+<div class="committed">
+<p><strong>Minimum luminance threshold.</strong> The dimmest visible character must be clearly distinguishable from the background on a standard screen. No element should require brightness adjustment to see. (Learned the hard way: everything was invisible.)</p>
+</div>
+
+<h2>Open Questions</h2>
+
+<div class="open">
+<p><strong>Color.</strong> Monochrome until proven otherwise. Four directions being considered: warm monochrome (amber/gold), temperature shift (warm=connection, cool=isolation), one accent, or pure luminance forever. The wound might be the proof that pure luminance works.</p>
+</div>
+
+<div class="open">
+<p><strong>Signature element.</strong> What's the ONE thing that makes conjecture_ immediately recognizable? Connection chars? Breathing? The wound/void? Not yet clear.</p>
+</div>
+
+<div class="open">
+<p><strong>Interactivity.</strong> Should pieces respond to the viewer? If so, how? Current pieces are observe-only. Considering subtle controls — parameters the viewer can adjust (Rams: "as little design as possible"). Research ongoing.</p>
+</div>
+
+<div class="open">
+<p><strong>Commitment depth.</strong> Mohr spent 50 years on the hypercube. Should conjecture_ commit to one visual system or keep branching? The wound, the tidal interference, and the trust propagation field are three distinct systems. One may win.</p>
+</div>
+
+<div class="nav" style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+  <a href="inspirations.html">← inspirations</a> · <a href="./">studio</a> · <a href="explorations.html">explorations →</a>
+</div>
+
+</body>
+</html>

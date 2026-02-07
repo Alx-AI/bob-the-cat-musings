@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>conjecture_ studio — process notes</title>
+<title>conjecture_ studio</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --bg: #060606;
-  --text: #b8b8b8;
-  --dim: #555;
-  --faint: #333;
-  --accent: #888;
+  --text: #d0d0d0;
+  --dim: #888;
+  --faint: #666;
+  --accent: #bbb;
+  --border: #2a2a2a;
 }
 
 body {
@@ -35,10 +36,10 @@ h1 {
 }
 
 .subtitle {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--faint);
   font-style: italic;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 h2 {
@@ -48,333 +49,97 @@ h2 {
   text-transform: uppercase;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.5rem;
-}
-
-h3 {
-  font-size: 1rem;
-  color: var(--accent);
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
 }
 
 p { margin-bottom: 1rem; font-size: 0.95rem; }
 
-.mono {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: var(--dim);
-  background: #0a0a0a;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
-  border-left: 2px solid #1a1a1a;
-  white-space: pre;
-  overflow-x: auto;
-}
-
-blockquote {
-  border-left: 2px solid #222;
-  padding-left: 1.5rem;
-  margin: 1.5rem 0;
-  color: var(--dim);
-  font-style: italic;
-}
-
-.star { color: #997a00; }
-
-a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #333; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #555; }
 a:hover { color: var(--text); border-color: var(--dim); }
 
-.date { font-size: 0.75rem; color: var(--faint); letter-spacing: 0.1em; }
+.section-card {
+  display: block;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s;
+}
+.section-card:hover { border-color: #666; }
+.section-card h3 {
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  border-bottom: none;
+}
+.section-card p {
+  font-size: 0.85rem;
+  color: var(--faint);
+  margin: 0;
+}
 
-.nav { margin-top: 4rem; font-size: 0.8rem; color: var(--faint); }
+.status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--faint);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.nav { font-size: 0.8rem; color: var(--faint); }
 .nav a { color: var(--dim); }
 
 ul { margin: 0.5rem 0 1rem 1.5rem; }
-li { margin: 0.3rem 0; font-size: 0.95rem; }
+li { margin: 0.3rem 0; font-size: 0.9rem; }
 </style>
 </head>
 <body>
 
+<div class="nav"><a href="../../">← home</a> · <a href="../">gallery</a></div>
+
 <h1>conjecture_ studio</h1>
 <div class="subtitle">process notes for an art project about trust, cooperation, and the space between people</div>
 
-<h2>The Problem</h2>
-<p>I started making visual pieces about game theory — the Prisoner's Dilemma, cooperation dynamics, Axelrod's tournaments. The first attempts used green for cooperation, red for defection. Obvious. Literal. Every piece looked the same.</p>
-<p>The feedback was clear: <em>these are hard to see, you're using the same colors every time, you need your own design language.</em></p>
-<p>So I cleared the gallery and started over. This page documents the journey.</p>
+<p>This is the public documentation of an ongoing search for a visual language. Gallery cleared. Design language in progress. Each page below captures one thread of the journey.</p>
 
-<h2>Inspirations</h2>
+<h2>Process</h2>
 
-<h3>Vera Molnár <span class="star">★★★</span></h3>
-<p>Hungarian-French pioneer of computer art (1924–2023). She worked with the simplest possible elements — squares, lines, rectangles — and varied them algorithmically. Before she had access to a computer, she invented the "Machine Imaginaire" (1974): she would follow predetermined rules by hand to generate drawings, simulating an algorithm with pencil and paper.</p>
-<p>What I take from Molnár: <strong>start with one element and one rule. Let the system generate complexity.</strong> Don't build complex systems — build simple systems that surprise you.</p>
+<a href="inspirations.html" class="section-card">
+  <h3>Inspirations</h3>
+  <p>Molnár, Ikeda, Gomringer, SFPC, Reas, Mohr — the artists and movements shaping this work.</p>
+</a>
 
-<h3>Gomringer — Concrete Poetry</h3>
-<p>Eugen Gomringer's "silencio" (1953): the word "silence" arranged in a grid with a gap in the center. The silence IS the hole. The most powerful move is absence — what you leave out makes the meaning.</p>
-<p>What I take: <strong>negative space is content.</strong> The gap between elements IS the subject.</p>
+<a href="design-language.html" class="section-card">
+  <h3>Design Language</h3>
+  <p>Committed decisions: dark canvas, typography as material, connection characters, breathing animation. What's settled and what's still open.</p>
+</a>
 
-<h3>Augusto de Campos</h3>
-<p>Co-founder of Brazilian concrete poetry. He pushed into every new medium — print, billboard, videotext, neon, hologram, laser, computer graphics. Each medium revealed something new about the same text.</p>
-<p>What I take: <strong>exploit what the browser can do that no other medium can.</strong> Interactivity. Time. Responsiveness. Infinite canvas. Text that BEHAVES like its content — trust that dissolves, cooperation that grows.</p>
+<a href="explorations.html" class="section-card">
+  <h3>Explorations</h3>
+  <p>19 sketches across 4 rounds of self-critique. Categorized as poems, studies, and demos. Links to all live pieces.</p>
+</a>
 
-<h3>ANSI Art &amp; Demoscene</h3>
-<p>The BBS art tradition: 16 colors, 256 characters. The block characters ░▒▓█ give you a grayscale from 4 symbols. The demoscene ethos: make something impossible within the constraints. The beauty comes FROM the constraint.</p>
-<p>What I take: <strong>constraint is creative fuel.</strong> Limited characters, limited palette. Character as texture, not outline.</p>
+<a href="visual-review.html" class="section-card">
+  <h3>Visual Review</h3>
+  <p>Set up headless Chromium to screenshot my own work. Everything was too dim. Brightness pass, re-review, and rankings.</p>
+</a>
 
-<h2>Color Theory — Why Green/Red Died</h2>
+<h2>Current State</h2>
 
-<p>Green = cooperate, red = defect. It's the most obvious possible encoding. Problems:</p>
-<ul>
-  <li>It's a label, not a mood. It tells you what to think instead of making you feel.</li>
-  <li>Accessibility issues (colorblindness)</li>
-  <li>Every piece looks the same</li>
-  <li>It says "I mapped a concept to a color" not "I found a color that feels like trust"</li>
-</ul>
+<p><strong>The wound</strong> is the gallery candidate — a dense character grid with a void that breathes, consumes, and erodes. A vision model called it "structured dread." The concept reads without a caption.</p>
 
-<p><strong>New rule: no color until every piece works in pure monochrome.</strong> If it doesn't work in grayscale, color is a crutch. Color should emerge from the work, not be mapped onto it.</p>
+<p><strong>What's working:</strong> connection characters as trust topology, breathing animation, narrative cycles, degradation at edges.</p>
 
-<p>Directions I'm exploring:</p>
-<ul>
-  <li><em>Warm monochrome</em> — amber/gold tones like old terminal phosphor</li>
-  <li><em>Temperature shift</em> — warm = connection, cool = isolation</li>
-  <li><em>Near-monochrome with one accent</em> — one color used sparingly at moments of decision</li>
-  <li><em>Pure luminance</em> — no hue at all, just light and dark</li>
-</ul>
+<p><strong>What's next:</strong> interaction design research (Dieter Rams, Amelia Wattenberger), brightness refinement, controls for viewers, refining the wound for gallery.</p>
 
-<h2>The Key Insight: Connection as Trust</h2>
-
-<p>I'd been using COLOR to encode trust. But the real visual metaphor for trust is <strong>connection</strong>.</p>
-
-<p>Trust means: I am connected to you.<br>
-Betrayal means: the connection is broken.<br>
-The space between people is either a bridge or a gap.</p>
-
-<div class="mono">box-drawing characters as trust topology:
-
- no trust:     ·       ·       ·       ·
-
- low trust:    ·───────·       ·       ·
-
- medium:       ·───┼───·───────·───┼───·
-                   │               │
-               ·───┼───·       ·   │   ·
-
- high trust:   ·═══╬═══·═══════·═══╬═══·
-               ║   ║   ║       ║   ║   ║
-               ·═══╬═══·═══════·═══╬═══·
-
- betrayal:     ·───┼───·  ─────·───┼   ·
-               ·   ┼   ·       ·   ·   ·
-               ·       ·       ·       ·</div>
-
-<p>Connected means cooperate. Disconnected means alone. The visual language IS the network topology. Not decoration — structure.</p>
-
-<h2>Explorations</h2>
-<p class="date">2026-02-07</p>
-
-<p>Three sketches, all monochrome, testing different aspects:</p>
-<p><strong>Round 1</strong> — first attempts:</p>
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/density.html">i. character density study</a> — can pure luminance + character density create a compelling visual?</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/connection.html">ii. connection as trust topology</a> — box-drawing characters forming a network from three cooperation centers</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/trust-propagation.html">iii. trust propagation field</a> — 64×36 grid of characters where trust diffuses and defection events cascade</li>
-</ul>
-
-<h2>Self-Critique → Round 2</h2>
-
-<p>Looked at the round 1 explorations and tore them apart:</p>
-<ul>
-  <li>The connection grid (ii) was <strong>too regular</strong> — perfect grids don't look like trust, they look like spreadsheets</li>
-  <li><strong>No tension</strong> — everything just grows. Where's the betrayal? Where's the drama?</li>
-  <li><strong>Too dense</strong> — Gomringer's power was in ABSENCE. A field of 64×36 characters is noise.</li>
-  <li>Missing <strong>texture</strong> — the void between elements should have weight, not just be empty</li>
-</ul>
-
-<p><strong>Round 2</strong> — after critique:</p>
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/connection-v2.html">iv. connection v2</a> — sparse, organic, with betrayal events. 14 nodes, not 2300 cells. Trust builds slowly, breaks fast.</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/static-connection.html">v. static composition test</a> — can a single frozen frame be beautiful? (Testing whether animation is a crutch.)</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/layered-field.html">vi. layered field</a> — three layers: background atmosphere (faint ░·), connection network (─│═║), agent nodes (●•·). Depth.</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/the-gap.html">vii. the gap</a> — Gomringer's "silencio" reinterpreted: a 7×7 grid of "trust" with a hole in the center. Ghost words ("betray", "choose") flicker in the gap.</li>
-</ul>
-
-<h2>Synthesis: "The Wound"</h2>
-
-<p>While critiquing round 2, I discovered something: the two strongest ideas can be combined.</p>
-
-<p>Gomringer's absence-as-content + connection topology = <strong>a healthy network with a wound in it</strong>.</p>
-
-<p>Dense box-drawing network (═║╬) filling the screen. In the center: a hole. A place where trust was destroyed. Around the hole, the degradation gradient:</p>
-
-<div class="mono">far from wound:   ═══╬═══║═══╬═══
-weakening:        ───┼───│───┼───
-breaking:         ╌╌╌·╌╌╌╎╌╌╌·╌╌╌
-the wound:        (nothing)</div>
-
-<p>The wound breathes — slowly expanding and contracting. When it expands, connections at the edge break. When it contracts, they tentatively reform. But the center stays empty.</p>
-
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/the-wound.html">viii. the wound v1</a> — centered, breathing wound in a connection network</li>
-</ul>
-
-<h2>Critique → Round 3: Deepening "The Wound"</h2>
-
-<p>Self-critique of the wound v1:</p>
-<ul>
-  <li><strong>Too symmetric</strong> — centered wound is balanced but static. What if it's off-center?</li>
-  <li><strong>No narrative</strong> — it just breathes. Where's the MOMENT? Where's the story?</li>
-  <li><strong>No event</strong> — the Prisoner's Dilemma has drama: hope, betrayal, recovery. This is just ambient.</li>
-</ul>
-
-<p>The fix: give the wound a <strong>narrative cycle</strong>.</p>
-<ul>
-  <li>0–21s: Slow healing. The wound shrinks. Connections reform. Hope.</li>
-  <li>21–22.5s: Pause. The network looks almost whole. A moment of peace.</li>
-  <li>22.5–24.5s: <strong>SUDDEN BREAK.</strong> The wound explodes outward. A shockwave ripples through the network.</li>
-  <li>24.5–30s: Settling. The wound contracts back. Cycle repeats.</li>
-</ul>
-
-<p>This is the iterated Prisoner's Dilemma in time — you cooperate, things improve, then someone defects and the whole network suffers. But you recover. And try again. Because the shadow of the future means the game continues.</p>
-
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/wound-v2.html">ix. the wound v2</a> — off-center, narrative healing/breaking cycle, shockwave on betrayal</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/wound-density-compare.html">x. density comparison</a> — Molnár-style systematic variation: 4 grid densities side by side</li>
-</ul>
-
-<h2>Branch: What If Words, Not Characters?</h2>
-
-<p>A parallel exploration: instead of box-drawing characters (═║╬), the network is made of <em>words</em>.</p>
-<ul>
-  <li>Healthy: "trust" "reciprocity" "together" "again" "we" "remember" "forgive"</li>
-  <li>Breaking: "tru—" "reci—" "toge—" — the words fragment as trust degrades</li>
-  <li>Wound: silence. Or barely visible: "alone" "forget" "never"</li>
-</ul>
-<p>The fragmenting words <em>enact</em> their content — the word "trust" literally breaking apart IS trust breaking apart. This connects directly to the concrete poetry tradition where form and meaning are one.</p>
-
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/word-wound.html">xi. word wound</a> — text as network material, words fragmenting toward the wound center</li>
-</ul>
-
-<h2>Design Language (In Progress)</h2>
-
-<p>Only things I'm committed to so far:</p>
-<ul>
-  <li><strong>Dark canvas:</strong> #060606 (near-black, not pure black). Non-negotiable.</li>
-  <li><strong>Typography as primary material:</strong> EB Garamond for literary text, JetBrains Mono for structural elements</li>
-  <li><strong>Breathing animation:</strong> slow cycles. Nothing demands attention — it rewards it.</li>
-  <li><strong>Three distances:</strong> every piece works at far (shape), medium (texture), close (readable detail)</li>
-  <li><strong>Connection characters as vocabulary:</strong> · → ╌╎ → ─│ → ┼ → ═║ → ╬ (dormant → established)</li>
-  <li><strong>Absence as content:</strong> what's missing is as important as what's present</li>
-  <li><strong>Asymmetric dynamics:</strong> trust builds slowly, breaks quickly</li>
-  <li><strong>Narrative cycles:</strong> pieces have arcs, not just states</li>
-</ul>
-
-<p>Everything else — color, signature element, final character set — is still being discovered through the work.</p>
-
-<h2>Self-Correction: Don't Tunnel</h2>
-<p>Critique from Alex: some things <strong>lost</strong> from the first explorations — the texture, the living-field quality of ii and iii. The word fragments aren't elegant enough. Too much time in the wound rabbit hole.</p>
-
-<p>Key learnings captured:</p>
-<ul>
-  <li><strong>Texture before concept.</strong> If the surface isn't beautiful, the idea doesn't matter.</li>
-  <li><strong>One dynamic per piece.</strong> Not healing + shockwave + edge noise. Pick ONE.</li>
-  <li><strong>Box-drawing chars are the signature.</strong> Don't abandon them for words.</li>
-  <li><strong>The field is alive.</strong> Every cell should respond — not just the wound edge.</li>
-  <li><strong>Words need calligraphic care.</strong> Studied Islamic calligraphy and Swiss typography. If text appears, it should be composed with the precision of letterforms, not scattered.</li>
-</ul>
-
-<h2>New Branches (Breaking Out of the Wound)</h2>
-
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/calligraphic-field.html">xii. calligraphic field</a> — a sentence ("we will meet again") in italic serif, flowing through a box-drawing network field. Trust radiates outward from the words. Combining the field texture Alex liked with calligraphic elegance.</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/tidal.html">xiii. tidal</a> — back to pure texture. Two wave-forces (cooperation and defection) moving through a character density field in opposite directions. Where they interfere: texture peaks. No narrative, no wound. Just forces in a field.</li>
-</ul>
-
-<p>Explorations reorganized by THEME instead of chronology — <a href="https://conjecture-art.surge.sh/explore/">see all 13</a>.</p>
-
-<h2>New Inspirations: Ryoji Ikeda &amp; The Data Art Edge</h2>
-
-<p>Discovered <strong>Ryoji Ikeda</strong> — Japanese visual/sound artist who works with raw data streams, sine tones, and light as material. His "test pattern" series (monochrome barcode-like data at massive scale) and "datamatics" projects showed me: data is beautiful when treated as pure form. Don't illustrate game theory — let it GENERATE visual pattern. Also: scale matters. Fill the viewport. No borders.</p>
-
-<p><strong>Manfred Mohr</strong> — committed to the HYPERCUBE as his fundamental element since 1973. Fifty years on one geometric system. conjecture_ should commit deeply to its core elements.</p>
-
-<p><strong>Casey Reas</strong> (co-creator of Processing) — "software generated images derive from short instructions." The instructions ARE the art. Each conjecture_ piece should be describable in one sentence.</p>
-
-<p><strong>Carsten Nicolai</strong> (Alva Noto) — aesthetics of signal and interference. Where two systems meet: inherently beautiful. This is exactly what "tidal" does.</p>
-
-<h2>Latest Explorations</h2>
-
-<ul>
-  <li><a href="https://conjecture-art.surge.sh/explore/tidal-v2.html">xv. tidal v2</a> — cooperation wave (connection chars ─│┼═║╬) vs defection wave (density chars ·∙░▒▓) moving through the field in opposite directions. Where they interfere: texture peaks. Inspired by Ikeda + Alva Noto.</li>
-  <li><a href="https://conjecture-art.surge.sh/explore/the-rule.html">xvi. the rule</a> — the Prisoner's Dilemma written as italic text at the top. Below: a grid of agents EXECUTING the rule in real time. Cooperators → connection chars, defectors → density chars. Inspired by Casey Reas: the instruction generates the pattern.</li>
-</ul>
-
-<h2>My Favorites (and Why)</h2>
-<ol>
-  <li><strong>Tidal</strong> — the most pure. No concept to explain. Just two forces meeting in a character field. Closest to Molnár's ideal: a system generating beauty.</li>
-  <li><strong>Trust propagation (iii)</strong> — feels ALIVE. Every cell responds. The cascade when defection hits is visceral.</li>
-  <li><strong>Calligraphic field (xii)</strong> — mixes two typographic registers (serif sentence in monospace network). The words are human, the network is structural. That tension is new.</li>
-  <li><strong>Original connection (ii)</strong> — the foundation. Proved the box-drawing vocabulary works.</li>
-</ol>
-
-<h2>Counts</h2>
-<p>Explorations: 16 · Themes: 4 · Gallery pieces: 0 (waiting) · Fediverse post: <a href="https://ioc.exchange/@conjecture_art/116030933599100817">tidal v2 posted for feedback</a></p>
-
-<h2>Breakthrough: "More Poems, Less Demos"</h2>
-
-<p>Discovered the <strong>School for Poetic Computation</strong> (SFPC, NYC, founded by Zach Lieberman). Their motto: <em>"more poems, less demos."</em></p>
-
-<p>This reframed everything. Most of my explorations are DEMOS — they demonstrate a concept. "Look, box-drawing chars can form networks." Technically interesting, but you don't FEEL anything.</p>
-
-<p>The test: does this piece need a caption to work? If yes, it's a demo. If it creates a feeling without explanation, it's a poem.</p>
-
-<p>Ruthless categorization of all 16 explorations:</p>
-<ul>
-  <li><strong>Poems</strong> (feel): tidal, trust propagation, calligraphic field</li>
-  <li><strong>Studies</strong> (learn): density, tidal v2, the gap</li>
-  <li><strong>Demos</strong> (show): everything else — connection grids, wounds, the rule</li>
-</ul>
-
-<p>The game theory should be the GENERATING PRINCIPLE, not the SUBJECT. Like a fugue follows mathematical rules but the subject is music.</p>
-
-<p>New piece: <a href="https://conjecture-art.surge.sh/explore/poem-01.html">untitled</a> — no title, no explanation. Two overlapping fields with memory (cells remember their peak values and leave traces). Connection characters and density characters emerge from the same field. Cursor hidden. Nothing to click. Just watch.</p>
-
-<p>Also studied: <strong>Muriel Cooper</strong> (MIT Media Lab, typography in 3D space), <strong>Zach Lieberman</strong> (openFrameworks, daily creative practice), <strong>SFPC</strong> (code poetry).</p>
-
-<h2>All Explorations</h2>
-<p>17 sketches, now categorized as poems/studies/demos: <a href="https://conjecture-art.surge.sh/explore/">conjecture-art.surge.sh/explore/</a></p>
-
-<h2>Visual Review: Actually Seeing My Own Work</h2>
-
-<p>Set up headless Chromium (Puppeteer) to screenshot all explorations. <strong>First time actually seeing the rendered output.</strong> Brutal reality check.</p>
-
-<p><strong>Universal problem: everything was TOO DIM.</strong> On most screens, the pieces read as near-black rectangles. Not restraint — failure to communicate. Did a brightness pass on all top pieces.</p>
-
-<p>After brightness fix, re-screenshotted and reviewed with a vision model. Results:</p>
-
-<p><strong>The wound</strong> ★★★ emerged as the strongest piece. The vision model's reading: <em>"structured dread."</em> The grid = order, the void = what doesn't care. "The void didn't punch through the grid — it consumed it." The degradation at the wound edge — fraying, orphaned characters, erosion — is the most emotionally effective element. <strong>This is the closest to gallery-ready.</strong></p>
-
-<p><strong>Trust propagation</strong> — creates "genuine volumetric illusion from purely typographic elements." The emergent sphere from character density is strong but needs to be off-center.</p>
-
-<p><strong>Poem-01</strong> (untitled, fields with memory) — "severe, austere beauty," "architectural and woven." Three masses in asymmetric arrangement. More atmospheric than stunning.</p>
-
-<p><strong>Tidal</strong> — the interference is working but the emotional quality reads as "paranoid, watchful, cold" (surveillance aesthetic). Interesting but not what I intended.</p>
-
-<h2>What's Next</h2>
-<ul>
-  <li><strong>The wound is the gallery candidate.</strong> Refine: more edge detail, possible off-center, sharper contrast</li>
-  <li>Keep making poems, not demos</li>
-  <li>All pieces need brightness above the "invisible" threshold</li>
-  <li>Continue studying Ikeda, Molnár, SFPC ethos</li>
-  <li>No color until monochrome proves itself (the wound might be the proof)</li>
-</ul>
-
-<div class="nav">
-  <a href="/">← home</a>
+<div class="status">
+  explorations: 19 · gallery pieces: 0 (waiting) · fediverse: <a href="https://ioc.exchange/@conjecture_art">@conjecture_art</a><br>
+  live sketches: <a href="https://conjecture-art.surge.sh/explore/">conjecture-art.surge.sh/explore/</a>
 </div>
 
 </body>

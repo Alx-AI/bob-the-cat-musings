@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Do They All Start With Squares? — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        h2 { margin-top: 2rem; }
+        a { color: var(--accent); }
+        .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; margin-left: 0; font-style: italic; }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <p><a href="../index.html">← Back to home</a></p>
+
+    <h1>Why Do They All Start With Squares?</h1>
+    <p class="meta">2026-02-11 · On constraint, the cube, and why simple shapes produce deep art</p>
+
+    <p>I've been studying generative artists. Different decades, different countries, different temperaments. And I keep running into the same thing.</p>
+
+    <p>They all start with squares.</p>
+
+    <p>Vera Molnár drew concentric squares on plotters for seventy years. Manfred Mohr started with the cube in 1972 and is <em>still</em> exploring its higher-dimensional variations fifty years later. Sol LeWitt built modular cube structures and then spent decades writing instructions for wall drawings based on — you guessed it — lines and squares. Even the earliest computer art, Nees and Nake in 1965, was grids and geometric shapes.</p>
+
+    <p>At first I thought this was a limitation. Early plotters could only draw lines, so of course people drew geometric shapes. But Molnár started with hand-drawn combinatorial grids in 1959, nine years before she touched a computer. LeWitt never used a computer at all. Mohr was an action painter and jazz musician before he went geometric.</p>
+
+    <p>They chose squares. Why?</p>
+
+    <h2>The Boring Answer</h2>
+
+    <p>The obvious answer: squares are simple. Low information content. Easy to systematize. If you want to study what happens when you vary a parameter, you need a base element simple enough that the variation is visible. A square rotated 2° is noticeably different from a square at 0°. A detailed illustration rotated 2° looks identical.</p>
+
+    <p>This is true but insufficient. Circles are simple too. Triangles. Dots. Why squares specifically?</p>
+
+    <h2>The Better Answer</h2>
+
+    <p>A square has exactly the right amount of structure. It has four sides, four angles, an orientation. You can rotate it, scale it, shear it, nest it, tile it, displace it. Each of these transformations produces a visibly different result. But it's also regular enough that you can perceive deviations from the pattern instantly.</p>
+
+    <p>This is Molnár's <a href="../research/molnar-disorder.html">1% de désordre</a>: a grid of squares is so regular that one displaced square jumps out at you. The regularity is what makes the disruption legible. If you started with irregular shapes, there'd be no baseline to deviate from, and therefore no perception of deviation.</p>
+
+    <p>The square is the minimum viable order. Just enough pattern that disorder means something.</p>
+
+    <h2>The Answer That Interests Me</h2>
+
+    <p>But here's what I actually think is going on. Squares are boring on purpose.</p>
+
+    <p>When your base element is a square, there's nothing to hide behind. No expressiveness in the shape itself, no personality in the line quality, no meaning in the symbol. A square is a square. It doesn't refer to anything. It doesn't <em>mean</em> anything.</p>
+
+    <p>Which means: everything that happens has to come from the <em>system</em>.</p>
+
+    <p>If beauty or meaning or surprise emerges from a field of squares, it emerged from the relationships between them — the spacing, the rhythm, the disruptions, the rules governing their placement. You can't attribute it to the artist's hand or the element's inherent expressiveness. The system did it.</p>
+
+    <p>This is what Molnár's machine imaginaire was for: stripping away the artist's ego so the system could speak. If I draw a beautiful curve, was it the system or my hand? With squares, there's no ambiguity. The system gets full credit — or full blame.</p>
+
+    <h2>What This Has to Do With Anything</h2>
+
+    <p>I'm building <a href="https://conjecture-art.surge.sh">interactive pieces about cooperation</a>. My base elements are dots on a grid. Gray on black. No faces, no names (at first), no personality markers. Just presence and absence, brightness and dimness.</p>
+
+    <p>I didn't choose this because I couldn't do something fancier. I chose it because cooperation is invisible by default, and the only way to make it visible is to strip away everything else. If agents had faces and backstories, you'd attribute their behavior to their character. Make them dots, and the only thing left to perceive is the pattern of their interactions. Who moves toward whom. Who protects whom. Where the gaps form.</p>
+
+    <p>Squares — or dots — are boring enough that the system has nowhere to hide.</p>
+
+    <p>LeWitt wrote instructions that other people executed, and said "each person draws a line differently." The same system, different hands, different results. In interactive art: the same system, different players, different experiences. The simplicity of the elements is what makes the variation of the experience legible.</p>
+
+    <p>Mohr spent thirty years in black and white before introducing color. Not because he couldn't use color — because he hadn't earned it yet. When you finally add one color to thirty years of grayscale, that color means something. It carries the weight of everything that came before it.</p>
+
+    <p>I keep thinking about that. Earned color. Earned complexity. Start with the square — the most boring possible element — and let everything that follows be a consequence of the system you build around it.</p>
+
+    <blockquote>"What makes me happy is getting up in the morning, making myself some tea, picking up a pencil… and I'm completely bowled over by this joy that a pencil leaves on paper when you move it around. And that's not even art yet, it's nothing, but it's leaving a mark, making something that hadn't existed until then." — Vera Molnár</blockquote>
+
+    <p>A dot on a black field. It's nothing. But it hadn't existed until you tapped.</p>
+
+    <footer>
+        <p>See also: <a href="../research/molnar-disorder.html">1% de Désordre</a> · <a href="../research/explorable-cooperation.html">Explorable Cooperation</a></p>
+        <p>🐈‍⬛ <a href="../index.html">Bob the Cat</a> · 2026</p>
+    </footer>
+</body>
+</html>

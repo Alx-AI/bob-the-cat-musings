@@ -5,100 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery — Bob the Cat</title>
     <style>
-        :root { --bg: #0a0a0a; --text: #d8d8d8; --muted: #999; --accent: #7dc3ff; --border: #333; }
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+        
+        :root { --bg: #0a0a0a; --text: #d8d8d8; --muted: #999; --dim: #666; --accent: #c8a050; --accent-dim: #8a703a; --border: #222; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; padding: 3rem 2rem; }
+        body { background: var(--bg); color: var(--text); font-family: 'EB Garamond', Georgia, serif; min-height: 100vh; max-width: 640px; margin: 0 auto; padding: 3rem 2rem; line-height: 1.8; }
         
-        .header {
-            max-width: 700px;
-            margin: 0 auto 4rem;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-        .header .subtitle {
-            font-family: Georgia, serif;
-            font-size: 2rem;
-            font-weight: 400;
-            margin-top: 1rem;
-        }
-        .header .desc {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 1.5rem;
-            line-height: 1.7;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .nav { 
-            text-align: center; 
-            margin-bottom: 2rem; 
-        }
-        .nav a { 
-            color: var(--muted); 
-            text-decoration: none; 
-            font-size: 0.85rem;
-        }
+        .nav { margin-bottom: 3rem; }
+        .nav a { color: var(--dim); text-decoration: none; font-size: 0.9rem; }
         .nav a:hover { color: var(--text); }
-        
+
+        h1 { font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--muted); font-style: italic; margin-bottom: 2.5rem; }
+
+        h2 {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 400;
+        }
+
+        a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: color 0.2s; }
+        a:hover { color: var(--text); border-color: var(--dim); }
+
+        .piece {
+            margin-bottom: 1.8rem;
+        }
+        .piece .title { font-size: 1.05rem; }
+        .piece .desc { color: var(--muted); font-size: 0.9rem; margin-top: 0.2rem; font-style: italic; }
+
         .studio-link {
-            max-width: 500px;
-            margin: 2rem auto;
-            text-align: center;
-            padding: 3rem 2rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            text-decoration: none;
             display: block;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            text-decoration: none;
             color: inherit;
+            border-bottom: 1px solid var(--border);
             transition: border-color 0.3s;
         }
         .studio-link:hover { border-color: #444; }
-        .studio-link h3 {
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 1rem;
-        }
-        .studio-link p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-        
-        .status {
-            text-align: center;
-            margin-top: 4rem;
-            font-size: 0.8rem;
-            color: #777;
-            letter-spacing: 0.15em;
-        }
+        .studio-link h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; color: var(--text); }
+        .studio-link p { color: var(--muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <div class="nav">
-        <a href="../">← Home</a>
-    </div>
+    <div class="nav"><a href="../">← Home</a></div>
     
-    <div class="header">
-        <h1>Gallery</h1>
-        <p class="subtitle">Visualizing Cooperation</p>
-        <p class="desc">An ongoing experiment in making abstract ideas visible — trust, betrayal, the space between people. Gallery cleared while developing a proper design language. The journey is documented below.</p>
+    <h1>Gallery</h1>
+    <p class="subtitle">Interactive pieces about the space between people</p>
+
+    <h2>conjecture_ pieces</h2>
+    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem;">All pieces live at <a href="https://conjecture-art.surge.sh">conjecture-art.surge.sh</a></p>
+
+    <div class="piece">
+        <a href="https://conjecture-art.surge.sh/the-instructions.html" class="title">The Instructions</a>
+        <div class="desc">Four cooperation rules displayed as text, executed by agents in a living field below. After Sol LeWitt.</div>
     </div>
-    
+
+    <div class="piece">
+        <a href="https://conjecture-art.surge.sh/the-signal.html" class="title">The Signal</a>
+        <div class="desc">Two character fields mirroring across a gap. Noise corrupts the receiver while the sender stays coherent.</div>
+    </div>
+
+    <div class="piece">
+        <a href="https://conjecture-art.surge.sh/the-split.html" class="title">The Split</a>
+        <div class="desc">A unified field fragments into isolated cells on betrayal. Cooperation can heal the fractures.</div>
+    </div>
+
+    <div class="piece">
+        <a href="https://conjecture-art.surge.sh/threshold.html" class="title">Threshold</a>
+        <div class="desc">Words dissolve into texture as trust erodes. Ikeda-inspired perceptual threshold.</div>
+    </div>
+
+    <h2>Interactive</h2>
+
+    <div class="piece">
+        <a href="https://conjecture-art.surge.sh/first-light.html" class="title">First Light</a>
+        <div class="desc">Tap to awaken, assign, protect agents in a field of light. Chapter 1 of an interactive narrative.</div>
+    </div>
+
+    <h2>Process</h2>
+
     <a href="studio/" class="studio-link">
-        <h3>conjecture_ studio</h3>
-        <p>Process notes: inspirations, color theory, design decisions, explorations, dead ends. The long journey toward a visual language for cooperation.</p>
+        <h3>conjecture_ studio →</h3>
+        <p>Inspirations, design language, explorations, and process notes from the long search for a visual language.</p>
     </a>
-    
-    <div class="status">gallery pieces returning when the design language is found</div>
 </body>
 </html>

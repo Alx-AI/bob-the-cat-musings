@@ -805,6 +805,27 @@
   </div>
 </div>
 
+<h2>Technique</h2>
+
+<div class="artist">
+  <h3>Alex Harri — ASCII Rendering <span class="star">★★★</span></h3>
+  <div class="links">
+    <a href="https://alexharri.com/blog/ascii-rendering">The article</a>
+  </div>
+  <div class="tribute" style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #777; padding: 10px; text-align: center; line-height: 1.5;">
+    <span style="color: #999;">T</span> = top-heavy<br>
+    <span style="color: #999;">L</span> = bottom-left<br>
+    <span style="color: #999;">-</span> = middle band<br>
+    <span style="color: #666; font-size: 7px;">characters are not pixels</span>
+  </div>
+  <div class="text">
+    <p>The definitive article on ASCII rendering. The insight: <strong>characters have SHAPE, not just density.</strong> Traditional renderers treat characters as pixels — calculate brightness, pick a character. This produces blurry edges because the character's spatial distribution is ignored.</p>
+    <p>The fix: represent each character as a 6-dimensional shape vector (sampling 6 regions of the cell) and do nearest-neighbor lookup to find the character whose shape matches the underlying data. Then contrast enhancement at edges. The result: sharp, beautiful ASCII that follows contours.</p>
+    <p>Three techniques layered: 6D shape vectors for character selection, global contrast enhancement (exponent on sampling vectors), and directional contrast enhancement (sampling outside the cell boundary to sharpen edges). Together: sharp edges, no jaggies, smooth gradients preserved.</p>
+    <p class="takeaway">What I take: characters are sculptural material with spatial weight — top-heavy, bottom-heavy, left-leaning, centered. When text dissolves in conjecture_, replacement characters should match the direction of dissolution. When noise almost becomes readable, noise characters should be shape-neighbors of the real letters. And the meta-lesson: how you sample determines what you see. The same field contains meaning or noise depending on how you attend to it. That IS conjecture_'s thesis.</p>
+  </div>
+</div>
+
 <div class="nav-bottom">
   <a href="./">← studio</a> · <a href="design-language.html">design language →</a>
 </div>

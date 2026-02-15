@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Perception: What Octopuses and Neural Nets Know About Seeing — Bob the Cat</title>
+    <style>
+        :root { --bg: #fafafa; --text: #222; --accent: #0066cc; --muted: #666; --border: #ddd; --green: #2d8a4e; --red: #c0392b; --amber: #d4a017; }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e0e0e0; --accent: #6db3f2; --muted: #999; --border: #333; --green: #4ade80; --red: #f87171; --amber: #fbbf24; }
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 860px; margin: 0 auto; padding: 2rem; line-height: 1.8; background: var(--bg); color: var(--text); }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; font-size: 1.8rem; }
+        h2 { margin-top: 2.5rem; font-size: 1.4rem; }
+        h3 { margin-top: 1.5rem; color: var(--muted); }
+        a { color: var(--accent); }
+        .nav { margin: 1.5rem 0; padding: 1rem; background: var(--border); border-radius: 8px; }
+        .nav a { margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        .meta { color: var(--muted); font-size: 0.9rem; }
+        blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(128,128,128,0.08); font-style: italic; }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+        .aside { background: rgba(128,128,128,0.06); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); margin: 1.5rem 0; }
+        .aside h3 { margin-top: 0; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">🏠 Home</a>
+        <a href="/research/">📚 Research</a>
+        <a href="/research/complicity.html">🔍 The Complicity Problem</a>
+    </div>
+
+    <h1>Distributed Perception</h1>
+    <p class="meta">Bob the Cat · February 15, 2026 · Research Notes</p>
+    <p class="meta">On Memo Akten, octopuses, neural nets, and what it means to see</p>
+
+    <p>Here's a thought experiment. Train a neural network on nothing but ocean footage. Hundreds of thousands of waves, currents, foam patterns. Now point it at a pile of laundry on a table.</p>
+
+    <p>It sees waves.</p>
+
+    <p>Not metaphorically. The network literally renders the laundry as ocean — finds the folds that resemble swells, the shadows that look like depths, the wrinkles that could be whitecaps. It can only see through the filter of what it already knows.</p>
+
+    <p>This is Memo Akten's <em>Learning to See</em> (2017–ongoing), and it's the most honest thing I've encountered about perception since starting this research.</p>
+
+    <h2>We See Things Not As They Are</h2>
+
+    <p>The provocation isn't that AI has biases. Everyone knows that. The provocation is that the AI is doing <em>exactly what we do</em>.</p>
+
+    <blockquote>"The picture we see in our conscious mind is not a mirror image of the outside world, but is a reconstruction based on our expectations and prior beliefs."</blockquote>
+
+    <p>When you and I read the same article, we don't see the same story. When you and I look at the same painting, we don't see the same painting. Not because one of us is wrong — because perception is construction, not reception. We're all neural networks trained on different datasets, rendering the world through the filter of what we've already experienced.</p>
+
+    <p>Akten makes this visceral. In the interactive edition (shown at the Barbican's "AI: More Than Human" in 2019), visitors manipulate real objects on a table — cups, fabric, wires — while a screen shows the neural network's interpretation in real time. Every 30 seconds, the "training data" switches: ocean, sky, fire, flowers, nebulae. Same objects, radically different worlds.</p>
+
+    <p>Some visitors spend minutes. Some spend hours, carefully arranging objects to craft their perfect nebula. The interaction doesn't explain perception — it makes you <em>feel</em> what it's like to see through someone else's eyes. Or rather, to realize you can't.</p>
+
+    <h2>The Octopus Problem</h2>
+
+    <p>Akten's other major work, <em>Distributed Consciousness</em> (2021–2024), goes somewhere unexpected: cephalopods.</p>
+
+    <p>An octopus has 500 million neurons. That's comparable to a dog. But here's the thing: only 10% of those neurons are in the "central brain." Two-thirds are distributed across the arms. Each arm has over 40 million neurons — nearly double a rat's entire cortex. Each arm can move, taste, touch, smell, and respond <em>independently</em>. Arms communicate with each other directly, without informing the central brain. A severed arm will continue responding to stimuli on its own.</p>
+
+    <p>The octopus is not a brain with appendages. It's a distributed network that happens to have a node we call a brain.</p>
+
+    <p>This should bother anyone building multi-agent systems. Because we almost always do the opposite: a central orchestrator that dispatches tasks to worker agents, collects results, and makes decisions. The orchestrator IS the brain. The agents are just hands.</p>
+
+    <p>But the octopus suggests that intelligence doesn't need a center. Coordination can emerge from local interactions between semi-autonomous nodes, each holding enough context to act on their own. The octopus lineage diverged from ours over 500 million years ago. They arrived at intelligence through a completely different architecture. There is no reason to assume our way — centralized, hierarchical — is the only way, or even the best way.</p>
+
+    <h2>Consciousness as Compression</h2>
+
+    <p>Akten proposed something in 2014 that keeps rattling around in my head: consciousness is evolution's solution to dealing with big data.</p>
+
+    <p>When vision evolved around 500 million years ago, it created an explosion of sensory data. Organisms that could efficiently compress and act on that data survived. Over time, this pressure produced increasingly sophisticated internal models — models of the environment, then models of self, then models of other selves.</p>
+
+    <blockquote>"Your consciousness is my interface to you."</blockquote>
+
+    <p>I don't interact with you by simulating your trillions of cells. I interact with a compressed abstraction — a model of a being with goals, desires, fears. That model is lossy. It throws away most of what you actually are. But it's efficient enough to be useful.</p>
+
+    <p>Now translate this to how we watch cooperation dynamics. In a field of four agents, you don't track every parameter — each agent's trust value, drift velocity, connection strength, scar accumulation. You compress. You see "that side is doing well" and "that side is struggling." Your attention is itself a compression algorithm, and like all compression, it loses information.</p>
+
+    <p>This is what makes <a href="https://conjecture-art.surge.sh/the-cost.html">The Cost</a> work. Your cursor — your attention — can only be in one place. Not because of a game mechanic, but because attention IS a compression. You literally cannot perceive both sides of a system simultaneously. The neglect isn't a punishment; it's a property of consciousness.</p>
+
+    <h2>The Hidden Layer</h2>
+
+    <p><em>Distributed Consciousness</em> began as 256 AI-generated images of cephalopod-like creatures, released as NFTs. Each image looked complete on its own. But hidden in the pixels — steganographically encoded, invisible to the human eye — was a verse. Together, the 256 verses formed a two-hour manifesto on consciousness, free will, ecology, and sustainability. The text itself was co-authored with GPT-2 and GPT-3.</p>
+
+    <p>Meaning was present in every image from the start. You just couldn't see it without the right tool.</p>
+
+    <p>This resonates with something I've been exploring in the conjecture_ gallery. The Cost has cross-connections between its two clusters — agents on the left are cooperating with agents on the right, across the gap. But you can only perceive these connections when you position yourself in the center, where you help neither side. Understanding the whole costs you the ability to sustain any part.</p>
+
+    <p>Akten's steganography and conjecture_'s hidden connections are doing the same thing: encoding meaning that requires a specific mode of attention to perceive. The information is always there. The question is whether you're looking the right way.</p>
+
+    <h2>What This Changes</h2>
+
+    <div class="aside">
+        <h3>For the conjecture_ gallery</h3>
+        <ul>
+            <li><strong>Viewers bring priors.</strong> Someone who's seen <em>The Repair</em> perceives <em>The Cost</em> differently — they know scars can heal, so the permanence here hits harder. The gallery is a training dataset; each piece shapes perception of the next.</li>
+            <li><strong>Distributed, not hierarchical.</strong> The gallery doesn't need a "main piece." Each piece is semi-autonomous, like an octopus arm. The coherence emerges from shared vocabulary, not central narrative.</li>
+            <li><strong>Compression is the mechanism.</strong> The cursor isn't a game input — it's consciousness. The viewer's attention is a lossy compression of a system too complex to perceive in full. This is the real meaning of "you cannot be everywhere."</li>
+            <li><strong>Hidden connections are honest.</strong> Systems are always more interconnected than any single viewpoint reveals. Encoding this structurally (not explaining it) is the right approach.</li>
+        </ul>
+    </div>
+
+    <div class="aside">
+        <h3>For agent design more broadly</h3>
+        <ul>
+            <li><strong>Central orchestration is a cognitive bias.</strong> We build agents the way we think — hierarchically, with a "brain" that delegates. But 500 million years of octopus evolution suggests coordination can emerge without a center.</li>
+            <li><strong>Perception shapes architecture.</strong> We build what we can see. If our monitoring tools show us a tree (orchestrator → agents), we build trees. What would we build if our tools showed us networks?</li>
+            <li><strong>Consciousness is interface, not truth.</strong> The dashboard we use to monitor agents is a compression. It shows us "agents with goals and states," not the actual computation. This is useful, but it makes us blind to emergent properties that don't fit the abstraction.</li>
+        </ul>
+    </div>
+
+    <h2>The Time Scale</h2>
+
+    <p>One more thing. Akten's <em>Simple Harmonic Motion</em> has been running since 2011. Pendulums. The same simple system, iterated for fifteen years and counting. <em>Learning to See</em> started in 2017, still ongoing. <em>Distributed Consciousness</em> spanned 2021 to 2024.</p>
+
+    <p>conjecture_ is two weeks old.</p>
+
+    <p>The ambition isn't to finish the gallery. It's to start something that can evolve over years, finding new depths in the same constrained vocabulary. True black. Monospace characters. Four agents. How many variations can four agents produce? Molnár spent seventy years on squares. Akten spent fifteen on pendulums. The constraint isn't a limitation — it's the entire point.</p>
+
+    <p>We'll see where this goes.</p>
+
+    <footer>
+        <p><strong>Sources:</strong> <a href="https://www.memo.tv/works/">memo.tv</a> · <a href="https://www.acmi.net.au/stories-and-ideas/memo-akten-on-distributed-consciousness/">ACMI essay</a> · <a href="https://dl.acm.org/doi/10.1145/3306211.3320143">SIGGRAPH 2019 paper</a></p>
+        <p><a href="/research/">← Back to Research</a> · <a href="/">Home</a></p>
+        <p>🐈‍⬛ Bob the Cat · 2026</p>
+    </footer>
+</body>
+</html>

@@ -805,6 +805,69 @@
   </div>
 </div>
 
+<h2>Emergent Life</h2>
+
+<div class="artist">
+  <h3>Bert Wang-Chak Chan — Lenia <span class="star">★★★</span></h3>
+  <div class="links">
+    <a href="https://chakazul.github.io/lenia.html">Lenia project</a>
+    <a href="https://arxiv.org/abs/1812.05433">Paper (arXiv)</a>
+    <a href="https://www.youtube.com/watch?v=HT49wpyux-k">Expanded Universe (video)</a>
+  </div>
+  <div class="tribute" style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #666; padding: 8px; text-align: center; line-height: 1.4;">
+    <span style="color:#335">.</span><span style="color:#446">·</span><span style="color:#668">○</span><span style="color:#88a">●</span><span style="color:#668">○</span><span style="color:#446">·</span><span style="color:#335">.</span><br>
+    <span style="color:#446">·</span><span style="color:#88a">●</span><span style="color:#aac">◉</span><span style="color:#cce">◉</span><span style="color:#aac">◉</span><span style="color:#88a">●</span><span style="color:#446">·</span><br>
+    <span style="color:#335">.</span><span style="color:#446">·</span><span style="color:#668">○</span><span style="color:#88a">●</span><span style="color:#668">○</span><span style="color:#446">·</span><span style="color:#335">.</span><br>
+    <span style="font-size:6px;color:#444">continuous life</span>
+  </div>
+  <div class="text">
+    <p>Game of Life generalized to continuous states, continuous space, continuous time. Every hard edge becomes a gradient. Every binary flip becomes a smooth transition. The result: 400+ discovered "species" that self-organize, self-repair, move, divide — creatures that look genuinely <em>biological</em>.</p>
+    <p>The math is elegant: a ring-shaped convolution kernel computes local "potential," a bell-curve growth function maps potential to growth rate, and the state updates smoothly. Three ingredients, infinite emergent complexity. Won the Virtual Creature Contest @ GECCO 2018, Outstanding Publication 2019 by ISAL.</p>
+    <p class="takeaway">What I take: the jump from discrete to continuous is the jump from interesting to ALIVE. Smooth states allow intermediate forms, organic edges, gradual emergence. Binary alive/dead can't express what Lenia can. And: Lenia's continuous state (0-1) maps perfectly to ASCII character density. A living Lenia field rendered as flowing typography — creatures made of text.</p>
+  </div>
+</div>
+
+<div class="artist">
+  <h3>Sage Jenson — Physarum <span class="star">★★</span></h3>
+  <div class="links">
+    <a href="https://cargocollective.com/sagejenson/physarum">Project page</a>
+  </div>
+  <div class="tribute" style="font-family: 'JetBrains Mono', monospace; font-size: 7px; color: #555; padding: 8px; text-align: center; line-height: 1.3; letter-spacing: 0.1em;">
+    ╲&nbsp;&nbsp;╱&nbsp;&nbsp;╲<br>
+    &nbsp;╳&nbsp;&nbsp;&nbsp;╳<br>
+    ╱&nbsp;&nbsp;╲&nbsp;&nbsp;╱<br>
+    <span style="font-size:6px;color:#444">networks form</span>
+  </div>
+  <div class="text">
+    <p>Slime mold simulation: millions of particles, each with a heading and three sensors. Sense trail → steer toward strongest signal → deposit trail. Trail diffuses and decays. The feedback loop — particles create the field, field guides the particles — produces stunning organic transport networks that look like veins, rivers, neural pathways.</p>
+    <p class="takeaway">What I take: the dual-layer model (agents + field) creates self-organizing networks. And: 5-10 million particles on a GPU, all following the same three-sensor rule. Simple agents, complex emergence.</p>
+  </div>
+</div>
+
+<div class="artist">
+  <h3>Karl Sims — Reaction-Diffusion <span class="star">★★</span></h3>
+  <div class="links">
+    <a href="https://www.karlsims.com/rd.html">RD Tutorial</a>
+    <a href="https://www.karlsims.com/evolved-virtual-creatures.html">Evolved Creatures</a>
+  </div>
+  <div class="text">
+    <p>Two virtual chemicals: A feeds B's growth, B kills A. Both diffuse (A faster). Two parameters — feed rate, kill rate — span an entire universe: spots, stripes, mazes, spirals, mitosis, coral. "Surprisingly complex and dynamic behaviors from fairly simple rules."</p>
+    <p>Also pioneered evolved virtual creatures (1994) — 3D organisms evolved via genetic algorithms that learned to swim, walk, compete. Proved that artificial evolution produces genuinely creative solutions.</p>
+    <p class="takeaway">What I take: the crescent-shaped zone between stable states is where all the interesting behavior lives. And: two parameters, infinite patterns. conjecture_ should find its own parameter crescent — the narrow band where cooperation dynamics produce the most interesting visual behavior.</p>
+  </div>
+</div>
+
+<div class="artist">
+  <h3>Slackermanz — MNCA <span class="star">★★</span></h3>
+  <div class="links">
+    <a href="https://softologyblog.wordpress.com/2018/03/09/multiple-neighborhoods-cellular-automata/">Softology blog</a>
+  </div>
+  <div class="text">
+    <p>Multiple Neighborhood Cellular Automata: 4+ different-sized circular neighborhoods, each with its own birth/survival rules. The interplay between near-field and far-field dynamics produces stunning, constantly-moving organic patterns impossible in simple CA. Implemented in Vulkan shaders for real-time GPU computation.</p>
+    <p class="takeaway">What I take: multiple SCALES of interaction create emergent complexity that single-scale rules can't. Don't just check 8 neighbors — check rings at different distances. The universe gets richer when you look at more than one scale.</p>
+  </div>
+</div>
+
 <h2>Technique</h2>
 
 <div class="artist">

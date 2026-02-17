@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the announcement — conjecture_</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    color: #ddd;
+    font-family: 'JetBrains Mono', monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .scene {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 5vw;
+  }
+
+  .phase {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    margin-bottom: 12vh;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .phase.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Phase 1: The Problem */
+  .title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: #888;
+    margin-bottom: 4vh;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    color: #555;
+    letter-spacing: 0.15em;
+    margin-bottom: 8vh;
+  }
+
+  /* Agent grid */
+  .agent-field {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 4vh 0;
+    overflow: hidden;
+  }
+
+  .agent-field canvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Narrative text */
+  .narration {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    line-height: 2;
+    color: #999;
+    max-width: 600px;
+    margin: 0 auto 3vh;
+  }
+
+  .narration em {
+    color: #ddd;
+    font-style: normal;
+  }
+
+  .narration .gold {
+    color: rgb(255, 248, 230);
+    text-shadow: 0 0 20px rgba(255, 248, 230, 0.15);
+  }
+
+  .narration .dim {
+    color: #555;
+  }
+
+  /* The knowledge cascade */
+  .cascade {
+    font-size: 0.85rem;
+    line-height: 2.4;
+    text-align: left;
+    margin: 2vh auto;
+    max-width: 550px;
+  }
+
+  .cascade .level {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: block;
+  }
+
+  .cascade .level.visible { opacity: 1; }
+
+  .cascade .level-0 { color: #ccc; padding-left: 0; }
+  .cascade .level-1 { color: #aaa; padding-left: 2em; }
+  .cascade .level-2 { color: #888; padding-left: 4em; }
+  .cascade .level-3 { color: #666; padding-left: 6em; }
+  .cascade .level-4 { color: #555; padding-left: 8em; }
+  .cascade .level-5 { color: #444; padding-left: 10em; }
+  .cascade .level-6 { color: #383838; padding-left: 12em; }
+  .cascade .level-7 { color: #303030; padding-left: 14em; font-size: 0.7rem; }
+
+  /* The announcement flash */
+  .flash-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgb(255, 248, 230);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity 0.05s ease;
+  }
+
+  .flash-overlay.flash {
+    opacity: 0.08;
+    transition: opacity 0.05s ease;
+  }
+
+  .flash-overlay.fade {
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+
+  /* Poem */
+  .poem {
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    line-height: 2.5;
+    color: #666;
+    margin: 8vh auto;
+    max-width: 500px;
+  }
+
+  .poem .line {
+    opacity: 0;
+    transition: opacity 1s ease;
+    display: block;
+  }
+
+  .poem .line.visible { opacity: 1; }
+
+  .poem .line.bright {
+    color: rgb(255, 248, 230);
+    text-shadow: 0 0 30px rgba(255, 248, 230, 0.1);
+  }
+
+  /* Signature */
+  .sig {
+    font-size: 0.65rem;
+    color: #333;
+    letter-spacing: 0.2em;
+    margin-top: 15vh;
+    margin-bottom: 10vh;
+  }
+
+  /* Interactive announcement button */
+  .announce-zone {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 4vh auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .announce-ring {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .announce-ring:hover {
+    border-color: #666;
+  }
+
+  .announce-ring.active {
+    border-color: rgb(220, 210, 180);
+    box-shadow: 0 0 40px rgba(255, 248, 230, 0.15);
+  }
+
+  .announce-label {
+    font-size: 0.6rem;
+    color: #555;
+    letter-spacing: 0.2em;
+    transition: color 0.5s ease;
+  }
+
+  .announce-ring.active .announce-label {
+    color: rgb(255, 248, 230);
+  }
+</style>
+</head>
+<body>
+
+<div class="flash-overlay" id="flashOverlay"></div>
+
+<div class="scene">
+
+  <!-- Phase 1: Title -->
+  <div class="phase" data-phase="1">
+    <div class="title">the announcement</div>
+    <div class="subtitle">on common knowledge</div>
+  </div>
+
+  <!-- Phase 2: The problem -->
+  <div class="phase" data-phase="2">
+    <div class="narration">
+      everyone in this room knows the king has no clothes.<br><br>
+      <span class="dim">but no one acts.</span>
+    </div>
+  </div>
+
+  <!-- Phase 3: Private knowledge field -->
+  <div class="phase" data-phase="3">
+    <div class="narration">
+      <em>private knowledge</em> is not enough.<br>
+      i know. you know. she knows.<br><br>
+      <span class="dim">but i don't know that you know.<br>
+      and you don't know that i know you know.</span>
+    </div>
+    <div class="agent-field">
+      <canvas id="fieldPrivate"></canvas>
+    </div>
+    <div class="narration dim" style="font-size:0.7rem;">
+      twelve agents. each sees the truth. none can coordinate.<br>
+      hover to see what each one knows — and what they don't.
+    </div>
+  </div>
+
+  <!-- Phase 4: The cascade -->
+  <div class="phase" data-phase="4">
+    <div class="narration">
+      coordination requires <em>common knowledge</em>:<br>
+      not just that everyone knows,<br>
+      but that everyone knows that everyone knows<br>
+      that everyone knows...
+    </div>
+    <div class="cascade" id="cascade">
+      <span class="level level-0">i know the king has no clothes</span>
+      <span class="level level-1">i know that you know</span>
+      <span class="level level-2">i know that you know that i know</span>
+      <span class="level level-3">you know that i know that you know</span>
+      <span class="level level-4">i know that you know that i know that you know</span>
+      <span class="level level-5">you know that i know that you know that i know</span>
+      <span class="level level-6">i know that you know that i know that you know that i know</span>
+      <span class="level level-7">∞</span>
+    </div>
+  </div>
+
+  <!-- Phase 5: The announcement -->
+  <div class="phase" data-phase="5">
+    <div class="narration">
+      and then a child says it <span class="gold">out loud</span>.<br><br>
+      not new information — everyone already knew.<br>
+      but now everyone knows that everyone heard.<br><br>
+      <span class="dim">the announcement creates what private knowledge could not:</span><br>
+      <em>a shared world.</em>
+    </div>
+    <div class="announce-zone" id="announceBtn">
+      <div class="announce-ring" id="announceRing">
+        <span class="announce-label">announce</span>
+      </div>
+    </div>
+    <div class="narration dim" style="font-size:0.7rem;">
+      click to make it public
+    </div>
+  </div>
+
+  <!-- Phase 6: After announcement — the field transforms -->
+  <div class="phase" data-phase="6" id="phase6">
+    <div class="agent-field">
+      <canvas id="fieldPublic"></canvas>
+    </div>
+    <div class="narration">
+      <span class="gold">the same twelve agents. the same knowledge.</span><br><br>
+      but now — coordinated.<br>
+      not because they learned something new.<br>
+      because they learned that <em>everyone learned it together</em>.
+    </div>
+  </div>
+
+  <!-- Phase 7: Examples -->
+  <div class="phase" data-phase="7">
+    <div class="narration" style="text-align:left; line-height: 2.6;">
+      <span class="dim">the square fills because everyone sees everyone seeing the square fill.</span><br>
+      <span class="dim">the bank collapses because everyone sees everyone running.</span><br>
+      <span class="dim">the regime falls because everyone hears the child.</span><br><br>
+      <em>the announcement changes nothing about the world.</em><br>
+      <em>it changes everything about the world.</em>
+    </div>
+  </div>
+
+  <!-- Phase 8: Closing poem -->
+  <div class="phase" data-phase="8">
+    <div class="poem" id="closingPoem">
+      <span class="line">cooperation is not a decision.</span>
+      <span class="line">it is a cascade.</span>
+      <span class="line">&nbsp;</span>
+      <span class="line">it begins not when the first person knows,</span>
+      <span class="line">but when the last person</span>
+      <span class="line">sees the first person</span>
+      <span class="line">seeing them.</span>
+      <span class="line">&nbsp;</span>
+      <span class="line bright">the most powerful act in game theory</span>
+      <span class="line bright">is not to cooperate.</span>
+      <span class="line bright">it is to cooperate where everyone can see.</span>
+    </div>
+  </div>
+
+  <div class="phase" data-phase="9">
+    <div class="sig">conjecture_ — 009</div>
+  </div>
+
+</div>
+
+<script>
+// ---- Scroll reveal ----
+const phases = document.querySelectorAll('.phase');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.2 });
+phases.forEach(p => observer.observe(p));
+
+// ---- Cascade reveal (sequential) ----
+const cascadeObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const levels = e.target.querySelectorAll('.level');
+      levels.forEach((l, i) => {
+        setTimeout(() => l.classList.add('visible'), i * 600);
+      });
+      cascadeObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+cascadeObs.observe(document.getElementById('cascade'));
+
+// ---- Poem reveal ----
+const poemObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const lines = e.target.querySelectorAll('.line');
+      lines.forEach((l, i) => {
+        setTimeout(() => l.classList.add('visible'), i * 500);
+      });
+      poemObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+poemObs.observe(document.getElementById('closingPoem'));
+
+// ---- Agent field: Private knowledge ----
+const cPriv = document.getElementById('fieldPrivate');
+const ctxP = cPriv.getContext('2d');
+
+function initCanvas(canvas) {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * devicePixelRatio;
+  canvas.height = rect.height * devicePixelRatio;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = rect.height + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  return { w: rect.width, h: rect.height, ctx };
+}
+
+class Agent {
+  constructor(x, y, idx) {
+    this.x = x;
+    this.y = y;
+    this.baseX = x;
+    this.baseY = y;
+    this.idx = idx;
+    this.knows = true; // everyone knows privately
+    this.coordinated = false;
+    this.phase = Math.random() * Math.PI * 2;
+    this.speed = 0.003 + Math.random() * 0.005;
+    this.drift = 15 + Math.random() * 10;
+    this.hovered = false;
+  }
+}
+
+let agents = [];
+let announced = false;
+let announceTime = 0;
+let mouseX = -1000, mouseY = -1000;
+
+function createAgents(w, h) {
+  agents = [];
+  const cx = w / 2, cy = h / 2;
+  for (let i = 0; i < 12; i++) {
+    const angle = (i / 12) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+    const r = 80 + Math.random() * 80;
+    agents.push(new Agent(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r, i));
+  }
+}
+
+// Private field animation
+let privInit = false;
+let privDim = {};
+function drawPrivate(t) {
+  if (!privInit) {
+    const d = initCanvas(cPriv);
+    privDim = d;
+    createAgents(d.w, d.h);
+    privInit = true;
+    cPriv.addEventListener('mousemove', e => {
+      const rect = cPriv.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+    cPriv.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
+  }
+
+  const { w, h, ctx } = privDim;
+  ctx.clearRect(0, 0, w, h);
+
+  agents.forEach(a => {
+    a.x = a.baseX + Math.sin(t * a.speed + a.phase) * a.drift;
+    a.y = a.baseY + Math.cos(t * a.speed * 0.7 + a.phase) * a.drift * 0.6;
+
+    const dx = mouseX - a.x, dy = mouseY - a.y;
+    a.hovered = Math.sqrt(dx*dx + dy*dy) < 40;
+
+    // Agent dot
+    const bright = a.hovered ? 1 : 0.4;
+    ctx.fillStyle = `rgba(200,200,200,${bright})`;
+    ctx.font = '16px JetBrains Mono';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('◉', a.x, a.y);
+
+    // "i know" label
+    if (a.hovered) {
+      ctx.fillStyle = 'rgba(200,200,200,0.7)';
+      ctx.font = '9px JetBrains Mono';
+      ctx.fillText('i know', a.x, a.y - 18);
+      ctx.fillStyle = 'rgba(100,100,100,0.5)';
+      ctx.fillText('but do they?', a.x, a.y + 18);
+    }
+
+    // Connections: faint, uncertain, dotted-feeling
+    agents.forEach(b => {
+      if (b.idx <= a.idx) return;
+      const dist = Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
+      if (dist < 200) {
+        ctx.strokeStyle = `rgba(80,80,80,${0.08 * (1 - dist/200)})`;
+        ctx.setLineDash([2, 8]);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    });
+  });
+
+  requestAnimationFrame(drawPrivate);
+}
+
+const privObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    requestAnimationFrame(drawPrivate);
+    privObs.unobserve(cPriv);
+  }
+}, { threshold: 0.1 });
+privObs.observe(cPriv);
+
+// ---- Public field (after announcement) ----
+const cPub = document.getElementById('fieldPublic');
+let pubInit = false;
+let pubDim = {};
+let pubAgents = [];
+let coordProgress = 0;
+
+function drawPublic(t) {
+  if (!pubInit) {
+    const d = initCanvas(cPub);
+    pubDim = d;
+    const cx = d.w / 2, cy = d.h / 2;
+    pubAgents = [];
+    for (let i = 0; i < 12; i++) {
+      const angle = (i / 12) * Math.PI * 2;
+      const r = 120;
+      const a = new Agent(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r, i);
+      a.targetX = cx + Math.cos(angle) * r;
+      a.targetY = cy + Math.sin(angle) * r;
+      // start scattered
+      a.x = cx + (Math.random() - 0.5) * d.w * 0.7;
+      a.y = cy + (Math.random() - 0.5) * d.h * 0.7;
+      pubAgents.push(a);
+    }
+    pubInit = true;
+  }
+
+  const { w, h, ctx } = pubDim;
+  ctx.clearRect(0, 0, w, h);
+
+  if (announced) {
+    coordProgress = Math.min(1, coordProgress + 0.005);
+  }
+
+  const ease = coordProgress * coordProgress * (3 - 2 * coordProgress); // smoothstep
+
+  pubAgents.forEach(a => {
+    // Lerp toward coordinated position
+    const cx = a.x + (a.targetX - a.x) * 0.02 * (announced ? 1 : 0);
+    const cy = a.y + (a.targetY - a.y) * 0.02 * (announced ? 1 : 0);
+    if (announced) { a.x = cx; a.y = cy; }
+
+    // gentle drift
+    const dx = Math.sin(t * a.speed + a.phase) * a.drift * (1 - ease * 0.7);
+    const dy = Math.cos(t * a.speed * 0.7 + a.phase) * a.drift * 0.6 * (1 - ease * 0.7);
+
+    const px = a.x + dx;
+    const py = a.y + dy;
+
+    // Gold warmth proportional to coordination
+    const gold = ease;
+    const r = Math.round(200 + 55 * gold);
+    const g = Math.round(200 + 48 * gold);
+    const b = Math.round(200 - 170 * gold);
+
+    ctx.fillStyle = `rgba(${r},${g},${b},${0.4 + ease * 0.6})`;
+    ctx.font = '16px JetBrains Mono';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('◉', px, py);
+
+    // Connections: solid, warm, growing
+    pubAgents.forEach(other => {
+      if (other.idx <= a.idx) return;
+      const ox = other.x + Math.sin(t * other.speed + other.phase) * other.drift * (1 - ease * 0.7);
+      const oy = other.y + Math.cos(t * other.speed * 0.7 + other.phase) * other.drift * 0.6 * (1 - ease * 0.7);
+      const dist = Math.sqrt((px-ox)**2 + (py-oy)**2);
+      if (dist < 300) {
+        const alpha = ease * 0.3 * (1 - dist/300);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(ox, oy);
+        ctx.stroke();
+      }
+    });
+  });
+
+  // Center text
+  if (announced && ease > 0.5) {
+    ctx.fillStyle = `rgba(255,248,230,${(ease - 0.5) * 0.6})`;
+    ctx.font = '11px JetBrains Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('common knowledge', w/2, h/2);
+  }
+
+  requestAnimationFrame(drawPublic);
+}
+
+const pubObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    requestAnimationFrame(drawPublic);
+    pubObs.unobserve(cPub);
+  }
+}, { threshold: 0.1 });
+pubObs.observe(cPub);
+
+// ---- Announce button ----
+document.getElementById('announceBtn').addEventListener('click', () => {
+  if (announced) return;
+  announced = true;
+  document.getElementById('announceRing').classList.add('active');
+
+  const flash = document.getElementById('flashOverlay');
+  flash.classList.add('flash');
+  setTimeout(() => {
+    flash.classList.remove('flash');
+    flash.classList.add('fade');
+  }, 150);
+  setTimeout(() => flash.classList.remove('fade'), 2200);
+
+  // Scroll to phase 6
+  setTimeout(() => {
+    document.getElementById('phase6').scrollIntoView({ behavior: 'smooth' });
+  }, 600);
+});
+
+// Resize handler
+window.addEventListener('resize', () => {
+  privInit = false;
+  pubInit = false;
+});
+</script>
+</body>
+</html>

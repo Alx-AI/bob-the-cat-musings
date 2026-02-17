@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the doubt — conjecture_</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;color:#d0d0d0;font-family:'JetBrains Mono',monospace;overflow:hidden;height:100vh;width:100vw}
+canvas{display:block;position:fixed;top:0;left:0}
+#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;display:flex;align-items:center;justify-content:center;pointer-events:none}
+#subtitle{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:0.65rem;color:#444;letter-spacing:0.2em;z-index:10;pointer-events:none;text-align:center;transition:opacity 2s}
+</style>
+</head>
+<body>
+<div id="subtitle">the stag hunt — a coordination game</div>
+<canvas id="c"></canvas>
+<script>
+const C = document.getElementById('c');
+const ctx = C.getContext('2d');
+let W, H;
+function resize() { W = C.width = innerWidth; H = C.height = innerHeight; }
+resize();
+addEventListener('resize', resize);
+
+const GOLD = [210, 170, 70];
+const WHITE = [200, 200, 200];
+const BLUE = [100, 140, 200];
+const RED = [180, 70, 70];
+const DIM = [55, 55, 55];
+
+// --- The two players' inner monologues ---
+const leftWords = [
+  "if you come",
+  "i will be there",
+  "i have always been there",
+  "but what if this time",
+  "what if you don't",
+  "the rabbit is small",
+  "but the rabbit is certain",
+  "the stag needs us both",
+  "i cannot carry it alone",
+  "i have been alone before",
+  "it was enough",
+  "it was not enough",
+  "i will walk toward you",
+  "i will keep walking",
+  "unless the doubt",
+  "the doubt",
+];
+
+const rightWords = [
+  "if you come",
+  "we eat for a month",
+  "together we are enough",
+  "but i've seen you hesitate",
+  "i've seen your eyes",
+  "drift toward the bushes",
+  "where the rabbits hide",
+  "safe small certain rabbits",
+  "enough for one",
+  "never enough for ambition",
+  "i want to trust you",
+  "i want to trust myself",
+  "i will walk toward you",
+  "watching your feet",
+  "not your words",
+  "your feet",
+];
+
+const centerPhrases = {
+  approach: "",
+  doubt: "the enemy is not selfishness\nit is fear",
+  breakLeft: "one flinched\nboth go hungry",
+  breakRight: "one flinched\nboth go hungry",
+  breakBoth: "two rabbits\ntwo small meals\ntwo regrets",
+  merge: "the stag falls\nbetween them",
+  aftermath: "",
+};
+
+// --- Word particle system ---
+class Word {
+  constructor(text, side, index, total) {
+    this.text = text;
+    this.side = side; // 'left' or 'right'
+    this.index = index;
+    this.total = total;
+    this.reset();
+  }
+
+  reset() {
+    const ySpacing = Math.min(32, (H * 0.7) / this.total);
+    const yStart = H * 0.15 + this.index * ySpacing;
+    
+    if (this.side === 'left') {
+      this.homeX = W * 0.15;
+      this.scatterX = W * 0.02 + Math.random() * W * 0.08;
+    } else {
+      this.homeX = W * 0.85;
+      this.scatterX = W * 0.90 + Math.random() * W * 0.08;
+    }
+    this.homeY = yStart;
+    this.scatterY = yStart + (Math.random() - 0.5) * 40;
+    
+    // Meeting point
+    this.meetX = W * 0.5 + (this.side === 'left' ? -1 : 1) * (30 + this.index * 3);
+    this.meetY = H * 0.35 + this.index * (Math.min(28, (H * 0.5) / this.total));
+
+    this.x = this.homeX;
+    this.y = this.homeY;
+    this.targetX = this.homeX;
+    this.targetY = this.homeY;
+    this.alpha = 0;
+    this.targetAlpha = 0;
+    this.color = [...WHITE];
+    this.targetColor = [...WHITE];
+    this.fontSize = Math.max(10, Math.min(14, W / 100));
+    this.trembleAmt = 0;
+    this.tremblePhase = Math.random() * Math.PI * 2;
+  }
+
+  setMode(mode) {
+    switch(mode) {
+      case 'home':
+        this.targetX = this.homeX;
+        this.targetY = this.homeY;
+        this.targetAlpha = 0.7;
+        this.targetColor = [...WHITE];
+        this.trembleAmt = 0;
+        break;
+      case 'approach':
+        // Move toward center
+        const t = 0.5; // halfway
+        this.targetX = this.homeX + (this.meetX - this.homeX) * t;
+        this.targetY = this.homeY + (this.meetY - this.homeY) * t;
+        this.targetAlpha = 0.85;
+        this.targetColor = [...WHITE];
+        this.trembleAmt = 0;
+        break;
+      case 'close':
+        this.targetX = this.meetX;
+        this.targetY = this.meetY;
+        this.targetAlpha = 1;
+        this.targetColor = [...GOLD];
+        this.trembleAmt = 0.5;
+        break;
+      case 'doubt':
+        // Trembling near center
+        this.targetX = this.meetX + (this.homeX - this.meetX) * 0.15;
+        this.targetY = this.meetY;
+        this.targetAlpha = 0.9;
+        this.targetColor = [...BLUE];
+        this.trembleAmt = 3;
+        break;
+      case 'scatter':
+        this.targetX = this.scatterX;
+        this.targetY = this.scatterY;
+        this.targetAlpha = 0.3;
+        this.targetColor = [...DIM];
+        this.trembleAmt = 0;
+        break;
+      case 'merge':
+        this.targetX = W * 0.5 + (Math.random() - 0.5) * 60;
+        this.targetY = H * 0.5 + (this.index / this.total - 0.5) * H * 0.3;
+        this.targetAlpha = 1;
+        this.targetColor = [...GOLD];
+        this.trembleAmt = 0;
+        break;
+      case 'fade':
+        this.targetAlpha = 0;
+        this.trembleAmt = 0;
+        break;
+    }
+  }
+
+  update(dt) {
+    const speed = 1.8;
+    this.x += (this.targetX - this.x) * speed * dt;
+    this.y += (this.targetY - this.y) * speed * dt;
+    this.alpha += (this.targetAlpha - this.alpha) * speed * dt;
+    for (let i = 0; i < 3; i++) {
+      this.color[i] += (this.targetColor[i] - this.color[i]) * speed * dt;
+    }
+    this.tremblePhase += dt * 8;
+  }
+
+  draw() {
+    if (this.alpha < 0.02) return;
+    const tx = this.x + Math.sin(this.tremblePhase) * this.trembleAmt;
+    const ty = this.y + Math.cos(this.tremblePhase * 1.3) * this.trembleAmt * 0.5;
+    
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+    ctx.fillStyle = `rgb(${Math.round(this.color[0])},${Math.round(this.color[1])},${Math.round(this.color[2])})`;
+    ctx.font = `300 ${this.fontSize}px 'JetBrains Mono', monospace`;
+    ctx.textAlign = this.side === 'left' ? 'right' : 'left';
+    ctx.textBaseline = 'middle';
+    
+    // Glow for gold words
+    if (this.color[0] > 180 && this.color[1] > 140 && this.color[2] < 100 && this.alpha > 0.5) {
+      ctx.shadowColor = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${this.alpha * 0.3})`;
+      ctx.shadowBlur = 15;
+    }
+    
+    ctx.fillText(this.text, tx, ty);
+    ctx.restore();
+  }
+}
+
+// Create words
+const wordsLeft = leftWords.map((t, i) => new Word(t, 'left', i, leftWords.length));
+const wordsRight = rightWords.map((t, i) => new Word(t, 'right', i, rightWords.length));
+const allWords = [...wordsLeft, ...wordsRight];
+
+// --- Round system ---
+// Each round: appear → approach → doubt → outcome
+// Outcomes rotate to show different possibilities
+const outcomes = ['merge', 'breakLeft', 'breakBoth', 'merge', 'breakRight', 'merge'];
+let roundIndex = 0;
+let phase = 'fadein';
+let phaseTimer = 0;
+let centerText = '';
+let centerAlpha = 0;
+let targetCenterAlpha = 0;
+let roundLabel = '';
+let roundLabelAlpha = 0;
+
+const PHASE_DURATIONS = {
+  fadein: 2,
+  home: 3,
+  approach: 4,
+  close: 3,
+  doubt: 4,
+  outcome: 5,
+  hold: 4,
+  fadeout: 3,
+};
+
+function startPhase(p) {
+  phase = p;
+  phaseTimer = 0;
+  
+  switch(p) {
+    case 'fadein':
+      allWords.forEach(w => { w.reset(); w.setMode('home'); w.alpha = 0; w.targetAlpha = 0; });
+      setTimeout(() => allWords.forEach(w => w.setMode('home')), 300);
+      targetCenterAlpha = 0;
+      const rn = roundIndex + 1;
+      roundLabel = `round ${rn}`;
+      roundLabelAlpha = 0;
+      break;
+    case 'home':
+      roundLabelAlpha = 0.4;
+      break;
+    case 'approach':
+      allWords.forEach(w => w.setMode('approach'));
+      centerText = '';
+      targetCenterAlpha = 0;
+      roundLabelAlpha = 0;
+      break;
+    case 'close':
+      allWords.forEach(w => w.setMode('close'));
+      break;
+    case 'doubt':
+      allWords.forEach(w => w.setMode('doubt'));
+      centerText = centerPhrases.doubt;
+      targetCenterAlpha = 0.5;
+      break;
+    case 'outcome': {
+      const outcome = outcomes[roundIndex % outcomes.length];
+      targetCenterAlpha = 0.6;
+      if (outcome === 'merge') {
+        allWords.forEach(w => w.setMode('merge'));
+        centerText = centerPhrases.merge;
+      } else if (outcome === 'breakLeft') {
+        wordsLeft.forEach(w => w.setMode('scatter'));
+        wordsRight.forEach(w => { w.setMode('scatter'); }); // other side bewildered
+        centerText = centerPhrases.breakLeft;
+      } else if (outcome === 'breakRight') {
+        wordsRight.forEach(w => w.setMode('scatter'));
+        wordsLeft.forEach(w => { w.setMode('scatter'); });
+        centerText = centerPhrases.breakRight;
+      } else if (outcome === 'breakBoth') {
+        allWords.forEach(w => w.setMode('scatter'));
+        centerText = centerPhrases.breakBoth;
+      }
+      break;
+    }
+    case 'hold':
+      break;
+    case 'fadeout':
+      allWords.forEach(w => w.setMode('fade'));
+      targetCenterAlpha = 0;
+      break;
+  }
+}
+
+const phaseOrder = ['fadein', 'home', 'approach', 'close', 'doubt', 'outcome', 'hold', 'fadeout'];
+
+function nextPhase() {
+  const idx = phaseOrder.indexOf(phase);
+  if (idx < phaseOrder.length - 1) {
+    startPhase(phaseOrder[idx + 1]);
+  } else {
+    roundIndex++;
+    startPhase('fadein');
+  }
+}
+
+// --- Closing poem (appears after all rounds) ---
+let showClosing = false;
+let closingAlpha = 0;
+const closingLines = [
+  "the stag hunt is not the prisoner's dilemma.",
+  "there is no temptation to betray.",
+  "there is only the question:",
+  "",
+  "do i believe you will come?",
+  "",
+  "the answer is not in your character.",
+  "it is in our history.",
+  "in whether we have practiced",
+  "arriving together before.",
+  "",
+  "trust is not a feeling.",
+  "trust is a coordination equilibrium.",
+  "and it must be built",
+  "one shared hunt at a time.",
+];
+
+// Start
+startPhase('fadein');
+
+let lastTime = performance.now();
+
+function animate(now) {
+  const dt = Math.min(0.05, (now - lastTime) / 1000);
+  lastTime = now;
+
+  phaseTimer += dt;
+  
+  // Check phase transitions
+  const dur = PHASE_DURATIONS[phase] || 3;
+  if (phaseTimer >= dur) {
+    if (phase === 'fadeout' && roundIndex >= outcomes.length - 1) {
+      showClosing = true;
+    } else {
+      nextPhase();
+    }
+  }
+
+  // Update words
+  allWords.forEach(w => w.update(dt));
+
+  // Center text alpha
+  centerAlpha += (targetCenterAlpha - centerAlpha) * 2 * dt;
+
+  // Draw
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, W, H);
+
+  if (!showClosing) {
+    // Draw faint center line (the meeting point)
+    ctx.strokeStyle = 'rgba(80,80,80,0.1)';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(W/2, H * 0.1);
+    ctx.lineTo(W/2, H * 0.9);
+    ctx.stroke();
+
+    // Draw words
+    allWords.forEach(w => w.draw());
+
+    // Center text
+    if (centerText && centerAlpha > 0.01) {
+      const lines = centerText.split('\n');
+      ctx.save();
+      ctx.globalAlpha = centerAlpha;
+      ctx.fillStyle = `rgb(${GOLD[0]},${GOLD[1]},${GOLD[2]})`;
+      ctx.font = `italic ${Math.max(11, W/80)}px 'JetBrains Mono', monospace`;
+      ctx.textAlign = 'center';
+      ctx.shadowColor = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0.2)`;
+      ctx.shadowBlur = 20;
+      lines.forEach((line, i) => {
+        ctx.fillText(line, W/2, H/2 - ((lines.length-1) * 10) + i * 24);
+      });
+      ctx.restore();
+    }
+
+    // Round label
+    if (roundLabelAlpha > 0.01) {
+      ctx.save();
+      ctx.globalAlpha = roundLabelAlpha;
+      ctx.fillStyle = '#333';
+      ctx.font = `200 ${Math.max(9, W/120)}px 'JetBrains Mono', monospace`;
+      ctx.textAlign = 'center';
+      ctx.fillText(roundLabel, W/2, H * 0.06);
+      ctx.restore();
+      roundLabelAlpha += (0 - roundLabelAlpha) * 0.3 * dt;
+    }
+  } else {
+    // Closing poem
+    closingAlpha = Math.min(1, closingAlpha + dt * 0.3);
+    const lineH = Math.max(20, H / 30);
+    const startY = H * 0.2;
+    ctx.save();
+    closingLines.forEach((line, i) => {
+      const lineDelay = i * 0.4;
+      const a = Math.max(0, Math.min(1, (closingAlpha * closingLines.length * 0.4) - lineDelay * 0.3));
+      if (a <= 0) return;
+      ctx.globalAlpha = a * 0.85;
+      
+      if (i === 4 || i === 13 || i === 14) {
+        ctx.fillStyle = `rgb(${GOLD[0]},${GOLD[1]},${GOLD[2]})`;
+        ctx.font = `italic ${Math.max(11, W/85)}px 'JetBrains Mono', monospace`;
+        ctx.shadowColor = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0.15)`;
+        ctx.shadowBlur = 12;
+      } else {
+        ctx.fillStyle = '#aaa';
+        ctx.font = `300 ${Math.max(11, W/90)}px 'JetBrains Mono', monospace`;
+        ctx.shadowBlur = 0;
+      }
+      ctx.textAlign = 'center';
+      ctx.fillText(line, W/2, startY + i * lineH);
+    });
+    ctx.restore();
+
+    // After poem shown for a while, restart
+    if (closingAlpha > closingLines.length * 0.8 + 5) {
+      showClosing = false;
+      closingAlpha = 0;
+      roundIndex = 0;
+      allWords.forEach(w => w.reset());
+      startPhase('fadein');
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

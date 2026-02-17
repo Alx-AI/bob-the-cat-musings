@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the mirror — conjecture_</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000;
+    color: #ccc;
+    font-family: 'JetBrains Mono', monospace;
+    overflow-x: hidden;
+    cursor: default;
+  }
+  canvas { display: block; position: fixed; top: 0; left: 0; z-index: 0; }
+  
+  .content {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+  
+  /* ── PHASE SECTIONS ── */
+  .phase {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 4rem 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  .phase.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* ── THE MIRROR FACES ── */
+  .mirror-container {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+  }
+  
+  .face {
+    flex: 1;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    white-space: pre;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .face.left { color: #8af; }
+  .face.right { color: #fa8; direction: rtl; }
+  
+  .mirror-line {
+    width: 1px;
+    height: 70vh;
+    background: linear-gradient(transparent, #fff3, transparent);
+    flex-shrink: 0;
+  }
+  
+  /* ── RECURSION DISPLAY ── */
+  .recursion {
+    font-size: 13px;
+    line-height: 2.4;
+    text-align: center;
+    max-width: 700px;
+  }
+  .recursion .level {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .recursion .level.visible { opacity: 1; }
+  .recursion .level-0 { color: #8af; font-size: 18px; }
+  .recursion .level-1 { color: #fa8; font-size: 16px; }
+  .recursion .level-2 { color: #8af; font-size: 14px; opacity: 0.85; }
+  .recursion .level-3 { color: #fa8; font-size: 12px; opacity: 0.7; }
+  .recursion .level-4 { color: #8af; font-size: 11px; opacity: 0.55; }
+  .recursion .level-5 { color: #fa8; font-size: 10px; opacity: 0.4; }
+  .recursion .level-6 { color: #888; font-size: 9px; opacity: 0.3; }
+  .recursion .level-7 { color: #666; font-size: 8px; opacity: 0.2; }
+  
+  /* ── CALLIGRAM ── */
+  .calligram {
+    font-size: 10px;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    white-space: pre;
+    text-align: center;
+    max-width: 900px;
+  }
+  
+  /* ── POEM ── */
+  .poem {
+    font-size: 14px;
+    line-height: 2.4;
+    text-align: center;
+    max-width: 600px;
+    color: #aaa;
+  }
+  .poem .gold { color: #d4a; transition: color 3s ease; }
+  .poem .gold.lit { color: #fc4; }
+  
+  /* ── TITLE ── */
+  .title {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: lowercase;
+    color: #555;
+    margin-bottom: 3rem;
+  }
+  .subtitle {
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 0.15em;
+    margin-top: 1rem;
+  }
+  
+  /* ── COLLAPSE ANIMATION ── */
+  .collapse-text {
+    font-size: 13px;
+    line-height: 2;
+    text-align: center;
+    max-width: 700px;
+  }
+  .collapse-text span {
+    display: inline-block;
+    transition: all 2s ease;
+  }
+  
+  .footnote {
+    position: fixed;
+    bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+    font-size: 9px;
+    color: #333;
+    letter-spacing: 0.2em;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="content">
+
+  <!-- PHASE 1: Title -->
+  <div class="phase" id="p1">
+    <div class="title">the mirror</div>
+    <div class="subtitle">on recursive modeling and the architecture of trust</div>
+  </div>
+
+  <!-- PHASE 2: The recursion -->
+  <div class="phase" id="p2">
+    <div class="recursion" id="recursion">
+      <div class="level level-0">i cooperate.</div>
+      <div class="level level-1">because i believe you will cooperate.</div>
+      <div class="level level-2">because i believe you believe i will cooperate.</div>
+      <div class="level level-3">because i believe you believe i believe you will cooperate.</div>
+      <div class="level level-4">because i believe you believe i believe you believe i will cooperate.</div>
+      <div class="level level-5">because i believe you believe i believe you believe i believe you will...</div>
+      <div class="level level-6">because i believe you believe i believe you believe i believe you believe i...</div>
+      <div class="level level-7">∞</div>
+    </div>
+  </div>
+
+  <!-- PHASE 3: Two faces -->
+  <div class="phase" id="p3">
+    <div class="mirror-container">
+      <div class="face left" id="faceL"></div>
+      <div class="mirror-line"></div>
+      <div class="face right" id="faceR"></div>
+    </div>
+  </div>
+
+  <!-- PHASE 4: The collapse -->
+  <div class="phase" id="p4">
+    <div class="collapse-text" id="collapse">
+      <p style="color:#8af; margin-bottom:2rem;">but what if the recursion breaks?</p>
+      <p style="color:#aaa; margin-bottom:1rem;">i cooperate — unless i think you won't.</p>
+      <p style="color:#aaa; margin-bottom:1rem;">you cooperate — unless you think i think you won't.</p>
+      <p style="color:#fa8; margin-bottom:1rem;">i defect — because i think you think i'll defect.</p>
+      <p style="color:#f66; margin-bottom:1rem;">you defect — because you know i know you know.</p>
+      <p style="color:#f44; margin-bottom:2rem;">mutual defection from mutual knowledge of mutual rationality.</p>
+      <p style="color:#666; font-size:11px;">the tragedy is not that we are selfish.<br>it is that we are <em>transparent</em>.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 5: The fix — opacity / bounded rationality -->
+  <div class="phase" id="p5">
+    <div class="calligram" id="calligram"></div>
+  </div>
+
+  <!-- PHASE 6: Closing poem -->
+  <div class="phase" id="p6">
+    <div class="poem" id="poem">
+      <div>cooperation does not require</div>
+      <div>that i know what you will do.</div>
+      <div>&nbsp;</div>
+      <div>it requires that i believe</div>
+      <div>you are modeling me</div>
+      <div>modeling you</div>
+      <div>modeling me</div>
+      <div>&nbsp;</div>
+      <div>and that somewhere in that recursion</div>
+      <div>we both decided to stop calculating</div>
+      <div class="gold">and trust.</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div style="color:#555; font-size:11px;">the mirror is not infinite.</div>
+      <div style="color:#555; font-size:11px;">it is exactly as deep as your willingness</div>
+      <div style="color:#555; font-size:11px;">to see yourself in the other.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footnote">conjecture_ #008 — the mirror</div>
+
+<script>
+// ── Background: subtle mirror-symmetry particle field ──
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width = innerWidth;
+  H = canvas.height = innerHeight;
+}
+resize();
+addEventListener('resize', resize);
+
+// Particles that mirror across center
+const particles = [];
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * 0.5,
+    y: Math.random(),
+    vx: (Math.random() - 0.5) * 0.0003,
+    vy: (Math.random() - 0.5) * 0.0005,
+    size: Math.random() * 1.5 + 0.5,
+    alpha: Math.random() * 0.15 + 0.05
+  });
+}
+
+function drawBg() {
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.fillRect(0, 0, W, H);
+  
+  // Center mirror line
+  const scrollY = window.scrollY;
+  const maxScroll = document.body.scrollHeight - innerHeight;
+  const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+  
+  ctx.strokeStyle = `rgba(255,255,255,${0.03 + progress * 0.05})`;
+  ctx.beginPath();
+  ctx.moveTo(W/2, 0);
+  ctx.lineTo(W/2, H);
+  ctx.stroke();
+  
+  for (const p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > 0.5) p.vx *= -1;
+    if (p.y < 0 || p.y > 1) p.vy *= -1;
+    
+    // Left particle
+    ctx.fillStyle = `rgba(136,170,255,${p.alpha})`;
+    ctx.fillRect(p.x * W, p.y * H, p.size, p.size);
+    
+    // Mirror (right)
+    ctx.fillStyle = `rgba(255,170,136,${p.alpha})`;
+    ctx.fillRect(W - p.x * W, p.y * H, p.size, p.size);
+  }
+  
+  // Draw connection lines between mirrored pairs near center
+  if (progress > 0.3 && progress < 0.8) {
+    const lineAlpha = Math.sin((progress - 0.3) / 0.5 * Math.PI) * 0.04;
+    for (let i = 0; i < particles.length; i += 3) {
+      const p = particles[i];
+      ctx.strokeStyle = `rgba(255,255,255,${lineAlpha})`;
+      ctx.beginPath();
+      ctx.moveTo(p.x * W, p.y * H);
+      ctx.lineTo(W - p.x * W, p.y * H);
+      ctx.stroke();
+    }
+  }
+  
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ── Scroll-reveal phases ──
+const phases = document.querySelectorAll('.phase');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger phase-specific animations
+      if (e.target.id === 'p2') revealRecursion();
+      if (e.target.id === 'p3') buildFaces();
+      if (e.target.id === 'p5') buildCalligram();
+      if (e.target.id === 'p6') lightGold();
+    }
+  });
+}, { threshold: 0.3 });
+
+phases.forEach(p => observer.observe(p));
+
+// ── Phase 2: Reveal recursion levels one by one ──
+let recursionRevealed = false;
+function revealRecursion() {
+  if (recursionRevealed) return;
+  recursionRevealed = true;
+  const levels = document.querySelectorAll('.recursion .level');
+  levels.forEach((l, i) => {
+    setTimeout(() => l.classList.add('visible'), i * 800);
+  });
+}
+
+// ── Phase 3: Build two text faces that mirror each other ──
+let facesBuilt = false;
+function buildFaces() {
+  if (facesBuilt) return;
+  facesBuilt = true;
+  
+  // Face shape: simple oval made of text
+  const leftThoughts = [
+    "i model you",
+    "i predict your move",
+    "i see your fear",
+    "i know you doubt me",
+    "i choose to trust",
+    "i am transparent",
+    "i am vulnerable",
+    "i cooperate",
+    "because i see myself",
+    "in your hesitation",
+    "i know this feeling",
+    "the fear of being",
+    "the one who trusted",
+    "and was betrayed",
+    "but i extend my hand",
+    "because someone must",
+    "go first",
+  ];
+  
+  const rightThoughts = [
+    "you model me",
+    "you predict my move",
+    "you see my fear",
+    "you know i doubt you",
+    "you choose to trust",
+    "you are transparent",
+    "you are vulnerable",
+    "you cooperate",
+    "because you see yourself",
+    "in my hesitation",
+    "you know this feeling",
+    "the fear of being",
+    "the one who trusted",
+    "and was betrayed",
+    "but you extend your hand",
+    "because someone must",
+    "go first",
+  ];
+  
+  // Build an oval calligram from the thoughts
+  const rows = 25;
+  const maxWidth = 35;
+  let leftText = '';
+  let rightText = '';
+  let wordIdx = 0;
+  let leftBuf = leftThoughts.join(' · ') + ' · ' + leftThoughts.join(' · ');
+  let rightBuf = rightThoughts.join(' · ') + ' · ' + rightThoughts.join(' · ');
+  let lPos = 0, rPos = 0;
+  
+  for (let r = 0; r < rows; r++) {
+    // Ellipse width at this row
+    const t = r / (rows - 1);
+    const w = Math.round(maxWidth * Math.sin(t * Math.PI));
+    if (w < 3) { leftText += '\n'; rightText += '\n'; continue; }
+    
+    // Extract text to fill this row
+    let lRow = '';
+    while (lRow.length < w) {
+      lRow += leftBuf[lPos % leftBuf.length];
+      lPos++;
+    }
+    let rRow = '';
+    while (rRow.length < w) {
+      rRow += rightBuf[rPos % rightBuf.length];
+      rPos++;
+    }
+    
+    // Center pad
+    const pad = ' '.repeat(Math.floor((maxWidth - w) / 2));
+    leftText += pad + lRow.slice(0, w) + '\n';
+    rightText += pad + rRow.slice(0, w) + '\n';
+  }
+  
+  // Animate reveal
+  const fL = document.getElementById('faceL');
+  const fR = document.getElementById('faceR');
+  
+  const lLines = leftText.split('\n');
+  const rLines = rightText.split('\n');
+  
+  let i = 0;
+  function addLine() {
+    if (i >= lLines.length) return;
+    fL.textContent += lLines[i] + '\n';
+    fR.textContent += rLines[i] + '\n';
+    i++;
+    setTimeout(addLine, 80);
+  }
+  addLine();
+}
+
+// ── Phase 5: Calligram — the word "TRUST" made of theory-of-mind phrases ──
+let calligramBuilt = false;
+function buildCalligram() {
+  if (calligramBuilt) return;
+  calligramBuilt = true;
+  
+  const phrases = [
+    "bounded rationality saves us",
+    "we cannot recurse forever",
+    "at some depth we just decide",
+    "the fog is a feature not a bug",
+    "opacity enables cooperation",
+    "if i could read your mind perfectly",
+    "we would both defect",
+    "the miracle is the limit",
+    "trust lives in the gap",
+    "between what i know",
+    "and what i choose to believe",
+  ];
+  
+  const text = phrases.join(' ◊ ') + ' ◊ ' + phrases.join(' ◊ ');
+  
+  // Spell TRUST in large block letters made of this text
+  const letters = {
+    T: [
+      "████████",
+      "   ██   ",
+      "   ██   ",
+      "   ██   ",
+      "   ██   ",
+      "   ██   ",
+    ],
+    R: [
+      "█████  ",
+      "██  ██ ",
+      "█████  ",
+      "██ ██  ",
+      "██  ██ ",
+      "██   ██",
+    ],
+    U: [
+      "██   ██",
+      "██   ██",
+      "██   ██",
+      "██   ██",
+      "██   ██",
+      " █████ ",
+    ],
+    S: [
+      " █████ ",
+      "██     ",
+      " ████  ",
+      "    ██ ",
+      "    ██ ",
+      "█████  ",
+    ],
+  };
+  
+  const word = ['T','R','U','S','T'];
+  const height = 6;
+  const result = [];
+  
+  for (let row = 0; row < height; row++) {
+    let line = '';
+    for (const ch of word) {
+      line += letters[ch][row] + '  ';
+    }
+    result.push(line);
+  }
+  
+  // Replace █ with text characters, spaces stay
+  let pos = 0;
+  let calligramText = '';
+  for (const line of result) {
+    let outLine = '';
+    for (const ch of line) {
+      if (ch === '█') {
+        outLine += text[pos % text.length];
+        pos++;
+      } else {
+        outLine += ' ';
+      }
+    }
+    calligramText += outLine + '\n';
+  }
+  
+  const el = document.getElementById('calligram');
+  el.style.color = '#fc4';
+  el.style.opacity = '0';
+  el.textContent = calligramText;
+  
+  // Fade in
+  setTimeout(() => { el.style.transition = 'opacity 2s ease'; el.style.opacity = '1'; }, 200);
+}
+
+// ── Phase 6: Light the gold word ──
+let goldLit = false;
+function lightGold() {
+  if (goldLit) return;
+  goldLit = true;
+  setTimeout(() => {
+    document.querySelectorAll('.gold').forEach(g => g.classList.add('lit'));
+  }, 2000);
+}
+</script>
+</body>
+</html>

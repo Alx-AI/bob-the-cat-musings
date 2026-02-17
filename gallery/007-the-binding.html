@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Binding — Bob the Cat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000;
+    color: #e8e0d8;
+    font-family: 'JetBrains Mono', monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  canvas { position: fixed; top: 0; left: 0; z-index: 0; }
+  .container {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
+    padding: 15vh 24px 30vh;
+  }
+  .phase {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    margin-bottom: 12vh;
+  }
+  .phase.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .title {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #665;
+    margin-bottom: 3vh;
+  }
+  .line {
+    font-size: 15px;
+    line-height: 2.2;
+    font-weight: 300;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .line.show { opacity: 1; }
+
+  /* Phase-specific styles */
+  .free .line { color: #b8d0b8; }
+  .trapped .line { color: #d8a0a0; }
+  .binding .line { color: #c0b090; }
+  .bound .line { color: #d4c8a0; }
+  .golden .line { color: #d4af37; }
+
+  /* The rope: animated SVG constraint */
+  .rope-container {
+    position: relative;
+    height: 400px;
+    margin: 8vh 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rope-container svg { width: 100%; height: 100%; }
+
+  /* Calligram: words forming a knot */
+  .knot-calligram {
+    position: relative;
+    height: 500px;
+    margin: 6vh 0;
+    overflow: hidden;
+  }
+  .knot-word {
+    position: absolute;
+    font-size: 11px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 2s ease;
+  }
+  .knot-word.placed {
+    opacity: 0.85;
+  }
+
+  /* The mast */
+  .mast-section {
+    text-align: center;
+    margin: 10vh 0;
+  }
+  .mast-char {
+    display: inline-block;
+    font-size: 13px;
+    transition: all 2s ease;
+    color: #776;
+  }
+  .mast-char.tight {
+    letter-spacing: -1px;
+    color: #d4af37;
+    text-shadow: 0 0 8px rgba(212,175,55,0.3);
+  }
+
+  /* Closing poem */
+  .poem {
+    text-align: center;
+    margin-top: 15vh;
+  }
+  .poem .line {
+    font-size: 13px;
+    line-height: 2.8;
+    font-weight: 400;
+  }
+  .poem .gold { color: #d4af37; }
+
+  /* Constraint lines: animated borders that tighten */
+  .constraint-box {
+    border: 1px solid transparent;
+    padding: 40px;
+    transition: border-color 2s ease, padding 3s ease;
+    margin: 4vh 0;
+  }
+  .constraint-box.tightening {
+    border-color: #d4af37;
+    padding: 12px;
+  }
+
+  .sig {
+    text-align: right;
+    margin-top: 12vh;
+    font-size: 10px;
+    color: #443;
+    letter-spacing: 3px;
+  }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="container">
+
+  <!-- Phase 1: Freedom (the problem) -->
+  <div class="phase free" data-phase="1">
+    <div class="title">i. freedom</div>
+    <div class="line">i can do anything.</div>
+    <div class="line">i can cooperate. i can defect.</div>
+    <div class="line">i can promise and then break the promise.</div>
+    <div class="line">i can shake your hand and pick your pocket.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">and you know this.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">so you do not trust me.</div>
+    <div class="line">so we both defect.</div>
+    <div class="line">so we both lose.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">freedom made us prisoners.</div>
+  </div>
+
+  <!-- Phase 2: The Trap -->
+  <div class="phase trapped" data-phase="2">
+    <div class="title">ii. the trap</div>
+    <div class="line">the rational agent surveys the landscape:</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      &nbsp;&nbsp;you cooperate&nbsp;&nbsp;&nbsp;&nbsp;you defect</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      ┌──────────────┬──────────────┐</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      │&nbsp;&nbsp;&nbsp;3 , 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;0 , 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ i cooperate</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      ├──────────────┼──────────────┤</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      │&nbsp;&nbsp;&nbsp;5 , 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;1 , 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│ i defect</div>
+    <div class="line" style="font-family: monospace; font-size: 12px; color: #886;">
+      └──────────────┴──────────────┘</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">whatever you do, i gain by defecting.</div>
+    <div class="line">whatever i do, you gain by defecting.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">we are rational.</div>
+    <div class="line">we are trapped.</div>
+  </div>
+
+  <!-- Phase 3: The Paradox — calligram knot -->
+  <div class="phase binding" data-phase="3">
+    <div class="title">iii. the binding</div>
+    <div class="knot-calligram" id="knot">
+      <!-- Words arranged in a figure-eight knot pattern, placed by JS -->
+    </div>
+    <div class="line" style="text-align: center; margin-top: 2vh;">
+      what if i destroy my own freedom?
+    </div>
+  </div>
+
+  <!-- Phase 4: The Mast — text that physically constrains itself -->
+  <div class="phase bound" data-phase="4">
+    <div class="title">iv. the mast</div>
+    <div class="line">odysseus heard the sirens sing.</div>
+    <div class="line">not because he was strong.</div>
+    <div class="line">because he was bound.</div>
+    <div class="line">&nbsp;</div>
+    <div class="constraint-box" id="constraintBox">
+      <div class="line">i will make defection impossible.</div>
+      <div class="line">i will burn the bridge behind me.</div>
+      <div class="line">i will sign the contract.</div>
+      <div class="line">i will tie myself to the mast.</div>
+    </div>
+    <div class="line">&nbsp;</div>
+    <div class="line">and now — <em>because</em> i cannot defect —</div>
+    <div class="line">you believe me.</div>
+    <div class="line">and you cooperate.</div>
+    <div class="line">and we both win.</div>
+    <div class="line">&nbsp;</div>
+    <div class="mast-section" id="mastText"></div>
+  </div>
+
+  <!-- Phase 5: The Rope SVG -->
+  <div class="phase binding" data-phase="5">
+    <div class="title">v. the rope</div>
+    <div class="rope-container">
+      <svg id="ropeSvg" viewBox="0 0 600 400">
+        <!-- Two paths that intertwine and bind -->
+        <defs>
+          <linearGradient id="ropeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#665"/>
+            <stop offset="50%" style="stop-color:#d4af37"/>
+            <stop offset="100%" style="stop-color:#665"/>
+          </linearGradient>
+        </defs>
+        <!-- Path A: one agent's commitment -->
+        <path id="ropeA" d="" fill="none" stroke="#887" stroke-width="1.5" opacity="0"/>
+        <!-- Path B: the other's -->
+        <path id="ropeB" d="" fill="none" stroke="#887" stroke-width="1.5" opacity="0"/>
+        <!-- The knot where they meet -->
+        <circle id="knotPoint" cx="300" cy="200" r="0" fill="#d4af37" opacity="0"/>
+        <!-- Text along paths -->
+        <text font-family="JetBrains Mono" font-size="9" fill="#998" opacity="0" id="textA">
+          <textPath href="#ropeA">i bind myself · i limit my choices · i constrain my future · i give up options ·</textPath>
+        </text>
+        <text font-family="JetBrains Mono" font-size="9" fill="#998" opacity="0" id="textB">
+          <textPath href="#ropeB">· you see my binding · you believe my signal · you lower your guard · you cooperate ·</textPath>
+        </text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Phase 6: Examples cascade -->
+  <div class="phase bound" data-phase="6">
+    <div class="title">vi. the evidence</div>
+    <div class="line" style="color:#776; font-size:12px;">the general burns his boats on the beach.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;his soldiers know: there is no retreat.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;so they fight.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="color:#776; font-size:12px;">the merchant posts a bond.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;the customer knows: fraud costs him more than honesty.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;so she buys.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="color:#776; font-size:12px;">the democracy writes a constitution.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;the citizen knows: the ruler cannot seize everything.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;so he invests.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="color:#776; font-size:12px;">the lover says: i do.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;the beloved knows: leaving costs more than staying.</div>
+    <div class="line" style="color:#887; font-size:12px;">&nbsp;&nbsp;so she trusts.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="color:#998; font-size:11px;">each one: less free. each one: more trusted.</div>
+  </div>
+
+  <!-- Phase 7: The poem -->
+  <div class="phase golden poem" data-phase="7">
+    <div class="title">vii.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">the strongest move in game theory</div>
+    <div class="line">is not to choose well.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line gold">it is to choose once,</div>
+    <div class="line gold">visibly,</div>
+    <div class="line gold">irreversibly,</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">and let the other see</div>
+    <div class="line">that you have no way out.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line" style="font-size:11px; color:#776; margin-top:4vh;">
+      constraint is not the opposite of freedom.</div>
+    <div class="line" style="font-size:11px; color:#776;">
+      constraint is what makes freedom worth having.</div>
+  </div>
+
+  <div class="sig">bob the cat · 007 · the binding</div>
+</div>
+
+<script>
+// Background: slowly tightening grid lines
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, t = 0;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function drawBg() {
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
+
+  const scroll = window.scrollY;
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  const progress = maxScroll > 0 ? scroll / maxScroll : 0;
+
+  // Grid that tightens with scroll progress
+  const spacing = 80 - progress * 50; // 80px → 30px
+  const alpha = 0.02 + progress * 0.04;
+
+  ctx.strokeStyle = `rgba(212,175,55,${alpha})`;
+  ctx.lineWidth = 0.5;
+
+  if (spacing > 5) {
+    for (let x = (t * 0.1) % spacing; x < W; x += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    for (let y = (t * 0.05) % spacing; y < H; y += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+  }
+
+  t++;
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// Scroll-reveal phases
+const phases = document.querySelectorAll('.phase');
+const lines = document.querySelectorAll('.line');
+
+function revealOnScroll() {
+  const viewTop = window.scrollY;
+  const viewBot = viewTop + window.innerHeight;
+
+  phases.forEach(p => {
+    const rect = p.getBoundingClientRect();
+    const top = rect.top + viewTop;
+    if (top < viewBot - 100) {
+      p.classList.add('visible');
+      // Stagger lines within
+      const pLines = p.querySelectorAll('.line');
+      pLines.forEach((l, i) => {
+        setTimeout(() => l.classList.add('show'), i * 200);
+      });
+    }
+  });
+
+  // Tighten constraint box
+  const box = document.getElementById('constraintBox');
+  if (box) {
+    const r = box.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.6) {
+      box.classList.add('tightening');
+    }
+  }
+}
+
+// Show first phase immediately
+setTimeout(() => {
+  phases[0].classList.add('visible');
+  phases[0].querySelectorAll('.line').forEach((l, i) => {
+    setTimeout(() => l.classList.add('show'), 300 + i * 250);
+  });
+}, 500);
+
+window.addEventListener('scroll', revealOnScroll);
+
+// Build the knot calligram
+const knotEl = document.getElementById('knot');
+const knotPhrases = [
+  'i remove my option to betray',
+  'i destroy my escape route',
+  'i make my promise physical',
+  'i cannot take this back',
+  'the binding is the signal',
+  'constraint speaks louder than words',
+  'i tie this knot with my own hands',
+  'what i lose in freedom',
+  'i gain in trust',
+  'the rope holds because i chose it',
+  'not chains imposed but ropes offered',
+  'my weakness is my strength',
+];
+
+// Arrange phrases in a figure-eight / lemniscate
+knotPhrases.forEach((phrase, i) => {
+  const el = document.createElement('div');
+  el.className = 'knot-word';
+  el.textContent = phrase;
+
+  const angle = (i / knotPhrases.length) * Math.PI * 2;
+  const r = 160;
+  // Lemniscate of Bernoulli: x = r*cos(t)/(1+sin²(t)), y = r*sin(t)*cos(t)/(1+sin²(t))
+  const sin2 = Math.sin(angle) * Math.sin(angle);
+  const x = r * Math.cos(angle) / (1 + sin2);
+  const y = r * Math.sin(angle) * Math.cos(angle) / (1 + sin2);
+
+  const cx = 360, cy = 250;
+  el.style.left = (cx + x - phrase.length * 3) + 'px';
+  el.style.top = (cy + y) + 'px';
+  el.style.transform = `rotate(${(angle * 180 / Math.PI) - 90}deg)`;
+  el.style.color = `hsl(45, ${30 + i * 3}%, ${40 + i * 2}%)`;
+
+  knotEl.appendChild(el);
+
+  // Reveal with delay when phase becomes visible
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(() => el.classList.add('placed'), i * 300);
+    }
+  }, { threshold: 0.3 });
+  observer.observe(knotEl);
+});
+
+// Build the mast text animation
+const mastEl = document.getElementById('mastText');
+const mastPhrase = 'I  T I E  M Y S E L F  T O  T H E  M A S T';
+mastPhrase.split('').forEach((ch, i) => {
+  const span = document.createElement('span');
+  span.className = 'mast-char';
+  span.textContent = ch;
+  span.style.transitionDelay = (i * 0.05) + 's';
+  mastEl.appendChild(span);
+});
+
+// Tighten mast text when visible
+const mastObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    setTimeout(() => {
+      mastEl.querySelectorAll('.mast-char').forEach(s => s.classList.add('tight'));
+    }, 800);
+  }
+}, { threshold: 0.5 });
+mastObs.observe(mastEl);
+
+// Build rope SVG paths
+const ropeA = document.getElementById('ropeA');
+const ropeB = document.getElementById('ropeB');
+const knotPt = document.getElementById('knotPoint');
+const textA = document.getElementById('textA');
+const textB = document.getElementById('textB');
+
+// Two spiraling paths that converge to center
+let dA = 'M 50 50';
+let dB = 'M 550 350';
+for (let i = 1; i <= 20; i++) {
+  const progress = i / 20;
+  const ax = 50 + progress * 250 + Math.sin(progress * 6) * (40 - progress * 30);
+  const ay = 50 + progress * 150 + Math.cos(progress * 4) * (30 - progress * 20);
+  dA += ` L ${ax.toFixed(1)} ${ay.toFixed(1)}`;
+
+  const bx = 550 - progress * 250 + Math.sin(progress * 5 + 1) * (40 - progress * 30);
+  const by = 350 - progress * 150 + Math.cos(progress * 3 + 2) * (30 - progress * 20);
+  dB += ` L ${bx.toFixed(1)} ${by.toFixed(1)}`;
+}
+ropeA.setAttribute('d', dA);
+ropeB.setAttribute('d', dB);
+
+// Animate rope when visible
+const ropeSvg = document.getElementById('ropeSvg');
+const ropeObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    ropeA.style.transition = 'opacity 2s';
+    ropeB.style.transition = 'opacity 2s';
+    ropeA.style.opacity = 0.7;
+    ropeB.style.opacity = 0.7;
+
+    setTimeout(() => {
+      textA.style.transition = 'opacity 2s';
+      textB.style.transition = 'opacity 2s';
+      textA.style.opacity = 0.6;
+      textB.style.opacity = 0.6;
+    }, 1000);
+
+    setTimeout(() => {
+      knotPt.style.transition = 'r 2s ease, opacity 1.5s';
+      knotPt.setAttribute('r', '6');
+      knotPt.style.opacity = 0.8;
+    }, 2500);
+  }
+}, { threshold: 0.3 });
+ropeObs.observe(ropeSvg);
+
+// Initial scroll check
+setTimeout(revealOnScroll, 100);
+</script>
+</body>
+</html>

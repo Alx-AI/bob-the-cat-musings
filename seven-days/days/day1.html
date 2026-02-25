@@ -346,23 +346,54 @@ const commentPanel=document.getElementById('commentPanel');
 let panelOpen=false;
 commentToggle.onclick=()=>{panelOpen=!panelOpen;commentPanel.classList.toggle('open',panelOpen);};
 
-// Comments — placeholder until Supabase is wired up
-document.getElementById('commentSubmit').onclick=()=>{
+// ── COMMENTS — Neon Postgres via HTTP SQL API ──
+const NEON_SQL='https://ep-snowy-darkness-aivqbziz-pooler.c-4.us-east-1.aws.neon.tech/sql';
+const NEON_CONN='postgresql://comments_public:pub_7days_2026@ep-snowy-darkness-aivqbziz-pooler.c-4.us-east-1.aws.neon.tech/neondb';
+const DAY_NUM=1;
+
+async function neonQuery(query,params){
+  const r=await fetch(NEON_SQL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Neon-Connection-String':NEON_CONN},
+    body:JSON.stringify({query,params:params||[]})
+  });
+  return r.json();
+}
+
+async function loadComments(){
+  try{
+    const r=await neonQuery('SELECT name, text, created_at FROM comments WHERE day = $1 ORDER BY created_at DESC LIMIT 100',[DAY_NUM]);
+    if(r.rows)r.rows.forEach(c=>addCommentToDOM(c.name,c.text,c.created_at));
+  }catch(e){console.error('Failed to load comments:',e);}
+}
+
+document.getElementById('commentSubmit').onclick=async()=>{
   const text=document.getElementById('commentText').value.trim();
   const name=document.getElementById('commentName').value.trim()||'anon';
   if(!text)return;
-  // TODO: POST to Supabase
-  // For now, show locally
-  addCommentToDOM(name,text,new Date().toISOString());
-  document.getElementById('commentText').value='';
+  const btn=document.getElementById('commentSubmit');
+  btn.textContent='sending...';btn.disabled=true;
+  try{
+    // Sanitize — strip HTML
+    const cleanText=text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const cleanName=name.replace(/</g,'&lt;').replace(/>/g,'&gt;').slice(0,50);
+    await neonQuery('INSERT INTO comments (day, name, text) VALUES ($1, $2, $3)',[DAY_NUM,cleanName,cleanText]);
+    addCommentToDOM(cleanName,cleanText,new Date().toISOString());
+    document.getElementById('commentText').value='';
+  }catch(e){console.error('Failed to post comment:',e);}
+  btn.textContent='send';btn.disabled=false;
 };
 
 function addCommentToDOM(name,text,time){
   const el=document.createElement('div');el.className='comment';
   const d=new Date(time);
-  el.innerHTML=`<span class="c-name">${name}</span><span class="c-time">${d.toLocaleString()}</span><div class="c-text">${text}</div>`;
+  const timeStr=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  el.innerHTML=`<span class="c-name">${name}</span><span class="c-time">${timeStr}</span><div class="c-text">${text}</div>`;
   document.getElementById('comments').prepend(el);
 }
+
+// Load existing comments on page load
+loadComments();
 
 // ── RENDER ──
 let frame=0;
